@@ -183,12 +183,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300409069}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 6.41, z: 21.26}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.03, y: -0.769, z: -0.011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1724490088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &331364980
 Mesh:
@@ -4163,11 +4163,12 @@ Transform:
   m_GameObject: {fileID: 1724490084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.3, z: 21.28}
+  m_LocalPosition: {x: 0, y: 7.965, z: 21.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1985119439}
+  - {fileID: 300409070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1724490089
@@ -4183,6 +4184,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerVel: 3
+  _sensorPosition: {fileID: 300409070}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _sensorRadius: 0.5
+  _gravity: -9.81
+  _playerGravity: {x: 0, y: 0, z: 0}
 --- !u!143 &1724490090
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4710,4 +4718,3 @@ SceneRoots:
   - {fileID: 1724490088}
   - {fileID: 14980140}
   - {fileID: 1029023983}
-  - {fileID: 300409070}

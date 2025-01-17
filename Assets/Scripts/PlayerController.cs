@@ -14,7 +14,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
 
     //Jump
-    private float _jumpForce = 5;
+
+    private float _jumpForce = 6f;
+    private float _doubleJumpForce = 2.7f;
+    [SerializeField] private bool _doubleJump =false;
+    [SerializeField] private bool _inAir =false;
 
     //GroundSensor
 
@@ -40,7 +44,7 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
 
         if(Input.GetButtonDown("Jump") && IsGrounded()){
-           Jump();
+           Jump(_jumpForce);
         }
 
         Gravity();
@@ -66,9 +70,17 @@ public class PlayerController : MonoBehaviour
     bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
     if (!isGrounded) {
+        _inAir=true;
         _playerGravity.y += _gravity * Time.deltaTime; 
+
+        if(_doubleJump==true && Input.GetButtonDown("Jump")){
+            _doubleJump=false;
+            Jump(_doubleJumpForce);
+        }
     } else if (_playerGravity.y < 0) {
         _playerGravity.y = -2f; 
+        _inAir=false;
+        _doubleJump=true;
     }
     Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
     characterController.Move(totalMovement);
@@ -90,10 +102,8 @@ public class PlayerController : MonoBehaviour
    }
    
    
-    void Jump(){
-        _playerGravity.y = Mathf.Sqrt(_jumpForce * -2 * _gravity);
-
-        
+    void Jump(float jumpForce){
+        _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
     }
 
     bool IsGrounded(){

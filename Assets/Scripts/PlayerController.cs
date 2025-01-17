@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerVel = 3f;
+    [SerializeField] private float playerVel = 0.1f;
     private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
         _playerGravity.y = -2f; 
         _inAir=false;
         _doubleJump=true;
+        playerVel=0.1f;
     }
     Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
     characterController.Move(totalMovement);
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
    
    
     void Jump(float jumpForce){
+        playerVel=0.17f;
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
     }
 

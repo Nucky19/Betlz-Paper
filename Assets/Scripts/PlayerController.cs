@@ -44,31 +44,33 @@ public class PlayerController : MonoBehaviour
         Gravity();
     }
 
-    void PlayerMovement(){
-        inputHorizontal=Input.GetAxisRaw("Horizontal");
-        movement.z=inputHorizontal*playerVel;
-        if(inputHorizontal>0){
-            if(playerDirection=="left"){
-                playerRotation = -180f;
-                this.transform.Rotate(Vector3.up,playerRotation);
-                playerDirection= "right"; 
-            } 
-            characterController.SimpleMove(movement);
-            return;
+    void PlayerMovement() {
+    
+    inputHorizontal = Input.GetAxisRaw("Horizontal");
+    movement.z = inputHorizontal * playerVel;
+    if (inputHorizontal > 0){
+        if (playerDirection == "left") {
+            playerRotation = -180f;
+            this.transform.Rotate(Vector3.up, playerRotation);
+            playerDirection = "right";
         }
-        if(inputHorizontal<0){
-            if(playerDirection=="right"){
-                playerRotation = 180f;
-                this.transform.Rotate(Vector3.up,playerRotation);
-                playerDirection= "left"; 
-            } 
-            characterController.SimpleMove(movement);
-            return;
+    } else if (inputHorizontal < 0) {
+        if (playerDirection == "right") {
+            playerRotation = 180f;
+            this.transform.Rotate(Vector3.up, playerRotation);
+            playerDirection = "left";
         }
-
-        
-
     }
+    bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+
+    if (!isGrounded) {
+        _playerGravity.y += _gravity * Time.deltaTime; 
+    } else if (_playerGravity.y < 0) {
+        _playerGravity.y = -2f; 
+    }
+    Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
+    characterController.Move(totalMovement);
+}
 
 
 

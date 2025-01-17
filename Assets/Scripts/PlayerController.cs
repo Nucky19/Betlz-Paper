@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float  _gravity = -9.81f;
     [SerializeField] private Vector3 _playerGravity;
+
     
     void Awake(){
         characterController = GetComponent<CharacterController>();
@@ -99,6 +101,13 @@ public class PlayerController : MonoBehaviour
     }
 
 
+   
+   
+   
+   
+   
+   
+   
     void OnDrawGizmos(){
 
         Gizmos.color = Color.green;

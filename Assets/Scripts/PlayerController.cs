@@ -13,10 +13,16 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Vector3 movement;
 
+    //States
+    [SerializeField] private bool _isFrog =false;
+    [SerializeField] private float _FrogVel=0.03f;
+
     //Jump
 
     private float _jumpForce = 6f;
     private float _doubleJumpForce = 2.7f;
+    private float _bufferTime = 0.25f;
+    private float _bufferTimer;
     [SerializeField] private bool _doubleJump =false;
     [SerializeField] private bool _inAir =false;
 
@@ -34,7 +40,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float  _gravity = -9.81f;
     [SerializeField] private Vector3 _playerGravity;
 
-    
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //TODO Hacer array que almacene las dos transformaciones disponibles en ese momento, 
+    //para luego en los debidos condicionales comprobar si esta transformado o no a partir de esa arary
+    //en vez de ir uno por uno
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     void Awake(){
         characterController = GetComponent<CharacterController>();
         Application.targetFrameRate = 60; //Capar a 60fps el juego;
@@ -43,9 +54,9 @@ public class PlayerController : MonoBehaviour
     void Update(){
         PlayerMovement();
 
-        if(Input.GetButtonDown("Jump") && IsGrounded()){
-           Jump(_jumpForce);
-        }
+        if(Input.GetButtonDown("Jump") && IsGrounded() && !_isFrog) Jump(_jumpForce);
+        if(Input.GetButtonDown("Jump") && IsGrounded() && _isFrog) Jump(15f);
+        if(Input.GetKeyDown("z") && IsGrounded()) FrogTransformation();
 
         Gravity();
     }
@@ -73,21 +84,26 @@ public class PlayerController : MonoBehaviour
         _inAir=true;
         _playerGravity.y += _gravity * Time.deltaTime; 
 
-        if(_doubleJump==true && Input.GetButtonDown("Jump")){
+        if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
             _doubleJump=false;
             Jump(_doubleJumpForce);
         }
+        
+        if(!_doubleJump && Input.GetButtonDown("Jump")) _bufferTimer=_bufferTime;
+        _bufferTimer -= Time.deltaTime;
+
     } else if (_playerGravity.y < 0) {
         _playerGravity.y = -2f; 
         _inAir=false;
+       
         _doubleJump=true;
-        playerVel=0.1f;
+        if (!_isFrog) playerVel=0.1f;
+        
+        if(_bufferTimer>0) Jump(_jumpForce);
     }
     Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
     characterController.Move(totalMovement);
 }
-
-
 
    void Gravity(){
     if(!IsGrounded())
@@ -104,25 +120,28 @@ public class PlayerController : MonoBehaviour
    
    
     void Jump(float jumpForce){
-        playerVel=0.17f;
+        if(!_isFrog) playerVel=0.17f;
+        else{
+            _isFrog=false;
+            playerVel=0.1f;
+        }
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
+        _bufferTimer=0;
     }
 
     bool IsGrounded(){
         return Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
     }
 
-
-   
-   
-   
-   
-   
-   
-   
     void OnDrawGizmos(){
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(_sensorPosition.position, 0.5f);
+    }
+
+    void FrogTransformation(){
+        _isFrog=true;
+        playerVel=_FrogVel;
+        Debug.Log("IsFrog");
     }
 }

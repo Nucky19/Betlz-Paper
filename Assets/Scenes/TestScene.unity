@@ -122,6 +122,105 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9729940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9729941}
+  - component: {fileID: 9729944}
+  - component: {fileID: 9729943}
+  - component: {fileID: 9729942}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9729941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9729940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8.03, z: 21.208801}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1724490088}
+  - {fileID: 623243647}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9729942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9729940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6af6fbad215bc74183ce90d09fba67f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 1029023982}
+--- !u!143 &9729943
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9729940}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9729944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9729940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4176e79afed59ed48be625b0fa0ebe96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerVel: 0.1
+  _isFrog: 0
+  _FrogVel: 0.03
+  _doubleJump: 0
+  _inAir: 0
+  _sensorPosition: {fileID: 300409070}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _sensorRadius: 0.5
+  _gravity: -9.81
+  _playerGravity: {x: 0, y: 0, z: 0}
 --- !u!1 &14980139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,9 +1973,6 @@ GameObject:
   - component: {fileID: 623243646}
   - component: {fileID: 623243645}
   - component: {fileID: 623243644}
-  - component: {fileID: 623243643}
-  - component: {fileID: 623243642}
-  - component: {fileID: 623243641}
   m_Layer: 0
   m_Name: TestFrog
   m_TagString: Player
@@ -1884,69 +1980,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &623243641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623243640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6af6fbad215bc74183ce90d09fba67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 1029023982}
---- !u!143 &623243642
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623243640}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &623243643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623243640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4176e79afed59ed48be625b0fa0ebe96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerVel: 0.1
-  _isFrog: 0
-  _FrogVel: 0.03
-  _doubleJump: 0
-  _inAir: 0
-  _sensorPosition: {fileID: 1985621449}
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _sensorRadius: 0.5
-  _gravity: -9.81
-  _playerGravity: {x: 0, y: 0, z: 0}
 --- !u!136 &623243644
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2029,14 +2062,14 @@ Transform:
   m_GameObject: {fileID: 623243640}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.9099998, z: 0.69000053}
+  m_LocalPosition: {x: -0.074, y: 0.031, z: -0.05}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2023763474}
   - {fileID: 1985621449}
   - {fileID: 911556004}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 9729941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -5626,9 +5659,6 @@ GameObject:
   - component: {fileID: 1724490087}
   - component: {fileID: 1724490086}
   - component: {fileID: 1724490085}
-  - component: {fileID: 1724490089}
-  - component: {fileID: 1724490090}
-  - component: {fileID: 1724490091}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -5718,77 +5748,14 @@ Transform:
   m_GameObject: {fileID: 1724490084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.03, z: 21.16}
+  m_LocalPosition: {x: 0, y: 0, z: -0.048801422}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1985119439}
   - {fileID: 300409070}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 9729941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1724490089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724490084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4176e79afed59ed48be625b0fa0ebe96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerVel: 0.1
-  _isFrog: 0
-  _FrogVel: 0.03
-  _doubleJump: 0
-  _inAir: 0
-  _sensorPosition: {fileID: 300409070}
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _sensorRadius: 0.5
-  _gravity: -9.81
-  _playerGravity: {x: 0, y: 0, z: 0}
---- !u!143 &1724490090
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724490084}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1724490091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724490084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6af6fbad215bc74183ce90d09fba67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 1029023982}
 --- !u!1 &1731305868
 GameObject:
   m_ObjectHideFlags: 0
@@ -7782,8 +7749,7 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 762940594}
-  - {fileID: 1724490088}
-  - {fileID: 623243647}
+  - {fileID: 9729941}
   - {fileID: 14980140}
   - {fileID: 217270560}
   - {fileID: 1739248556}

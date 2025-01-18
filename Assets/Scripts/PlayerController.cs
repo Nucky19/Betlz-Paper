@@ -13,9 +13,15 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Vector3 movement;
 
+    //Models
+    [SerializeField] private GameObject normalModel;
+    [SerializeField] private GameObject frogModel;
+
     //States
     [SerializeField] private bool _isFrog =false;
     [SerializeField] private float _FrogVel=0.03f;
+    [SerializeField] private float _FrogJumpForce=15f;
+    [SerializeField] private bool _frogJumpComplete =false;
 
     //Jump
 
@@ -49,15 +55,23 @@ public class PlayerController : MonoBehaviour
     void Awake(){
         characterController = GetComponent<CharacterController>();
         Application.targetFrameRate = 60; //Capar a 60fps el juego;
+        SetNormalModel();
     }
 
     void Update(){
         PlayerMovement();
 
-        if(Input.GetButtonDown("Jump") && IsGrounded() && !_isFrog) Jump(_jumpForce);
-        if(Input.GetButtonDown("Jump") && IsGrounded() && _isFrog) Jump(15f);
-        if(Input.GetKeyDown("z") && IsGrounded()) FrogTransformation();
-
+        if (Input.GetButtonDown("Jump") && IsGrounded()) {
+            if (_isFrog && !_frogJumpComplete){
+                Jump(_FrogJumpForce); 
+                _frogJumpComplete = true;
+            }
+            else if (!_isFrog) Jump(_jumpForce); 
+        }
+        if(Input.GetKeyDown("z") && IsGrounded() && !_frogJumpComplete){
+            if (!_isFrog) FrogTransformation();
+            else if(_isFrog) SetNormalState();
+        }
         Gravity();
     }
 
@@ -96,6 +110,11 @@ public class PlayerController : MonoBehaviour
         _playerGravity.y = -2f; 
         _inAir=false;
        
+        if (_frogJumpComplete){
+            _frogJumpComplete = false; // Finaliza el salto especial
+            SetNormalState(); // Cambia al estado normal
+        }
+
         _doubleJump=true;
         if (!_isFrog) playerVel=0.1f;
         
@@ -107,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
    void Gravity(){
     if(!IsGrounded())
-    {
+    {  
         _playerGravity.y += _gravity *Time.deltaTime;
     }   
     else if(IsGrounded() && _playerGravity.y <0 )
@@ -121,10 +140,11 @@ public class PlayerController : MonoBehaviour
    
     void Jump(float jumpForce){
         if(!_isFrog) playerVel=0.17f;
-        else{
-            _isFrog=false;
-            playerVel=0.1f;
-        }
+        // else{
+        //     _isFrog=false;
+        //     playerVel=0.1f;
+        //     SetNormalModel();
+        // }
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
     }
@@ -141,7 +161,22 @@ public class PlayerController : MonoBehaviour
 
     void FrogTransformation(){
         _isFrog=true;
+        SetFrogModel();
         playerVel=_FrogVel;
         Debug.Log("IsFrog");
+    }
+    void SetNormalState(){
+        _isFrog = false;
+        SetNormalModel();
+        playerVel = 0.1f; 
+    }
+    private void SetNormalModel(){
+        normalModel.SetActive(true);
+        frogModel.SetActive(false);
+    }
+    private void SetFrogModel()
+    {
+        normalModel.SetActive(false);
+        frogModel.SetActive(true);
     }
 }

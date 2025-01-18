@@ -111,8 +111,8 @@ public class PlayerController : MonoBehaviour
         _inAir=false;
        
         if (_frogJumpComplete){
-            _frogJumpComplete = false; // Finaliza el salto especial
-            SetNormalState(); // Cambia al estado normal
+            _frogJumpComplete = false; 
+            SetNormalState(); 
         }
 
         _doubleJump=true;
@@ -140,11 +140,6 @@ public class PlayerController : MonoBehaviour
    
     void Jump(float jumpForce){
         if(!_isFrog) playerVel=0.17f;
-        // else{
-        //     _isFrog=false;
-        //     playerVel=0.1f;
-        //     SetNormalModel();
-        // }
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
     }

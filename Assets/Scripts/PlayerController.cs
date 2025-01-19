@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
 
     //States
     [SerializeField] private bool _isFrog =false;
+    [SerializeField] private bool _frogJumpComplete =false;
     [SerializeField] private float _FrogVel=0.03f;
     [SerializeField] private float _FrogJumpForce=15f;
-    [SerializeField] private bool _frogJumpComplete =false;
 
     //Jump
 

@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 9729942}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,6 +154,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 300409070}
   - {fileID: 1724490088}
   - {fileID: 623243647}
   m_Father: {fileID: 0}
@@ -190,8 +191,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 3.18
+  m_Radius: 0.78
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -210,8 +211,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerVel: 0.1
+  normalModel: {fileID: 1724490084}
+  frogModel: {fileID: 623243640}
   _isFrog: 0
+  _frogJumpComplete: 0
   _FrogVel: 0.03
+  _FrogJumpForce: 15
   _doubleJump: 0
   _inAir: 0
   _sensorPosition: {fileID: 300409070}
@@ -942,11 +947,11 @@ Transform:
   m_GameObject: {fileID: 300409069}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -0.769, z: -0.011}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.048, y: -1.2304001, z: -0.06640053}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1724490088}
+  m_Father: {fileID: 9729941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &331364980
 Mesh:
@@ -5748,12 +5753,11 @@ Transform:
   m_GameObject: {fileID: 1724490084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.048801422}
+  m_LocalPosition: {x: 0, y: 0.02, z: -0.048801422}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1985119439}
-  - {fileID: 300409070}
   m_Father: {fileID: 9729941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1731305868

@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerVel = 0.1f;
+    [SerializeField] private float playerVel = 0.2f;
     private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -173,5 +173,17 @@ public class PlayerController : MonoBehaviour
     {
         normalModel.SetActive(false);
         frogModel.SetActive(true);
+    }
+
+
+    void OnTriggerEnter (Collider collider) 
+    {
+        if(gameObject.layer == 7)
+        {
+            Destroy(gameObject);
+        }
+
+        
+
     }
 }

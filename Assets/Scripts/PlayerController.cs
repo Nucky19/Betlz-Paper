@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     if (!isGrounded) {
         _inAir=true;
-        _playerGravity.y += _gravity * Time.deltaTime; 
+        //_playerGravity.y += _gravity * Time.deltaTime; 
 
         if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
             _doubleJump=false;
@@ -128,10 +128,12 @@ public class PlayerController : MonoBehaviour
     if(!IsGrounded())
     {  
         _playerGravity.y += _gravity *Time.deltaTime;
+        _inAir = true;
     }   
     else if(IsGrounded() && _playerGravity.y <0 )
     {
         _playerGravity.y = -1;
+        _inAir = false;
     }
 
         characterController.Move(_playerGravity * Time.deltaTime);

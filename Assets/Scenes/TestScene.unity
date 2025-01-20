@@ -2783,13 +2783,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4176e79afed59ed48be625b0fa0ebe96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerVel: 0.2
+  playerVelConstant: 0.15
+  playerVel: 0.15
   normalModel: {fileID: 1724490084}
   frogModel: {fileID: 623243640}
   _isFrog: 0
   _FrogVel: 0.03
-  _FrogJumpForce: 15
+  _FrogJumpForce: 7
   _frogJumpComplete: 0
+  _jumpForce: 2
+  _playerVelJump: 0.17
+  _doubleJumpForce: 2.5
+  _playerVelDoubleJump: 0.22
   _doubleJump: 0
   _inAir: 0
   _sensorPosition: {fileID: 300409070}
@@ -2797,7 +2802,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _sensorRadius: 0.5
-  _gravity: -9.81
+  _gravity: -20
   _playerGravity: {x: 0, y: 0, z: 0}
 --- !u!1 &14980139
 GameObject:

@@ -6,7 +6,8 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerVel = 0.2f;
+    [SerializeField] private float playerVelConstant = 0.15f;
+    [SerializeField] private float playerVel = 0.15f;
     private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -20,13 +21,15 @@ public class PlayerController : MonoBehaviour
     //States
     [SerializeField] private bool _isFrog =false;
     [SerializeField] private float _FrogVel=0.03f;
-    [SerializeField] private float _FrogJumpForce=15f;
+    [SerializeField] private float _FrogJumpForce=7f;
     [SerializeField] private bool _frogJumpComplete =false;
 
     //Jump
 
-    private float _jumpForce = 6f;
-    private float _doubleJumpForce = 2.7f;
+    [SerializeField] private float _jumpForce = 2f;
+    [SerializeField] private float _playerVelJump = 0.17f;
+    [SerializeField] private float _doubleJumpForce = 2.2f;
+    [SerializeField] private float _playerVelDoubleJump = 0.22f;
     private float _bufferTime = 0.25f;
     private float _bufferTimer;
     [SerializeField] private bool _doubleJump =false;
@@ -77,52 +80,52 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMovement() {
     
-    inputHorizontal = Input.GetAxisRaw("Horizontal");
-    movement.z = inputHorizontal * playerVel;
-    if (inputHorizontal > 0){
-        if (playerDirection == "left") {
-            playerRotation = -180f;
-            this.transform.Rotate(Vector3.up, playerRotation);
-            playerDirection = "right";
+        inputHorizontal = Input.GetAxisRaw("Horizontal");
+        movement.z = inputHorizontal * playerVel;
+        if (inputHorizontal > 0){
+            if (playerDirection == "left") {
+                playerRotation = -180f;
+                this.transform.Rotate(Vector3.up, playerRotation);
+                playerDirection = "right";
+            }
+        } else if (inputHorizontal < 0) {
+            if (playerDirection == "right") {
+                playerRotation = 180f;
+                this.transform.Rotate(Vector3.up, playerRotation);
+                playerDirection = "left";
+            }
         }
-    } else if (inputHorizontal < 0) {
-        if (playerDirection == "right") {
-            playerRotation = 180f;
-            this.transform.Rotate(Vector3.up, playerRotation);
-            playerDirection = "left";
-        }
-    }
-    bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+        bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
-    if (!isGrounded) {
-        _inAir=true;
-        //_playerGravity.y += _gravity * Time.deltaTime; 
+        if (!isGrounded) {
+            _inAir=true;
+            //_playerGravity.y += _gravity * Time.deltaTime; 
 
-        if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
-            _doubleJump=false;
-            Jump(_doubleJumpForce);
-        }
+            if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+                _doubleJump=false;
+                Jump(_doubleJumpForce);
+            }
+            
+            if(!_doubleJump && Input.GetButtonDown("Jump")) _bufferTimer=_bufferTime;
+            _bufferTimer -= Time.deltaTime;
+
+        } else if (_playerGravity.y < 0) {
+            // _playerGravity.y = -2f;
+            _inAir=false;
         
-        if(!_doubleJump && Input.GetButtonDown("Jump")) _bufferTimer=_bufferTime;
-        _bufferTimer -= Time.deltaTime;
+            if (_frogJumpComplete){
+                _frogJumpComplete = false; 
+                SetNormalState(); 
+            }
 
-    } else if (_playerGravity.y < 0) {
-        _playerGravity.y = -2f; 
-        _inAir=false;
-       
-        if (_frogJumpComplete){
-            _frogJumpComplete = false; 
-            SetNormalState(); 
+            _doubleJump=true;
+            if (!_isFrog && _doubleJump) playerVel=playerVelConstant;
+            
+            if(_bufferTimer>0) Jump(_jumpForce);
         }
-
-        _doubleJump=true;
-        if (!_isFrog) playerVel=0.1f;
-        
-        if(_bufferTimer>0) Jump(_jumpForce);
+        Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
+        characterController.Move(totalMovement);
     }
-    Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
-    characterController.Move(totalMovement);
-}
 
    void Gravity(){
     if(!IsGrounded())
@@ -141,7 +144,8 @@ public class PlayerController : MonoBehaviour
    
    
     void Jump(float jumpForce){
-        if(!_isFrog) playerVel=0.17f;
+        if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
+        else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
     }
@@ -165,7 +169,7 @@ public class PlayerController : MonoBehaviour
     void SetNormalState(){
         _isFrog = false;
         SetNormalModel();
-        playerVel = 0.1f; 
+        playerVel = playerVelConstant; 
     }
     private void SetNormalModel(){
         normalModel.SetActive(true);

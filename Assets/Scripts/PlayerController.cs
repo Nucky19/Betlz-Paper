@@ -97,10 +97,12 @@ public class PlayerController : MonoBehaviour
         }
         bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
-        if (!isGrounded) {
-            _inAir=true;
-            //_playerGravity.y += _gravity * Time.deltaTime; 
+        if (_inAir) {
+        // if (!isGrounded) {
+            // _inAir=true;
 
+            //_playerGravity.y += _gravity * Time.deltaTime; 
+            // Debug.Log("En el aire");
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
@@ -128,13 +130,11 @@ public class PlayerController : MonoBehaviour
     }
 
    void Gravity(){
-    if(!IsGrounded())
-    {  
+    if(!IsGrounded()){  
         _playerGravity.y += _gravity *Time.deltaTime;
         _inAir = true;
     }   
-    else if(IsGrounded() && _playerGravity.y <0 )
-    {
+    else if(IsGrounded() && _playerGravity.y <0 ){
         _playerGravity.y = -1;
         _inAir = false;
     }

@@ -6,8 +6,8 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerVelConstant = 0.15f;
-    [SerializeField] private float playerVel = 0.15f;
+    [SerializeField] private float playerVelConstant = 0.4f;
+    [SerializeField] private float playerVel = 0.4f;
     private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -20,16 +20,16 @@ public class PlayerController : MonoBehaviour
 
     //States
     [SerializeField] private bool _isFrog =false;
-    [SerializeField] private float _FrogVel=0.03f;
-    [SerializeField] private float _FrogJumpForce=7f;
+    [SerializeField] private float _FrogVel=0.2f;
+    [SerializeField] private float _FrogJumpForce=12f;
     [SerializeField] private bool _frogJumpComplete =false;
 
     //Jump
 
-    [SerializeField] private float _jumpForce = 2f;
-    [SerializeField] private float _playerVelJump = 0.17f;
-    [SerializeField] private float _doubleJumpForce = 2.2f;
-    [SerializeField] private float _playerVelDoubleJump = 0.22f;
+    [SerializeField] private float _jumpForce = 3f;
+    [SerializeField] private float _playerVelJump = 0.43f;
+    [SerializeField] private float _doubleJumpForce = 3.5f;
+    [SerializeField] private float _playerVelDoubleJump = 0.45f;
     private float _bufferTime = 0.25f;
     private float _bufferTimer;
     [SerializeField] private bool _doubleJump =false;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
     //Gravity
 
-    [SerializeField] private float  _gravity = -9.81f;
+    [SerializeField] private float  _gravity = -37f;
     [SerializeField] private Vector3 _playerGravity;
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -54,10 +54,12 @@ public class PlayerController : MonoBehaviour
     //para luego en los debidos condicionales comprobar si esta transformado o no a partir de esa arary
     //en vez de ir uno por uno
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    void Start(){
+        Application.targetFrameRate = 60; //Capar a 60fps el juego;
+    }
 
     void Awake(){
         characterController = GetComponent<CharacterController>();
-        Application.targetFrameRate = 60; //Capar a 60fps el juego;
         SetNormalModel();
     }
 
@@ -126,7 +128,8 @@ public class PlayerController : MonoBehaviour
             if(_bufferTimer>0) Jump(_jumpForce);
         }
         Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
-        characterController.Move(totalMovement);
+        // characterController.Move(totalMovement);
+        characterController.Move(totalMovement*playerVel);
     }
 
    void Gravity(){
@@ -184,8 +187,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter (Collider collider) 
     {
-        if(gameObject.layer == 7)
-        {
+        if(collider.gameObject.layer == 7){
             Destroy(gameObject);
         }
 

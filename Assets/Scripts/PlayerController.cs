@@ -101,9 +101,8 @@ public class PlayerController : MonoBehaviour
                 playerDirection = "left";
             }
         }
-        // bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
-        if (_inAir) {
+        if (_inAir) { ////////////ESTO SIGUE JUNTO PORQUE PROBÉ A SEPARARLO Y DEJÓ DE FUNCIONAR ALGUNAS COSAS. LO CAMBIARÉ MAS ADELANTE/////////////
         // if (!isGrounded) {
             // _inAir=true;
 
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour
             
             if(_bufferTimer>0) Jump(_jumpForce);
         }
-        Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
+        Vector3 totalMovement = movement + _playerGravity * Time.deltaTime; ////////////ESTO SIGUE ASI PORQUE SINO EL MOVIMIENTO DEL PERSONAJE SE JODE MUCHO, YA TE ENSEÑARÉ EN CLASE/////////////
         characterController.Move(totalMovement*playerVel);
         // Vector3 totalMovement = (movement + _playerGravity) * Time.deltaTime;
         // characterController.Move(totalMovement*playerVel);

@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _FrogVel=0.2f;
     [SerializeField] private float _FrogJumpForce=12f;
     [SerializeField] private bool _frogJumpComplete =false;
+    [SerializeField] private bool _isDeath =false;
 
     //Jump
 
@@ -41,7 +42,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]  LayerMask _groundLayer;
     
-    [SerializeField]  float _sensorRadius = 0.5f;
+    // [SerializeField]  float _sensorRadius = 0.5f;
+    [SerializeField]  float _groundSensorX = 0.65f;
+    [SerializeField]  float _groundSensorY = 0.5f;
+    [SerializeField]  float _groundSensorZ = 0.61f;
 
 
     //Gravity
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 playerDirection = "left";
             }
         }
-        bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+        // bool isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
         if (_inAir) {
         // if (!isGrounded) {
@@ -129,6 +133,8 @@ public class PlayerController : MonoBehaviour
         }
         Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
         characterController.Move(totalMovement*playerVel);
+        // Vector3 totalMovement = (movement + _playerGravity) * Time.deltaTime;
+        // characterController.Move(totalMovement*playerVel);
         // characterController.Move(totalMovement);
     }
 
@@ -153,15 +159,30 @@ public class PlayerController : MonoBehaviour
         _bufferTimer=0;
     }
 
+    // bool IsGrounded(){
+    //     return Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+    // }
+    // void OnDrawGizmos(){
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawWireSphere(_sensorPosition.position, _sensorRadius);
+    // }
+
     bool IsGrounded(){
-        return Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
+        return Physics.CheckBox(
+        _sensorPosition.position, 
+        new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ),     
+        Quaternion.identity,      
+        _groundLayer.value        
+        );
     }
 
-    void OnDrawGizmos(){
+    void OnDrawGizmos() {
+        Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(_sensorPosition.position, 0.5f);
+        Gizmos.DrawWireCube(_sensorPosition.position, halfExtents * 2); 
     }
+    
 
     void FrogTransformation(){
         _isFrog=true;
@@ -185,14 +206,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnTriggerEnter (Collider collider) 
-    {
-        if(collider.gameObject.layer == 7){
-            Destroy(gameObject);
-        }
-    }
-
-    void Death(){
-
+    // void OnTriggerEnter (Collider collider) 
+    // {
+    //     if(collider.gameObject.layer == 7){
+    //         Destroy(gameObject);
+    //     }
+    // }
+        
+    public void Die(){
+        _isDeath=true;
+        Debug.Log("Death");
     }
 }

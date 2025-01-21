@@ -5,8 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Trap
-  - D1-1
-  - D1-2
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX

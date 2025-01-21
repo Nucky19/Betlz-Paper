@@ -128,8 +128,8 @@ public class PlayerController : MonoBehaviour
             if(_bufferTimer>0) Jump(_jumpForce);
         }
         Vector3 totalMovement = movement + _playerGravity * Time.deltaTime;
-        // characterController.Move(totalMovement);
         characterController.Move(totalMovement*playerVel);
+        // characterController.Move(totalMovement);
     }
 
    void Gravity(){
@@ -190,8 +190,9 @@ public class PlayerController : MonoBehaviour
         if(collider.gameObject.layer == 7){
             Destroy(gameObject);
         }
+    }
 
-        
+    void Death(){
 
     }
 }

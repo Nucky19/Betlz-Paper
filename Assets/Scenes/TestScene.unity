@@ -2724,7 +2724,7 @@ Transform:
   m_GameObject: {fileID: 9729940}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.94, z: 25.27}
+  m_LocalPosition: {x: 0, y: 7.94, z: 24.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2785,19 +2785,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4176e79afed59ed48be625b0fa0ebe96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerVelConstant: 0.4
-  playerVel: 0.4
+  _slideSpeed: 1
+  _raySize: 1
+  playerVelConstant: 3
+  playerVel: 3
   normalModel: {fileID: 1724490084}
   frogModel: {fileID: 623243640}
   _isFrog: 0
-  _FrogVel: 0.25
-  _FrogJumpForce: 12
+  _FrogVel: 2
+  _FrogJumpForce: 15
   _frogJumpComplete: 0
   _isDeath: 0
-  _jumpForce: 3
-  _playerVelJump: 0.43
-  _doubleJumpForce: 3.5
-  _playerVelDoubleJump: 0.45
+  _jumpForce: 4
+  _playerVelJump: 3.2
+  _doubleJumpForce: 4.2
+  _playerVelDoubleJump: 3.5
   _doubleJump: 0
   _inAir: 0
   _sensorPosition: {fileID: 300409070}

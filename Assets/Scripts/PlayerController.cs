@@ -6,8 +6,11 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerVelConstant = 0.4f;
-    [SerializeField] private float playerVel = 0.4f;
+
+    [SerializeField] private float _slideSpeed = 1f;
+    [SerializeField] private float _raySize = 1f;
+    [SerializeField] private float playerVelConstant = 3f;
+    [SerializeField] private float playerVel = 3f;
     private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -20,22 +23,25 @@ public class PlayerController : MonoBehaviour
 
     //States
     [SerializeField] private bool _isFrog =false;
-    [SerializeField] private float _FrogVel=0.2f;
-    [SerializeField] private float _FrogJumpForce=12f;
+    [SerializeField] private float _FrogVel=2f;
+    [SerializeField] private float _FrogJumpForce=15f;
     [SerializeField] private bool _frogJumpComplete =false;
     [SerializeField] private bool _isDeath =false;
 
     //Jump
 
-    [SerializeField] private float _jumpForce = 3f;
-    [SerializeField] private float _playerVelJump = 0.43f;
-    [SerializeField] private float _doubleJumpForce = 3.5f;
-    [SerializeField] private float _playerVelDoubleJump = 0.45f;
+    [SerializeField] private float _jumpForce = 4f;
+    [SerializeField] private float _playerVelJump = 3.2f;
+    [SerializeField] private float _doubleJumpForce = 4.2f;
+    [SerializeField] private float _playerVelDoubleJump = 3.5f;
     private float _bufferTime = 0.25f;
     private float _bufferTimer;
     [SerializeField] private bool _doubleJump =false;
     [SerializeField] private bool _inAir =false;
+    // [SerializeField] private float _doubleJumpDelay=0.5f;
+    // [SerializeField] private float _doubleJumpTimer;
 
+    // [SerializeField] private bool _startDoubleTimer=false;
     //GroundSensor
 
     [SerializeField] Transform _sensorPosition;
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded()) {
             if (_isFrog && !_frogJumpComplete){
+                // _doubleJumpTimer=0;
                 Jump(_FrogJumpForce); 
                 _frogJumpComplete = true;
             }
@@ -82,6 +89,9 @@ public class PlayerController : MonoBehaviour
             else if(_isFrog) SetNormalState();
         }
         Gravity();
+        if(!IsGrounded()) Checkcorner();
+
+        // if(_startDoubleTimer) DoubleJumpWaitTime();
     }
 
     void PlayerMovement() {
@@ -109,6 +119,7 @@ public class PlayerController : MonoBehaviour
             //_playerGravity.y += _gravity * Time.deltaTime; 
             // Debug.Log("En el aire");
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+                // _startDoubleTimer=true;
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
             }
@@ -130,11 +141,8 @@ public class PlayerController : MonoBehaviour
             
             if(_bufferTimer>0) Jump(_jumpForce);
         }
-        Vector3 totalMovement = movement + _playerGravity * Time.deltaTime; ////////////ESTO SIGUE ASI PORQUE SINO EL MOVIMIENTO DEL PERSONAJE SE JODE MUCHO, YA TE ENSEÑARÉ EN CLASE/////////////
+        Vector3 totalMovement = movement * Time.deltaTime; ////////////ESTO SIGUE ASI PORQUE SINO EL MOVIMIENTO DEL PERSONAJE SE JODE MUCHO, YA TE ENSEÑARÉ EN CLASE/////////////
         characterController.Move(totalMovement*playerVel);
-        // Vector3 totalMovement = (movement + _playerGravity) * Time.deltaTime;
-        // characterController.Move(totalMovement*playerVel);
-        // characterController.Move(totalMovement);
     }
 
    void Gravity(){
@@ -158,6 +166,12 @@ public class PlayerController : MonoBehaviour
         _bufferTimer=0;
     }
 
+    // void DoubleJumpWaitTime(){
+    //     _doubleJumpTimer+=Time.deltaTime;
+    //     if(_doubleJumpTimer >= _doubleJumpDelay)_doubleJump=true;
+    //     _startDoubleTimer=false;
+    // }
+
     // bool IsGrounded(){
     //     return Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
     // }
@@ -175,11 +189,25 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    void Checkcorner(){
+        RaycastHit hit;
+        if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySize, _groundLayer)){
+            SlideCorner(hit.normal);
+        }
+    }
+    void SlideCorner(Vector3 slideDirection){
+        characterController.Move((slideDirection*_slideSpeed+Vector3.down)*Time.deltaTime);
+    }
+
     void OnDrawGizmos() {
         Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_sensorPosition.position, halfExtents * 2); 
+    
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(_sensorPosition.position, transform.forward*_raySize);
+        Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySize);
     }
     
 

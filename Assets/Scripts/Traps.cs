@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Traps : MonoBehaviour
 {
-    public PlayerController playerController;
+    // public PlayerController playerController;
     void Awake(){
-        playerController=GetComponent<PlayerController>();
+        // playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     void Update(){
         
     }
     void OnTriggerEnter(Collider collider){
-        if(collider.gameObject.layer==6){
+        if(collider.gameObject.tag=="Player"){
             Debug.Log("Player Contact");
-            playerController.Die();
+            // playerController.Die();
+            PlayerController.Instance.Die();
         }
     }
 }

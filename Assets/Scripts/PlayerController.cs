@@ -6,6 +6,7 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
     //Movement
     [SerializeField] private float playerVelConstant = 3f;
     [SerializeField] private float playerVel = 3f;
@@ -158,7 +159,6 @@ public class PlayerController : MonoBehaviour
         _groundLayer.value        
         );
     }
-
     void Checkcorner(){
         RaycastHit hit;
         if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySize, _groundLayer)){
@@ -168,7 +168,6 @@ public class PlayerController : MonoBehaviour
     void SlideCorner(Vector3 slideDirection){
         characterController.Move((slideDirection*_slideSpeed+Vector3.down)*Time.deltaTime);
     }
-
     void OnDrawGizmos() {
         Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 
@@ -179,8 +178,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, transform.forward*_raySize);
         Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySize);
     }
-    
-
     void FrogTransformation(){
         _isFrog=true;
         SetFrogModel();
@@ -201,7 +198,6 @@ public class PlayerController : MonoBehaviour
         normalModel.SetActive(false);
         frogModel.SetActive(true);
     }
-        
     public void Die(){
         _isDeath=true;
         Debug.Log("Death");

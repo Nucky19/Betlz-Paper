@@ -6,9 +6,7 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    [SerializeField] private float _slideSpeed = 1f;
-    [SerializeField] private float _raySize = 1f;
+    //Movement
     [SerializeField] private float playerVelConstant = 3f;
     [SerializeField] private float playerVel = 3f;
     private float inputHorizontal;
@@ -29,7 +27,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDeath =false;
 
     //Jump
-
     [SerializeField] private float _jumpForce = 4f;
     [SerializeField] private float _playerVelJump = 3.2f;
     [SerializeField] private float _doubleJumpForce = 4.2f;
@@ -38,24 +35,17 @@ public class PlayerController : MonoBehaviour
     private float _bufferTimer;
     [SerializeField] private bool _doubleJump =false;
     [SerializeField] private bool _inAir =false;
-    // [SerializeField] private float _doubleJumpDelay=0.5f;
-    // [SerializeField] private float _doubleJumpTimer;
 
-    // [SerializeField] private bool _startDoubleTimer=false;
     //GroundSensor
-
     [SerializeField] Transform _sensorPosition;
-
     [SerializeField]  LayerMask _groundLayer;
-    
-    // [SerializeField]  float _sensorRadius = 0.5f;
     [SerializeField]  float _groundSensorX = 0.65f;
     [SerializeField]  float _groundSensorY = 0.5f;
     [SerializeField]  float _groundSensorZ = 0.61f;
-
+    [SerializeField] private float _slideSpeed = 1f;
+    [SerializeField] private float _raySize = 1f;
 
     //Gravity
-
     [SerializeField] private float  _gravity = -37f;
     [SerializeField] private Vector3 _playerGravity;
 
@@ -74,16 +64,16 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
-        PlayerMovement();
 
+        PlayerMovement();
         if (Input.GetButtonDown("Jump") && IsGrounded()) {
             if (_isFrog && !_frogJumpComplete){
-                // _doubleJumpTimer=0;
                 Jump(_FrogJumpForce); 
                 _frogJumpComplete = true;
             }
             else if (!_isFrog) Jump(_jumpForce); 
         }
+        InAir(_inAir);
         if(Input.GetKeyDown("z") && IsGrounded() && !_frogJumpComplete){
             if (!_isFrog) FrogTransformation();
             else if(_isFrog) SetNormalState();
@@ -91,7 +81,6 @@ public class PlayerController : MonoBehaviour
         Gravity();
         if(!IsGrounded()) Checkcorner();
 
-        // if(_startDoubleTimer) DoubleJumpWaitTime();
     }
 
     void PlayerMovement() {
@@ -111,15 +100,13 @@ public class PlayerController : MonoBehaviour
                 playerDirection = "left";
             }
         }
+        Vector3 totalMovement = movement * Time.deltaTime; 
+        characterController.Move(totalMovement*playerVel);
+    }
 
-        if (_inAir) { ////////////ESTO SIGUE JUNTO PORQUE PROBÉ A SEPARARLO Y DEJÓ DE FUNCIONAR ALGUNAS COSAS. LO CAMBIARÉ MAS ADELANTE/////////////
-        // if (!isGrounded) {
-            // _inAir=true;
-
-            //_playerGravity.y += _gravity * Time.deltaTime; 
-            // Debug.Log("En el aire");
+    void InAir(bool inAir){
+        if (inAir) { 
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
-                // _startDoubleTimer=true;
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
             }
@@ -128,21 +115,16 @@ public class PlayerController : MonoBehaviour
             _bufferTimer -= Time.deltaTime;
 
         } else if (_playerGravity.y < 0) {
-            // _playerGravity.y = -2f;
             _inAir=false;
         
             if (_frogJumpComplete){
                 _frogJumpComplete = false; 
                 SetNormalState(); 
             }
-
             _doubleJump=true;
             if (!_isFrog && _doubleJump) playerVel=playerVelConstant;
-            
             if(_bufferTimer>0) Jump(_jumpForce);
         }
-        Vector3 totalMovement = movement * Time.deltaTime; ////////////ESTO SIGUE ASI PORQUE SINO EL MOVIMIENTO DEL PERSONAJE SE JODE MUCHO, YA TE ENSEÑARÉ EN CLASE/////////////
-        characterController.Move(totalMovement*playerVel);
     }
 
    void Gravity(){
@@ -166,19 +148,7 @@ public class PlayerController : MonoBehaviour
         _bufferTimer=0;
     }
 
-    // void DoubleJumpWaitTime(){
-    //     _doubleJumpTimer+=Time.deltaTime;
-    //     if(_doubleJumpTimer >= _doubleJumpDelay)_doubleJump=true;
-    //     _startDoubleTimer=false;
-    // }
-
-    // bool IsGrounded(){
-    //     return Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
-    // }
-    // void OnDrawGizmos(){
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawWireSphere(_sensorPosition.position, _sensorRadius);
-    // }
+   
 
     bool IsGrounded(){
         return Physics.CheckBox(
@@ -231,14 +201,6 @@ public class PlayerController : MonoBehaviour
         normalModel.SetActive(false);
         frogModel.SetActive(true);
     }
-
-
-    // void OnTriggerEnter (Collider collider) 
-    // {
-    //     if(collider.gameObject.layer == 7){
-    //         Destroy(gameObject);
-    //     }
-    // }
         
     public void Die(){
         _isDeath=true;

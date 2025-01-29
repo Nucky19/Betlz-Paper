@@ -12,7 +12,8 @@ public class Traps : MonoBehaviour
         
     }
     void OnTriggerEnter(Collider collider){
-        if(collider.gameObject.tag=="Player"){
+        Debug.Log("Trigger Entered");
+        if(collider.gameObject.CompareTag("Player")){ //TODO No detecta el tag de Player
             Debug.Log("Player Contact");
             // playerController.Die();
             PlayerController.Instance.Die();

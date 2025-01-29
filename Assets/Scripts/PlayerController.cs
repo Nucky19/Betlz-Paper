@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float  _gravity = -37f;
     [SerializeField] private Vector3 _playerGravity;
 
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //TODO Hacer array que almacene las dos transformaciones disponibles en ese momento, 
     //para luego en los debidos condicionales comprobar si esta transformado o no a partir de esa arary
@@ -60,6 +61,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void Awake(){
+        if (Instance == null) Instance = this;
+    else   Destroy(gameObject);
+    
         characterController = GetComponent<CharacterController>();
         SetNormalModel();
     }
@@ -81,7 +85,6 @@ public class PlayerController : MonoBehaviour
         }
         Gravity();
         if(!IsGrounded()) Checkcorner();
-
     }
 
     void PlayerMovement() {
@@ -140,16 +143,13 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(_playerGravity * Time.deltaTime);
    }
-   
-   
+
     void Jump(float jumpForce){
         if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
     }
-
-   
 
     bool IsGrounded(){
         return Physics.CheckBox(
@@ -159,15 +159,18 @@ public class PlayerController : MonoBehaviour
         _groundLayer.value        
         );
     }
+
     void Checkcorner(){
         RaycastHit hit;
         if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySize, _groundLayer)){
             SlideCorner(hit.normal);
         }
     }
+
     void SlideCorner(Vector3 slideDirection){
         characterController.Move((slideDirection*_slideSpeed+Vector3.down)*Time.deltaTime);
     }
+
     void OnDrawGizmos() {
         Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 
@@ -178,26 +181,30 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, transform.forward*_raySize);
         Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySize);
     }
+
+    void SetNormalState(){
+        _isFrog = false;
+        SetNormalModel();
+        playerVel = playerVelConstant; 
+    }
+
     void FrogTransformation(){
         _isFrog=true;
         SetFrogModel();
         playerVel=_FrogVel;
         Debug.Log("IsFrog");
     }
-    void SetNormalState(){
-        _isFrog = false;
-        SetNormalModel();
-        playerVel = playerVelConstant; 
-    }
+
     private void SetNormalModel(){
         normalModel.SetActive(true);
         frogModel.SetActive(false);
     }
-    private void SetFrogModel()
-    {
+
+    private void SetFrogModel(){
         normalModel.SetActive(false);
         frogModel.SetActive(true);
     }
+
     public void Die(){
         _isDeath=true;
         Debug.Log("Death");

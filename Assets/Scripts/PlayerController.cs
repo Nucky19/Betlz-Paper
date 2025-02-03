@@ -7,13 +7,17 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+    
+    public Inputs input;
+    private CharacterController characterController;
+
     //Movement
     [SerializeField] private float playerVelConstant = 3f;
     [SerializeField] private float playerVel = 3f;
-    private float inputHorizontal;
+    // private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
-    private CharacterController characterController;
+
     private Vector3 movement;
 
     //Models
@@ -21,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject frogModel;
 
     //States
-    [SerializeField] private bool _isFrog =false;
+    [SerializeField] public bool _isFrog =false;
     [SerializeField] private float _FrogVel=2f;
     [SerializeField] private float _FrogJumpForce=15f;
     [SerializeField] private bool _frogJumpComplete =false;
@@ -62,8 +66,10 @@ public class PlayerController : MonoBehaviour
 
     void Awake(){
         if (Instance == null) Instance = this;
-    else   Destroy(gameObject);
-    
+        else   Destroy(gameObject);
+
+        input = GetComponent<Inputs>();
+
         characterController = GetComponent<CharacterController>();
         SetNormalModel();
     }
@@ -71,7 +77,7 @@ public class PlayerController : MonoBehaviour
     void Update(){
 
         PlayerMovement();
-        if (Input.GetButtonDown("Jump") && IsGrounded()) {
+        if (input.jump && IsGrounded()) {
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
                 _frogJumpComplete = true;
@@ -79,7 +85,7 @@ public class PlayerController : MonoBehaviour
             else if (!_isFrog) Jump(_jumpForce); 
         }
         InAir(_inAir);
-        if(Input.GetKeyDown("z") && IsGrounded() && !_frogJumpComplete){
+        if(input.firstTransformation && IsGrounded() && !_frogJumpComplete){
             if (!_isFrog) FrogTransformation();
             else if(_isFrog) SetNormalState();
         }
@@ -89,15 +95,15 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMovement() {
     
-        inputHorizontal = Input.GetAxisRaw("Horizontal");
-        movement.z = inputHorizontal * playerVel;
-        if (inputHorizontal > 0){
+        // input.inputHorizontal = Input.GetAxisRaw("Horizontal");
+        movement.z = input.inputHorizontal * playerVel;
+        if (input.inputHorizontal > 0){
             if (playerDirection == "left") {
                 playerRotation = -180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "right";
             }
-        } else if (inputHorizontal < 0) {
+        } else if (input.inputHorizontal < 0) {
             if (playerDirection == "right") {
                 playerRotation = 180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
@@ -182,7 +188,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySize);
     }
 
-    void SetNormalState(){
+    public void SetNormalState(){
         _isFrog = false;
         SetNormalModel();
         playerVel = playerVelConstant; 
@@ -207,6 +213,6 @@ public class PlayerController : MonoBehaviour
 
     public void Die(){
         _isDeath=true;
-        Debug.Log("Death");
+        // Debug.Log("Death");
     }
 }

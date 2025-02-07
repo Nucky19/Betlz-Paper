@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         }
         Gravity();
         if(!IsGrounded()) Checkcorner();
+        if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
     }
 
@@ -180,21 +181,26 @@ public class PlayerController : MonoBehaviour
         characterController.Move((slideDirection*_slideSpeed+Vector3.down)*Time.deltaTime);
     }
 
-    // void CheckRoof(){
+    void CheckRoof() {
+        RaycastHit hit;
+        if (Physics.Raycast(_sensorPosition.position, Vector3.up, out hit, _rayUpSize, _groundLayer) && !hit.collider.CompareTag("Passable"))  ApplyCeilingHit();
+    }
 
-    // }
+    void ApplyCeilingHit() {
+        if (_playerGravity.y > 0)   _playerGravity.y = -_slideSpeed * 2;
+    }
 
     void CheckPassablePlatform(){
-    RaycastHit hit;
-    bool platformDetected = false;
+        RaycastHit hit;
+        bool platformDetected = false;
 
-    if (Physics.Raycast(_sensorPosition.position, Vector3.down, out hit, _rayDownSize, _groundLayer)){
-        if (hit.collider.CompareTag("Passable")) {
-            SetPlatformTrigger(hit.collider, false);
-            platformDetected = true;
-        }
-    }   
-    
+        if (Physics.Raycast(_sensorPosition.position, Vector3.down, out hit, _rayDownSize, _groundLayer)){
+            if (hit.collider.CompareTag("Passable")) {
+                SetPlatformTrigger(hit.collider, false);
+                platformDetected = true;
+            }
+        }   
+        
         if (!platformDetected) SetAllPassablePlatformsToTrigger();
     }
 

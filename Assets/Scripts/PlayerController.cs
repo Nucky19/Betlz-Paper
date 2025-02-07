@@ -48,7 +48,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]  float _groundSensorY = 0.5f;
     [SerializeField]  float _groundSensorZ = 0.61f;
     [SerializeField] private float _slideSpeed = 1f;
-    [SerializeField] private float _raySize = 1f;
+    [SerializeField] private float _raySideSize = 1f;
+    [SerializeField] private float _rayUpSize = 3.2f;
+    [SerializeField] private float _rayDownSize = 0.7f;
 
     //Gravity
     [SerializeField] private float  _gravity = -37f;
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour
         }
         Gravity();
         if(!IsGrounded()) Checkcorner();
+        CheckPassablePlatform();
     }
 
     void PlayerMovement() {
@@ -168,13 +171,43 @@ public class PlayerController : MonoBehaviour
 
     void Checkcorner(){
         RaycastHit hit;
-        if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySize, _groundLayer)){
+        if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySideSize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySideSize, _groundLayer)){
             SlideCorner(hit.normal);
         }
     }
 
     void SlideCorner(Vector3 slideDirection){
         characterController.Move((slideDirection*_slideSpeed+Vector3.down)*Time.deltaTime);
+    }
+
+    // void CheckRoof(){
+
+    // }
+
+    void CheckPassablePlatform(){
+    RaycastHit hit;
+    bool platformDetected = false;
+
+    if (Physics.Raycast(_sensorPosition.position, Vector3.down, out hit, _rayDownSize, _groundLayer)){
+        if (hit.collider.CompareTag("Passable")) {
+            SetPlatformTrigger(hit.collider, false);
+            platformDetected = true;
+        }
+    }   
+    
+        if (!platformDetected) SetAllPassablePlatformsToTrigger();
+    }
+
+    void SetPlatformTrigger(Collider platformCollider, bool isTrigger){
+        platformCollider.isTrigger = isTrigger;
+    }
+
+    void SetAllPassablePlatformsToTrigger(){
+        GameObject[] passablePlatforms = GameObject.FindGameObjectsWithTag("Passable");
+        foreach (GameObject platform in passablePlatforms){
+            Collider collider = platform.GetComponent<Collider>();
+            if (collider != null) collider.isTrigger = true;
+        }
     }
 
     void OnDrawGizmos() {
@@ -184,8 +217,12 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(_sensorPosition.position, halfExtents * 2); 
     
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(_sensorPosition.position, transform.forward*_raySize);
-        Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySize);
+        Gizmos.DrawRay(_sensorPosition.position, transform.forward*_raySideSize);
+        Gizmos.DrawRay(_sensorPosition.position, -transform.forward*_raySideSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(_sensorPosition.position, Vector3.up*_rayUpSize);
+        Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
 
     public void SetNormalState(){

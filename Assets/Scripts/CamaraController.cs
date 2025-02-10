@@ -5,34 +5,57 @@ using Cinemachine;
 using Unity.VisualScripting;
 public class CamaraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineVirtualCamera[] cameras;
 
-   /* void DeactivateCameraByName(string cam1)
-{
-    GameObject cameraObject = GameObject.Find("Virtual Camera_Pantalla 1"); // Busca el objeto por nombre
-    if (cameraObject != null)
+ private int currentCameraIndex = 0; // Índice de la cámara actual
+
+    private void Start()
     {
-        CinemachineVirtualCamera virtualCamera = cameraObject.GetComponent<CinemachineVirtualCamera>();
-        if (virtualCamera != null)
+        // Asegúrate de que la primera cámara sea la activa al inicio
+        SetCameraPriority(currentCameraIndex);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Asegúrate de que el objeto que entra en el collider es tu personaje
+        if (other.CompareTag("Player"))
         {
-            virtualCamera.enabled = false; // Desactiva la cámara virtual
-            Debug.Log($"Cámara {cam1} desactivada.");
+            // Determina la dirección de entrada
+            Vector3 direction = other.transform.position - transform.position;
+
+            if (direction.x < 0) // Entró por la izquierda
+            {
+                SwitchToNextCamera();
+            }
+            else if (direction.x > 0) // Entró por la derecha
+            {
+                SwitchToPreviousCamera();
+            }
         }
     }
-}*/
 
+    private void SwitchToNextCamera()
+    {
+        // Cambia a la siguiente cámara
+        currentCameraIndex = (currentCameraIndex + 1) % cameras.Length; // Asegúrate de que el índice no exceda el tamaño del arreglo
+        SetCameraPriority(currentCameraIndex);
+    }
 
-// void OnTriggerEnter ( Collider collider)
-// {
+    private void SwitchToPreviousCamera()
+    {
+        // Cambia a la cámara anterior
+        currentCameraIndex = (currentCameraIndex - 1 + cameras.Length) % cameras.Length; // Asegúrate de que el índice no sea negativo
+        SetCameraPriority(currentCameraIndex);
+    }
 
-    
-//         // Verifica que el objeto que entra es el jugador
-//         if (CompareTag("Player"))
-//         {
-//             virtualCamera.Priority = 0; 
-//         }
-
-// }
+    private void SetCameraPriority(int index)
+    {
+        // Establece la prioridad de las cámaras
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            cameras[i].Priority = (i == index) ? 1 : 0; // La cámara activa tiene prioridad 1, las demás 0
+        }
+    }
 
 
 }

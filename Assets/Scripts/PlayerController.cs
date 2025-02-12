@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerVelDoubleJump = 3.5f;
     private float _bufferTime = 0.25f;
     private float _bufferTimer;
-    [SerializeField] private bool _doubleJump =false;
+    [SerializeField] public bool _doubleJump =true;
     [SerializeField] private bool _inAir =false;
 
     //GroundSensor

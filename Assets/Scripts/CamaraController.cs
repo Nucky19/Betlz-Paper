@@ -20,8 +20,8 @@ public class CamaraController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnPlayerTrigger(1);
-
+        // OnPlayerTrigger(1);
+        Debug.Log(currentCameraIndex);
         // Asegúrate de que el objeto que entra en el collider es tu personaje
         if (other.CompareTag("Player"))
         {

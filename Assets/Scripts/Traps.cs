@@ -16,7 +16,7 @@ public class Traps : MonoBehaviour
         if(collider.gameObject.CompareTag("PlayerHitBox")){ //TODO No detecta el tag de Player
             Debug.Log("Player Contact");
             // playerController.Die();
-            PlayerController.Instance.Die();
+            // PlayerController.Instance.Die();
         }
     }
 }

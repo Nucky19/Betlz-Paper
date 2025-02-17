@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static event Action<int> OnScreen;
+    [SerializeField] int currentScreen;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Start(){
+        OnScreen(1);
     }
+    
 }

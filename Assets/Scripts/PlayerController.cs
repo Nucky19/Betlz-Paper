@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     
     public Inputs input;
+    public PlayerStates state;
     private CharacterController characterController;
 
     //Movement
-    [SerializeField] private float playerVelConstant = 3f;
-    [SerializeField] private float playerVel = 3f;
+    [SerializeField] public float playerVelConstant = 3f;
+    [SerializeField] public float playerVel = 3f;
     // private float inputHorizontal;
     private float playerRotation;
     private string playerDirection = "right";
@@ -21,15 +22,17 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
 
     //Models
-    [SerializeField] private GameObject normalModel;
-    [SerializeField] private GameObject frogModel;
+    // [SerializeField] private GameObject normalModel;
+    // [SerializeField] private GameObject frogModel;
 
     //States
+    public static event Action<bool> OnFrog;
+    
+
     [SerializeField] public bool _isFrog =false;
-    [SerializeField] private float _FrogVel=2f;
+    [SerializeField] public float _FrogVel=2f;
     [SerializeField] private float _FrogJumpForce=15f;
     [SerializeField] private bool _frogJumpComplete =false;
-    [SerializeField] private bool _isDeath =false;
 
     //Jump
     public static event Action<bool> OnPlayerDoubleJump;
@@ -72,9 +75,9 @@ public class PlayerController : MonoBehaviour
         else   Destroy(gameObject);
 
         input = GetComponent<Inputs>();
+        state=GetComponent<PlayerStates>();
 
         characterController = GetComponent<CharacterController>();
-        SetNormalModel();
     }
 
     void Update(){
@@ -89,8 +92,8 @@ public class PlayerController : MonoBehaviour
         }
         InAir(_inAir);
         if(input.firstTransformation && IsGrounded() && !_frogJumpComplete){
-            if (!_isFrog) FrogTransformation();
-            else if(_isFrog) SetNormalState();
+            if (!_isFrog) state.FrogTransformation();
+            else if(_isFrog) state.SetNormalState();
         }
         Gravity();
         if(!IsGrounded()) Checkcorner();
@@ -135,7 +138,7 @@ public class PlayerController : MonoBehaviour
         
             if (_frogJumpComplete){
                 _frogJumpComplete = false; 
-                SetNormalState(); 
+                state.SetNormalState(); 
             }
             _doubleJump=true;
             OnPlayerDoubleJump(true);
@@ -234,31 +237,32 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
 
-    public void SetNormalState(){
-        _isFrog = false;
-        SetNormalModel();
-        playerVel = playerVelConstant; 
-    }
+    // public void SetNormalState(){
+    //     _isFrog = false;
+    //     SetNormalModel();
+    //     playerVel = playerVelConstant; 
+    // }
 
-    void FrogTransformation(){
-        _isFrog=true;
-        SetFrogModel();
-        playerVel=_FrogVel;
-        Debug.Log("IsFrog");
-    }
+    // void FrogTransformation(){
+    //     _isFrog=true;
+    //     SetFrogModel();
+    //     playerVel=_FrogVel;
+    //     Debug.Log("IsFrog");
+    // }
 
-    private void SetNormalModel(){
-        normalModel.SetActive(true);
-        frogModel.SetActive(false);
-    }
+    // private void SetNormalModel(){
+    //     normalModel.SetActive(true);
+    //     frogModel.SetActive(false);
+    // }
 
-    private void SetFrogModel(){
-        normalModel.SetActive(false);
-        frogModel.SetActive(true);
-    }
+    // private void SetFrogModel(){
+    //     normalModel.SetActive(false);
+    //     frogModel.SetActive(true);
+    // }
 
-    public void Die(){
-        _isDeath=true;
-        // Debug.Log("Death");
-    }
+    // public void Die(){
+    //     _isDeath=true;
+    //     OnDeath(true);
+    //     // Debug.Log("Death");
+    // }
 }

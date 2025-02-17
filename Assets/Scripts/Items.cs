@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Items : MonoBehaviour
 {
-   private PlayerController player;
+    private PlayerController player;
+    [SerializeField] bool doubleJumpAvaiable;
 
-   void OnEnable()
-   {
+
+   void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
    }
 
-   void OnDisable()
-   {
+   void OnDisable(){
         PlayerController.OnPlayerDoubleJump -= DoubleJump;
    }
 
@@ -35,8 +35,10 @@ public class Items : MonoBehaviour
             case "JumpReset":
                 if (!doubleJumpAvaiable) {
                     player._doubleJump = true;
+                    // Debug.Log("Objeto Adquirido");
+                    Destroy(gameObject);
+                    //TODO Inhabilitarlo 2 segundos en vez de destruirlo.
                 }
-                Destroy(gameObject); //TODO Inhabilitarlo 2 segundos en vez de destruirlo.
                 break;
             default:
                 Destroy(gameObject);
@@ -50,11 +52,10 @@ public class Items : MonoBehaviour
 private int pantalla;
 
 void Test(int numero)
-    {
-        pantalla = numero;
-    }
+{
+    pantalla = numero;
+}
 
-bool doubleJumpAvaiable;
 void DoubleJump(bool doublejump){
     doubleJumpAvaiable = doublejump;
 }

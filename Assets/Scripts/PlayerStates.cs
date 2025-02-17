@@ -14,11 +14,11 @@ public class PlayerStates : MonoBehaviour
     private int ActualScreen;
 
     void OnEnable(){
-        PlayerController.OnPlayerDoubleJump += OnScreen;
+        GameManager.OnScreen += InScreen;
     }
 
     void OnDisable(){
-        PlayerController.OnPlayerDoubleJump -= OnScreen;
+        GameManager.OnScreen -= InScreen;
     }
     void Awake(){
         player = GetComponent<PlayerController>();
@@ -47,20 +47,13 @@ public class PlayerStates : MonoBehaviour
         normalModel.SetActive(false);
         frogModel.SetActive(true);
     }
-void OnEnable(){
-        PlayerController.OnPlayerDoubleJump += OnScreen;
-    }
-
-    void OnDisable(){
-        PlayerController.OnPlayerDoubleJump -= OnScreen;
-    }
     public void Die(){
         _isDeath=true;
         OnDeath(true);
         // Debug.Log("Death");
     }
 
-    void OnScreen(int screen){
+    void InScreen(int screen){
         ActualScreen=screen;
     }
 }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Unity.VisualScripting;
+using System;
 public class CamaraController : MonoBehaviour
 {
+    public static event Action<int>  OnPlayerTrigger;
+
     [SerializeField] private CinemachineVirtualCamera[] cameras;
 
  private int currentCameraIndex = 0; // Índice de la cámara actual
@@ -12,11 +15,13 @@ public class CamaraController : MonoBehaviour
     private void Start()
     {
         // Asegúrate de que la primera cámara sea la activa al inicio
-        SetCameraPriority(currentCameraIndex);
+        //SetCameraPriority(currentCameraIndex);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        OnPlayerTrigger(1);
+
         // Asegúrate de que el objeto que entra en el collider es tu personaje
         if (other.CompareTag("Player"))
         {

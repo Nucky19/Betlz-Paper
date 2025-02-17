@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDeath =false;
 
     //Jump
+    public static event Action<bool> OnPlayerDoubleJump;
     [SerializeField] private float _jumpForce = 4f;
     [SerializeField] private float _playerVelJump = 3.2f;
     [SerializeField] private float _doubleJumpForce = 4.2f;
@@ -121,6 +122,7 @@ public class PlayerController : MonoBehaviour
     void InAir(bool inAir){
         if (inAir) { 
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+                OnPlayerDoubleJump(false);
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
             }
@@ -136,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 SetNormalState(); 
             }
             _doubleJump=true;
+            OnPlayerDoubleJump(true);
             if (!_isFrog && _doubleJump) playerVel=playerVelConstant;
             if(_bufferTimer>0) Jump(_jumpForce);
         }

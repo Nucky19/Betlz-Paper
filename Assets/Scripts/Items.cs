@@ -5,6 +5,17 @@ using UnityEngine;
 public class Items : MonoBehaviour
 {
    private PlayerController player;
+
+   void OnEnable()
+   {
+        PlayerController.OnPlayerDoubleJump += DoubleJump;
+   }
+
+   void OnDisable()
+   {
+        PlayerController.OnPlayerDoubleJump -= DoubleJump;
+   }
+
     void Awake() {
         Collider[] colliders = GetComponents<Collider>();
         if (colliders.Length > 0) {
@@ -22,15 +33,32 @@ public class Items : MonoBehaviour
     if (collider.gameObject.CompareTag("Player")) {
         switch (gameObject.tag) {
             case "JumpReset":
-                if (!player._doubleJump) {
+                if (!doubleJumpAvaiable) {
                     player._doubleJump = true;
                 }
-                Destroy(gameObject);
+                Destroy(gameObject); //TODO Inhabilitarlo 2 segundos en vez de destruirlo.
                 break;
             default:
                 Destroy(gameObject);
                 break;
         }
     }
+
+    
 }
+
+private int pantalla;
+
+void Test(int numero)
+    {
+        pantalla = numero;
+    }
+
+bool doubleJumpAvaiable;
+void DoubleJump(bool doublejump){
+    doubleJumpAvaiable = doublejump;
+}
+
+
+
 }

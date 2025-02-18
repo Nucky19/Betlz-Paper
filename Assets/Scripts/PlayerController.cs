@@ -88,6 +88,10 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
 
+
+
+
+       
         PlayerMovement();
         if (input.jump && IsGrounded()) {
             if (_isFrog && !_frogJumpComplete){
@@ -134,6 +138,7 @@ public class PlayerController : MonoBehaviour
     void InAir(bool inAir){
         if (inAir) { 
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+                _animator.SetBool("IsDoubleJumping", true);
                 OnPlayerDoubleJump(false);
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
@@ -144,6 +149,7 @@ public class PlayerController : MonoBehaviour
 
         } else if (_playerGravity.y < 0) {
             _inAir=false;
+            _animator.SetBool("IsDoubleJumping",false);
         
             if (_frogJumpComplete){
                 _frogJumpComplete = false; 
@@ -162,6 +168,7 @@ public class PlayerController : MonoBehaviour
         _inAir = true;
     }   
     else if(IsGrounded() && _playerGravity.y <0 ){
+        _animator.SetBool("IsJumping", false);
         _playerGravity.y = -1;
         _inAir = false;
     }
@@ -170,6 +177,7 @@ public class PlayerController : MonoBehaviour
    }
 
     void Jump(float jumpForce){
+        _animator.SetBool("IsJumping", true);
         if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);

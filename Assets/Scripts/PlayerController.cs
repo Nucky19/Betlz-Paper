@@ -61,6 +61,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 _playerGravity;
 
 
+    //Animations
+    private Animator _animator;
+
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //TODO Hacer array que almacene las dos transformaciones disponibles en ese momento, 
     //para luego en los debidos condicionales comprobar si esta transformado o no a partir de esa arary
@@ -78,6 +82,8 @@ public class PlayerController : MonoBehaviour
         state=GetComponent<PlayerStates>();
 
         characterController = GetComponent<CharacterController>();
+
+        _animator = GetComponent<Animator>();
     }
 
     void Update(){
@@ -105,13 +111,16 @@ public class PlayerController : MonoBehaviour
     
         // input.inputHorizontal = Input.GetAxisRaw("Horizontal");
         movement.z = input.inputHorizontal * playerVel;
+        
         if (input.inputHorizontal > 0){
+            _animator.SetBool("IsRunning", true);
             if (playerDirection == "left") {
                 playerRotation = -180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "right";
             }
         } else if (input.inputHorizontal < 0) {
+            _animator.SetBool("IsRunning", true);
             if (playerDirection == "right") {
                 playerRotation = 180f;
                 this.transform.Rotate(Vector3.up, playerRotation);

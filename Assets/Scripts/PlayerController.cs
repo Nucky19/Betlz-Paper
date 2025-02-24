@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
 
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     void Update(){

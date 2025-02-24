@@ -89,7 +89,10 @@ public class PlayerController : MonoBehaviour
     void Update(){
 
 
-
+    //    // if(input.inputHorizontal == 0 && IsGrounded())
+    //     {
+    //         _animator.SetBool("IsRunning", false);
+    //     } !!!!!Preguntar Víctor!!!!
 
        
         PlayerMovement();
@@ -169,6 +172,7 @@ public class PlayerController : MonoBehaviour
     }   
     else if(IsGrounded() && _playerGravity.y <0 ){
         _animator.SetBool("IsJumping", false);
+        _animator.SetBool("IsGrounded", true);
         _playerGravity.y = -1;
         _inAir = false;
     }

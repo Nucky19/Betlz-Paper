@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float  _gravity = -37f;
     [SerializeField] private Vector3 _playerGravity;
 
+    [SerializeField] private float _coyoteTime = 0.15f; 
+    private float _coyoteTimer;
+
 
     //Animations
     private Animator _animator;
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
             else if(_isFrog) state.SetNormalState();
         }
         Gravity();
-        Checkcorner();
+        if(!IsGrounded()) Checkcorner();
         if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
     }
@@ -187,6 +190,20 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    // bool IsGrounded() {
+    //     bool grounded = Physics.CheckBox(
+    //         _sensorPosition.position, 
+    //         new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ),     
+    //         Quaternion.identity,      
+    //         _groundLayer.value        
+    //     );
+
+    //     if (grounded) _coyoteTimer = _coyoteTime; 
+    //     else _coyoteTimer -= Time.deltaTime; 
+
+    //     return _coyoteTimer > 0; 
+    // }
+
     void Checkcorner(){
         RaycastHit hit;
         if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySideSize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySideSize, _groundLayer)){
@@ -247,33 +264,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, Vector3.up*_rayUpSize);
         Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
-
-    // public void SetNormalState(){
-    //     _isFrog = false;
-    //     SetNormalModel();
-    //     playerVel = playerVelConstant; 
-    // }
-
-    // void FrogTransformation(){
-    //     _isFrog=true;
-    //     SetFrogModel();
-    //     playerVel=_FrogVel;
-    //     Debug.Log("IsFrog");
-    // }
-
-    // private void SetNormalModel(){
-    //     normalModel.SetActive(true);
-    //     frogModel.SetActive(false);
-    // }
-
-    // private void SetFrogModel(){
-    //     normalModel.SetActive(false);
-    //     frogModel.SetActive(true);
-    // }
-
-    // public void Die(){
-    //     _isDeath=true;
-    //     OnDeath(true);
-    //     // Debug.Log("Death");
-    // }
 }

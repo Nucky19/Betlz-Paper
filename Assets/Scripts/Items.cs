@@ -31,8 +31,6 @@ public class Items : MonoBehaviour
    
 void OnTriggerEnter(Collider collider) {
     if (collider.gameObject.CompareTag("Player")) {
-        Debug.Log("El jugador tocó el objeto: " + gameObject.name);
-
         switch (gameObject.tag) {
             case "JumpReset":
                 if (!doubleJumpAvaiable) {
@@ -48,7 +46,6 @@ void OnTriggerEnter(Collider collider) {
 }
 
 IEnumerator DisableTemporarily(GameObject obj, float time) {
-    Debug.Log("Desactivando: " + obj.name);
 
     MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
     SkinnedMeshRenderer skinnedRenderer = obj.GetComponent<SkinnedMeshRenderer>();
@@ -71,7 +68,6 @@ IEnumerator DisableTemporarily(GameObject obj, float time) {
     if (skinnedRenderer) skinnedRenderer.enabled = true;
     if (col) col.enabled = true;
 
-    Debug.Log("Reactivado: " + obj.name);
 }
 
 void DoubleJump(bool doublejump){

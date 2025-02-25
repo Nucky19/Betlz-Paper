@@ -23,21 +23,21 @@ public class Items : MonoBehaviour
                 col.isTrigger = true;
             }
         } else {
-            Debug.LogWarning("No se encontraron Colliders en " + gameObject.name);
+            Debug.LogWarning("No Colliders en " + gameObject.name);
         }
 
         player = FindObjectOfType<PlayerController>();
     }
    
-   void OnTriggerEnter(Collider collider) {
+void OnTriggerEnter(Collider collider) {
     if (collider.gameObject.CompareTag("Player")) {
+        Debug.Log("El jugador tocó el objeto: " + gameObject.name);
+
         switch (gameObject.tag) {
             case "JumpReset":
                 if (!doubleJumpAvaiable) {
                     player._doubleJump = true;
-                    // Debug.Log("Objeto Adquirido");
-                    Destroy(gameObject);
-                    //TODO Inhabilitarlo 2 segundos en vez de destruirlo.
+                    StartCoroutine(DisableTemporarily(gameObject, 2f));
                 }
                 break;
             default:
@@ -45,15 +45,33 @@ public class Items : MonoBehaviour
                 break;
         }
     }
-
-    
 }
 
-private int pantalla;
+IEnumerator DisableTemporarily(GameObject obj, float time) {
+    Debug.Log("Desactivando: " + obj.name);
 
-void Test(int numero)
-{
-    pantalla = numero;
+    MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+    SkinnedMeshRenderer skinnedRenderer = obj.GetComponent<SkinnedMeshRenderer>();
+
+    if (meshRenderer == null) meshRenderer = obj.GetComponentInChildren<MeshRenderer>();
+    if (skinnedRenderer == null) skinnedRenderer = obj.GetComponentInChildren<SkinnedMeshRenderer>();
+    
+    Collider col = obj.GetComponent<Collider>();
+    if (col == null) col = obj.GetComponentInChildren<Collider>();
+    
+
+    if (meshRenderer) meshRenderer.enabled = false;
+    if (skinnedRenderer) skinnedRenderer.enabled = false;
+    if (col) col.enabled = false;
+
+    yield return new WaitForSeconds(time); 
+
+  
+    if (meshRenderer) meshRenderer.enabled = true;
+    if (skinnedRenderer) skinnedRenderer.enabled = true;
+    if (col) col.enabled = true;
+
+    Debug.Log("Reactivado: " + obj.name);
 }
 
 void DoubleJump(bool doublejump){

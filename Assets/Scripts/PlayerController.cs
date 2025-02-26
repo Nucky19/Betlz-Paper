@@ -63,9 +63,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _coyoteTime = 0.15f; 
     private float _coyoteTimer;
 
-
     //Animations
     private Animator _animator;
+
+    void OnEnable(){
+      
+    }
 
     void Start(){
         Application.targetFrameRate = 60; //Capar a 60fps el juego;

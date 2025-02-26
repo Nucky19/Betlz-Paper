@@ -7,19 +7,29 @@ using System;
 public class PlayerStates : MonoBehaviour
 {
     public PlayerController player;
-    public static event Action<bool> OnDeath;
+    public static event Action<int, bool> OnDeath;
     [SerializeField] private bool _isDeath =false;
     [SerializeField] public GameObject normalModel;
     [SerializeField] public GameObject frogModel;
     private int ActualScreen;
 
+    // void OnEnable(){
+    //     GameManager.OnScreen += InScreen;
+    // }
+
+    // void OnDisable(){
+    //     GameManager.OnScreen -= InScreen;
+    // }
+
     void OnEnable(){
-        GameManager.OnScreen += InScreen;
+        CameraController.OnScreen += InScreen;
+        Traps.OnTrapContact += Die;
+    }
+    void OnDisable(){
+        CameraController.OnScreen += InScreen;
+        Traps.OnTrapContact += Die;
     }
 
-    void OnDisable(){
-        GameManager.OnScreen -= InScreen;
-    }
     void Awake(){
         player = GetComponent<PlayerController>();
         SetNormalModel();
@@ -49,8 +59,8 @@ public class PlayerStates : MonoBehaviour
     }
     public void Die(){
         _isDeath=true;
-        OnDeath(true);
-        // Debug.Log("Death");
+        // OnDeath(true);
+        OnDeath?.Invoke(ActualScreen, true);
     }
 
     void InScreen(int screen){

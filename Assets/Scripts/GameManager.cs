@@ -5,11 +5,31 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static event Action<int> OnScreen;
     [SerializeField] int currentScreen;
+    [SerializeField] Transform[] respawns;
+    GameObject player;
 
-    void Start(){
-        OnScreen(1);
+    void Awake(){
+        player=GameObject.FindWithTag("Player");
     }
-    
+
+    void OnEnable(){
+        CameraController.OnScreen += HandleCameraChange;
+        PlayerStates.OnDeath += Respawn;
+    }
+
+    void OnDisable(){
+        CameraController.OnScreen -= HandleCameraChange;
+        PlayerStates.OnDeath -= Respawn;
+    }
+
+    void HandleCameraChange(int cameraNumber)
+    {
+        Debug.Log(cameraNumber);
+        currentScreen=cameraNumber;
+    }
+
+    void Respawn(int Screen, bool death){   
+        player.transform.position=respawns[Screen].position;
+    }
 }

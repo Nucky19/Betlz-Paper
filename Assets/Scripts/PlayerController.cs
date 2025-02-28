@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
         movement.z = input.inputHorizontal * playerVel;
         
         if (input.inputHorizontal > 0){
+            if(_isFrog){ _animator.SetBool("FrogIsWalking", true);}
             _animator.SetBool("IsRunning", true);
             if (playerDirection == "left") {
                 playerRotation = -180f;
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour
                 playerDirection = "right";
             }
         } else if (input.inputHorizontal < 0) {
+             if(_isFrog){ _animator.SetBool("FrogIsWalking", true);}
             _animator.SetBool("IsRunning", true);
             if (playerDirection == "right") {
                 playerRotation = 180f;
@@ -145,6 +147,7 @@ public class PlayerController : MonoBehaviour
 
         } else if (_playerGravity.y < 0) {
             // _animator.SetBool("IsDoubleJumping",false);
+            _animator.SetBool("FrogFreeFall", true);
             _animator.SetBool("FreeFall",true);
             _inAir=false;
         
@@ -177,7 +180,7 @@ public class PlayerController : MonoBehaviour
    }
 
     void Jump(float jumpForce){
-        if(_doubleJump)_animator.SetBool("IsJumping", true);
+        if(_doubleJump){_animator.SetBool("IsJumping", true);}
         if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);

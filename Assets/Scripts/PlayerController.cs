@@ -48,13 +48,13 @@ public class PlayerController : MonoBehaviour
     //GroundSensor
     [SerializeField] Transform _sensorPosition;
     [SerializeField]  LayerMask _groundLayer;
-    [SerializeField]  float _groundSensorX = 0.65f;
-    [SerializeField]  float _groundSensorY = 0.5f;
-    [SerializeField]  float _groundSensorZ = 0.61f;
+    [SerializeField]  public float _groundSensorX = 0.65f;
+    [SerializeField]  public float _groundSensorY = 0.5f;
+    [SerializeField]  public float _groundSensorZ = 0.61f;
     [SerializeField] private float _slideSpeed = 1f;
-    [SerializeField] private float _raySideSize = 1f;
-    [SerializeField] private float _rayUpSize = 3.2f;
-    [SerializeField] private float _rayDownSize = 0.7f;
+    [SerializeField] public float _raySideSize = 1f;
+    [SerializeField] public float _rayUpSize = 4.15f;
+    [SerializeField] public float _rayDownSize = 0.7f;
 
     //Gravity
     [SerializeField] private float  _gravity = -37f;
@@ -85,7 +85,9 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponentInChildren<Animator>();
     }
-
+    public void SetAnimator(Animator newAnimator){
+        if (newAnimator != null)_animator = newAnimator;
+    }
     void Update(){
         PlayerMovement();
         if (input.jump && IsGrounded()) {

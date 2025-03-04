@@ -3,7 +3,92 @@ guid: 65d9122cd5a658a47bbc777de7e3a16c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Caja_1
+    second: {fileID: 2100000, guid: 0151d6b300752ad458dfd41a6745b5fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cardboard
+    second: {fileID: 2100000, guid: 10232408000ef01469fd38db338591c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cardboard.003
+    second: {fileID: 2100000, guid: a32335179dd06814ab1240233032ddf5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carton1
+    second: {fileID: 2100000, guid: fb782e95f5847bf4da1c695f5a9d8a26, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cartulina_Verde.001
+    second: {fileID: 2100000, guid: f876464d338647d43b227213ee278a86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crumpled Paper
+    second: {fileID: 2100000, guid: 5d034d95eabef8048b63b5f1ff59111f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crumpled Paper.001
+    second: {fileID: 2100000, guid: 4071fc527f4aca340aada26a485a1b0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hojas
+    second: {fileID: 2100000, guid: 0872e18a598ecd747986d4cd8ae567d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hojas.001
+    second: {fileID: 2100000, guid: 4677c4dae6dfc874bb68713e938256ad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hojas.002
+    second: {fileID: 2100000, guid: 304e18c819793654baf8ab9bbcdfac7f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior_Flor
+    second: {fileID: 2100000, guid: adbcaf54a2b94f544b2779675d0ab34f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leather Blue
+    second: {fileID: 2100000, guid: a8c5d21ae36dd3c4d8dc4ea953a2e4c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paper
+    second: {fileID: 2100000, guid: a121872b1d898bb4285c0044456788f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paper 18
+    second: {fileID: 2100000, guid: 8f2614a8ad7827548b51b4178174b650, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red Leather
+    second: {fileID: 2100000, guid: 3b31ef3a4383b7f4e911508cabdd4e0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Simple wood
+    second: {fileID: 2100000, guid: 498b18e7f5e3ba04dab86636499edf05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tape_1
+    second: {fileID: 2100000, guid: cced5a1e05a22384e85ece1c524fbb62, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,12 @@ guid: d3816cd5c1e65c04d8ec284779121ae3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Capy
+    second: {fileID: 2100000, guid: a76efdc9b7deefa469e7624504905747, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

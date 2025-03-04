@@ -8,18 +8,20 @@ TagManager:
   - Spyke
   - Passable
   - JumpReset
+  - MovingPlatform
+  - ReturnPlatform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
   - Trap
   - Dead Zone
   - Item
-  - 
+  - MovingPlatform
   - 
   - 
   - 

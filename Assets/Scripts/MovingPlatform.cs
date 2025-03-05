@@ -44,42 +44,38 @@ public class MovingPlatform : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-{
-    if (other.CompareTag("MovingPlatform")) 
     {
-        isSeparating = true; // Se separa al chocar con otra plataforma
-        movingForward = !movingForward; // 🔹 Invertimos la dirección de inmediato
-        moveSpeed = separationSpeed; // 🔹 Reducimos la velocidad temporalmente
+        if (other.CompareTag("MovingPlatform")) 
+        {
+            isSeparating = true; // Se separa al chocar con otra plataforma
+            movingForward = !movingForward; // 🔹 Invertimos la dirección de inmediato
+            moveSpeed = separationSpeed; // 🔹 Reducimos la velocidad temporalmente
 
-        Debug.Log(gameObject.name + " colisionó con otra plataforma. Cambiando dirección y reduciendo velocidad.");
+            Debug.Log(gameObject.name + " colisionó con otra plataforma. Cambiando dirección y reduciendo velocidad.");
+        }
+        else if (other.CompareTag("ReturnPlatform"))
+        {
+            isSeparating = false; // 🔹 Ya no estamos separándonos
+            moveSpeed = 20f; // 🔹 Restauramos velocidad normal
+
+            // ❌ Eliminamos el cambio de dirección aquí, dejamos que lo haga el evento
+            // movingForward = !movingForward; 
+
+            PlatformEventManager.Instance.TriggerPlatformReturn(); // 🔹 Disparamos el evento de sincronización
+
+            Debug.Log(gameObject.name + " tocó ReturnPlatform. Disparando evento.");
+        }
     }
-    else if (other.CompareTag("ReturnPlatform"))
-    {
-        isSeparating = false; // 🔹 Ya no estamos separándonos
-        moveSpeed = 20f; // 🔹 Restauramos velocidad normal
-
-        // ❌ Eliminamos el cambio de dirección aquí, dejamos que lo haga el evento
-        // movingForward = !movingForward; 
-
-        PlatformEventManager.Instance.TriggerPlatformReturn(); // 🔹 Disparamos el evento de sincronización
-
-        Debug.Log(gameObject.name + " tocó ReturnPlatform. Disparando evento.");
-    }
-}
-
-
-
-
 
     private void ChangeDirection()
-{
-    bool previousDirection = movingForward; // Guardamos la dirección anterior
-    movingForward = !movingForward;
-    moveSpeed = 20f; // 🔹 Restauramos la velocidad normal
+    {
+        bool previousDirection = movingForward; // Guardamos la dirección anterior
+        movingForward = !movingForward;
+        moveSpeed = 20f; // 🔹 Restauramos la velocidad normal
 
-    Debug.Log(gameObject.name + " CAMBIO DE DIRECCIÓN: de " + (previousDirection ? "adelante" : "atrás") + 
-              " a " + (movingForward ? "adelante" : "atrás"));
-}
+        Debug.Log(gameObject.name + " CAMBIO DE DIRECCIÓN: de " + (previousDirection ? "adelante" : "atrás") + 
+                " a " + (movingForward ? "adelante" : "atrás"));
+    }
 
 
     private void OnDestroy()

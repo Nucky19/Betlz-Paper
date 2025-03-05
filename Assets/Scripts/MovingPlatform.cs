@@ -1,100 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
     [Header("Movimiento")]
-    // [SerializeField] private float speed; // Velocidad de movimiento hacia el choque
-    [SerializeField] private float moveSpeed = 20f; // Velocidad de movimiento hacia el choque
-    [SerializeField] private float separationSpeed = 3f; // Velocidad al separarse después de chocar
-    [SerializeField] private float maxSeparation = 3f; // Distancia máxima de separación antes de volver a moverse al choque
-    [SerializeField] private bool movingForward = true; // Si comienza moviéndose hacia adelante en Z
+    [SerializeField] private float moveSpeed = 20f;
+    [SerializeField] private float separationSpeed = 3f;
+    [SerializeField] private bool movingForward = true; // Dirección actual
 
-    [Header("Detección de colisión")]
-    [SerializeField] private string platformTag = "MovingPlatform"; // Tag de otras plataformas
-    [SerializeField] private string playerTag = "Player"; // Tag del jugador
-    [SerializeField] private string returnTag = "ReturnPlatform"; // Tag del trigger de retorno
-    [SerializeField] private GameObject collisionDetector; // Empty con BoxCollider para detectar colisiones
-
+    private bool isSeparating = false; // Indica si la plataforma está separándose después del choque
     private Vector3 startPos;
-    private bool isSeparating = false; // Indica si está separándose después de chocar
-    private Rigidbody rb;
-
-    private void Start(){
+    
+    private void Start()
+    {
         startPos = transform.position;
-        rb = GetComponent<Rigidbody>();
 
-        if (rb == null){
-            rb = gameObject.AddComponent<Rigidbody>();
-            rb.isKinematic = true;
-            rb.useGravity = false;
+        // Asegurar que solo nos suscribimos una vez
+        if (PlatformEventManager.Instance != null)
+        {
+            PlatformEventManager.Instance.OnPlatformReturn -= ChangeDirection; // 🔹 Primero nos desuscribimos por si acaso
+            PlatformEventManager.Instance.OnPlatformReturn += ChangeDirection; // 🔹 Luego nos suscribimos
+            Debug.Log(gameObject.name + " suscrito al evento OnPlatformReturn.");
+        }
+        else
+        {
+            Debug.LogError("PlatformEventManager no encontrado en la escena.");
         }
     }
 
-    private void Update(){
+
+    private void Update()
+    {
         MovePlatform();
     }
 
-    void MovePlatform() {
+    void MovePlatform()
+    {
         float speed = isSeparating ? separationSpeed : moveSpeed;
         float direction = movingForward ? 1 : -1;
 
         transform.position += Vector3.forward * direction * speed * Time.deltaTime;
 
-        // Si se está separando, verifica si alcanzó la distancia máxima
-        if (isSeparating && Vector3.Distance(transform.position, startPos) >= maxSeparation){
-            isSeparating = false;
-            movingForward = !movingForward; // Cambia la dirección para moverse otra vez al choque
-        }
+        // Debug.Log(gameObject.name + " moviéndose en dirección: " + (movingForward ? "adelante" : "atrás"));
     }
 
-    private void OnTriggerEnter(Collider other){
-    // Si detecta que colisiona con la plataforma
-        if (other.CompareTag(platformTag)) {
-            isSeparating = true; // Empieza a separarse
-            moveSpeed=5f;
-
-        }
-
-        // Verificamos si el objeto es el jugador
-        if (other.CompareTag(playerTag)){
-            // Verifica si el jugador está atrapado entre las plataformas
-            Collider[] colliders = Physics.OverlapBox(collisionDetector.transform.position, collisionDetector.transform.localScale / 2);
-            foreach (Collider hit in colliders){
-                if (hit.CompareTag(platformTag)){
-                    Debug.Log("Muerto");
-                }
-            }
-        }
-        
-        // Si llega al trigger de retorno
-        else if (other.CompareTag(returnTag)){
-            startPos = transform.position; // Resetea la posición inicial
-            movingForward = !movingForward; // Invierte el movimiento
-            moveSpeed=20f;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("MovingPlatform")) 
     {
-        if (collision.gameObject.CompareTag(playerTag)){
-            collision.transform.parent = this.transform; // Hace que el jugador se mueva con la plataforma
-        }
-    }
+        isSeparating = true; // Se separa al chocar con otra plataforma
+        movingForward = !movingForward; // 🔹 Invertimos la dirección de inmediato
+        moveSpeed = separationSpeed; // 🔹 Reducimos la velocidad temporalmente
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag(playerTag)){
-            collision.transform.parent = null; // Libera al jugador cuando se baja de la plataforma
-        }
+        Debug.Log(gameObject.name + " colisionó con otra plataforma. Cambiando dirección y reduciendo velocidad.");
     }
-
-    private void OnDrawGizmos()
+    else if (other.CompareTag("ReturnPlatform"))
     {
-        if (collisionDetector != null){
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(collisionDetector.transform.position, collisionDetector.transform.localScale);
-        }
+        isSeparating = false; // 🔹 Ya no estamos separándonos
+        moveSpeed = 20f; // 🔹 Restauramos velocidad normal
+
+        // ❌ Eliminamos el cambio de dirección aquí, dejamos que lo haga el evento
+        // movingForward = !movingForward; 
+
+        PlatformEventManager.Instance.TriggerPlatformReturn(); // 🔹 Disparamos el evento de sincronización
+
+        Debug.Log(gameObject.name + " tocó ReturnPlatform. Disparando evento.");
+    }
+}
+
+
+
+
+
+    private void ChangeDirection()
+{
+    bool previousDirection = movingForward; // Guardamos la dirección anterior
+    movingForward = !movingForward;
+    moveSpeed = 20f; // 🔹 Restauramos la velocidad normal
+
+    Debug.Log(gameObject.name + " CAMBIO DE DIRECCIÓN: de " + (previousDirection ? "adelante" : "atrás") + 
+              " a " + (movingForward ? "adelante" : "atrás"));
+}
+
+
+    private void OnDestroy()
+    {
+        // Nos aseguramos de quitar la suscripción cuando el objeto sea destruido
+        if (PlatformEventManager.Instance != null)
+            PlatformEventManager.Instance.OnPlatformReturn -= ChangeDirection;
     }
 }

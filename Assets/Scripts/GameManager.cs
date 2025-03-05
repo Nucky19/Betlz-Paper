@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform[] respawns;
     GameObject player;
 
+    void Start()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     void Awake(){
         player=GameObject.FindWithTag("Player");
     }

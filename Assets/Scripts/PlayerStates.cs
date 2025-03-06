@@ -9,6 +9,7 @@ public class PlayerStates : MonoBehaviour
 
     public PlayerController player;
     public static event Action<int, bool> OnDeath;
+    public static event Action OnRespawn; // 🔹 Evento para que otros scripts sepan que el jugador ha reaparecido
     [SerializeField] private bool _isDeath =false;
     [SerializeField] public GameObject normalModel;
     [SerializeField] public GameObject frogModel;
@@ -16,12 +17,16 @@ public class PlayerStates : MonoBehaviour
     private int ActualScreen;
 
     void OnEnable(){
-        CameraController.OnScreen += InScreen;
+        ScreenTrigger.OnScreen += InScreen;
         Traps.OnTrapContact += Die;
+        // ScreenTrigger.OnEnterScreen += InScreen;
     }
+
     void OnDisable(){
-        CameraController.OnScreen += InScreen;
-        Traps.OnTrapContact += Die;
+        ScreenTrigger.OnScreen -= InScreen;
+        Traps.OnTrapContact -= Die;
+        // ScreenTrigger.OnEnterScreen -= InScreen;
+
     }
 
     void Awake(){
@@ -92,9 +97,18 @@ public class PlayerStates : MonoBehaviour
         normalModel.SetActive(false);
     }
     public void Die(){
-        _isDeath=true;
-        // OnDeath(true);
-        OnDeath?.Invoke(ActualScreen, true);
+        if (!_isDeath){
+            _isDeath = true;
+            Debug.Log("Jugador ha muerto. Activando respawn...");
+            OnDeath?.Invoke(ActualScreen, true); // 🔹 Disparamos el evento de muerte con la pantalla actual
+        }
+    }
+
+    public void Respawn(){
+        Debug.Log("Jugador reapareciendo...");
+        _isDeath = false; // 🔹 Reiniciamos el estado de muerte
+        SetNormalState(); // 🔹 Restauramos el estado normal del jugador
+        OnRespawn?.Invoke(); // 🔹 Disparamos el evento de respawn para que otros scripts lo sepan
     }
 
     void InScreen(int screen){

@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
 public class Traps : MonoBehaviour
 {
-    // public PlayerController playerController;
-    public static event Action OnTrapContact;  
+    public static event Action OnTrapContact;
+    private bool isTriggerActive = true;
 
-    
-    void Awake(){
-        // playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-    }
-    void Update(){
-        
-    }
-    void OnTriggerEnter(Collider collider){
-        // Debug.Log("Trigger Entered");
-        if(collider.gameObject.CompareTag("PlayerHitBox")){ 
-            Debug.Log("Player Contact");
-            OnTrapContact();
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("PlayerHitBox") && isTriggerActive)
+        {
+            isTriggerActive = false;  // Desactiva la trampa para evitar que se dispare nuevamente hasta que el jugador respawnee.
+            Debug.Log("Jugador tocó una trampa.");
+            OnTrapContact?.Invoke(); // 🔹 Llamamos al evento solo si hay suscriptores
         }
+    }
+    public void ResetTrap()
+    {
+        isTriggerActive = true;  // Reactivamos la trampa para que se pueda activar nuevamente
     }
 }

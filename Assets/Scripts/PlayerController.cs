@@ -258,6 +258,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ResetMovement()
+    {
+        movement = Vector3.zero; // 🔹 Detener el movimiento
+        _playerGravity = Vector3.zero; // 🔹 Resetear la gravedad
+    }
+
     void OnDrawGizmos() {
         Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 

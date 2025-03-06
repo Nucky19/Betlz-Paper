@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 public class CameraController : MonoBehaviour
 {
     public static event Action<int> OnPlayerTrigger;  
-    public static event Action<int> OnScreen;       
+    // public static event Action<int> OnScreen;       
 
     [SerializeField] private CinemachineVirtualCamera[] cameras; 
 
@@ -78,7 +78,7 @@ public class CameraController : MonoBehaviour
             if (match.Success){
                 int cameraNumber = int.Parse(match.Value);
                 Debug.Log("Cámara número: " + cameraNumber);
-                OnScreen?.Invoke(cameraNumber);  
+                // OnScreen?.Invoke(cameraNumber);  
             }
         }
     }

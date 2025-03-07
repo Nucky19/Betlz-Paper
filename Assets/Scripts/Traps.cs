@@ -12,11 +12,12 @@ public class Traps : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("PlayerHitBox") && isTriggerActive)
         {
-            isTriggerActive = false;  // Desactiva la trampa para evitar que se dispare nuevamente hasta que el jugador respawnee.
+            isTriggerActive = false;  // Desactiva la trampa temporalmente
             Debug.Log("Jugador tocó una trampa.");
             OnTrapContact?.Invoke(); // 🔹 Llamamos al evento solo si hay suscriptores
         }
     }
+
     public void ResetTrap()
     {
         isTriggerActive = true;  // Reactivamos la trampa para que se pueda activar nuevamente

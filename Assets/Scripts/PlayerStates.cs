@@ -96,19 +96,30 @@ public class PlayerStates : MonoBehaviour
         frogModel.SetActive(true);
         normalModel.SetActive(false);
     }
-    public void Die(){
-        if (!_isDeath){
+    public void Die()
+    {
+        if (!_isDeath)
+        {
             _isDeath = true;
-            Debug.Log("Jugador ha muerto. Activando respawn...");
+            Debug.Log("💀 Jugador ha muerto. Activando respawn...");
             OnDeath?.Invoke(ActualScreen, true); // 🔹 Disparamos el evento de muerte con la pantalla actual
+        }
+        else
+        {
+            Debug.LogError("⚠️ Jugador intentó morir pero ya estaba en estado de muerte.");
         }
     }
 
-    public void Respawn(){
-        Debug.Log("Jugador reapareciendo...");
-        _isDeath = false; // 🔹 Reiniciamos el estado de muerte
-        SetNormalState(); // 🔹 Restauramos el estado normal del jugador
+   public void Respawn()
+    {
+        Debug.Log($"♻️ Jugador reapareciendo... (Antes de reset, _isDeath={_isDeath})");
+
+        _isDeath = false; // 🔹 Asegurar que se reinicia correctamente
+
+        Debug.Log($"✅ Estado de muerte reiniciado (_isDeath={_isDeath})");
+
         OnRespawn?.Invoke(); // 🔹 Disparamos el evento de respawn para que otros scripts lo sepan
+        SetNormalState(); // 🔹 Restauramos el estado normal del jugador
     }
 
     void InScreen(int screen){

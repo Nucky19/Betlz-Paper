@@ -52,7 +52,7 @@ void Respawn(int screen, bool death)
     {
         Debug.Log("✅ Respawn ejecutándose correctamente.");
 
-        if (characterController  != null)
+        if (characterController != null)
         {
             characterController.enabled = false;
             player.transform.position = respawns[screen].position;
@@ -72,13 +72,27 @@ void Respawn(int screen, bool death)
             Debug.LogError("❌ ERROR: No se encontró CharacterController en el jugador.");
             player.transform.position = respawns[screen].position;
         }
-        ResetTraps();
+
+        ResetTraps(); // 🔄 Reactivar las trampas después del respawn
+        
+        // 🔹 Llamamos a Respawn() en PlayerStates para reiniciar _isDeath
+        PlayerStates playerStates = player.GetComponent<PlayerStates>();
+        if (playerStates != null)
+        {
+            playerStates.Respawn();
+            Debug.Log("♻️ Estado de muerte reiniciado correctamente.");
+        }
+        else
+        {
+            Debug.LogError("❌ ERROR: No se encontró PlayerStates en el jugador.");
+        }
     }
     else
     {
         Debug.LogError("❌ ERROR: Índice de respawn inválido o muerte no detectada correctamente.");
     }
 }
+
 void ResetTraps()
     {
         Traps[] traps = FindObjectsOfType<Traps>();

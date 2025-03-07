@@ -6,100 +6,68 @@ using System;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] int currentScreen;
-    [SerializeField] Transform[] respawns; // 🔹 Array con los puntos de respawn
-    [SerializeField] GameObject player;  // 🔹 Asignamos manualmente el objeto "Player"
+    [SerializeField] Transform[] respawns; 
+    [SerializeField] GameObject player; 
     [SerializeField] CharacterController characterController;
 
-    void Start()
-    {
+    void Start(){
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
 
-    void Awake()
-    {
+    void Awake(){
         // player = GameObject.FindWithTag("Player");
-        // Debug.Log(player.name);  // Para asegurarte de que el GameObject correcto está siendo asignado
+        // Debug.Log(player.name); 
         // characterController = player.GetComponent<CharacterController>();
 
     }
 
-    void OnEnable()
-    {
+    void OnEnable(){
         ScreenTrigger.OnScreen += HandleCameraChange;
         PlayerStates.OnDeath += Respawn;
         Traps.OnTrapContact += ResetTraps;
     }
 
-    void OnDisable()
-    {
+    void OnDisable(){
         ScreenTrigger.OnScreen -= HandleCameraChange;
         PlayerStates.OnDeath -= Respawn;
         Traps.OnTrapContact -= ResetTraps;
     }
 
-   void HandleCameraChange(int cameraNumber)
-    {
+    void HandleCameraChange(int cameraNumber){
         Debug.Log("Cambiando a pantalla " + cameraNumber);
         currentScreen = cameraNumber;
     }
 
-void Respawn(int screen, bool death)
-{
-    Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
+    void Respawn(int screen, bool death){
+        Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
 
-    if (death && screen >= 0 && screen < respawns.Length)
-    {
-        Debug.Log("✅ Respawn ejecutándose correctamente.");
-
-        if (characterController != null)
-        {
-            characterController.enabled = false;
-            player.transform.position = respawns[screen].position;
-            Debug.Log("➡️ Nueva posición del jugador: " + player.transform.position);
+        if (death && screen >= 0 && screen < respawns.Length){
             
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                playerController.ResetMovement();
-                Debug.Log("🛑 Movimiento reseteado.");
+            if (characterController != null){
+                characterController.enabled = false;
+                player.transform.position = respawns[screen].position;
+                Debug.Log("Posición del jugador: " + player.transform.position);
+                
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                if (playerController != null) playerController.ResetMovement();
+                characterController.enabled = true;
             }
-
-            characterController.enabled = true;
-        }
-        else
-        {
-            Debug.LogError("❌ ERROR: No se encontró CharacterController en el jugador.");
-            player.transform.position = respawns[screen].position;
-        }
-
-        ResetTraps(); // 🔄 Reactivar las trampas después del respawn
         
-        // 🔹 Llamamos a Respawn() en PlayerStates para reiniciar _isDeath
-        PlayerStates playerStates = player.GetComponent<PlayerStates>();
-        if (playerStates != null)
-        {
-            playerStates.Respawn();
-            Debug.Log("♻️ Estado de muerte reiniciado correctamente.");
-        }
-        else
-        {
-            Debug.LogError("❌ ERROR: No se encontró PlayerStates en el jugador.");
-        }
-    }
-    else
-    {
-        Debug.LogError("❌ ERROR: Índice de respawn inválido o muerte no detectada correctamente.");
-    }
-}
 
-void ResetTraps()
-    {
+            ResetTraps(); 
+            
+        
+            PlayerStates playerStates = player.GetComponent<PlayerStates>();
+            if (playerStates != null) playerStates.Respawn();
+        }
+        
+    }
+
+void ResetTraps(){
         Traps[] traps = FindObjectsOfType<Traps>();
-        foreach (Traps trap in traps)
-        {
-            trap.ResetTrap();  // Reactiva cada trampa
-            Debug.Log("🔄 Trampa reseteada.");
+        foreach (Traps trap in traps){
+            trap.ResetTrap();  
         }
     }
 

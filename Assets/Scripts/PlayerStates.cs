@@ -9,7 +9,7 @@ public class PlayerStates : MonoBehaviour
 
     public PlayerController player;
     public static event Action<int, bool> OnDeath;
-    public static event Action OnRespawn; // 🔹 Evento para que otros scripts sepan que el jugador ha reaparecido
+    public static event Action OnRespawn; 
     [SerializeField] private bool _isDeath =false;
     [SerializeField] public GameObject normalModel;
     [SerializeField] public GameObject frogModel;
@@ -34,8 +34,7 @@ public class PlayerStates : MonoBehaviour
         SetNormalModel();
     }
     
-    public void SetNormalState()
-    {
+    public void SetNormalState(){
         player._isFrog = false;
         SetNormalModel();
         player.playerVel = player.playerVelConstant;
@@ -60,8 +59,7 @@ public class PlayerStates : MonoBehaviour
         }
     }
 
-    public void FrogTransformation()
-    {
+    public void FrogTransformation(){
         player._isFrog = true;
         SetFrogModel();
         player.playerVel = player._FrogVel;
@@ -96,30 +94,17 @@ public class PlayerStates : MonoBehaviour
         frogModel.SetActive(true);
         normalModel.SetActive(false);
     }
-    public void Die()
-    {
-        if (!_isDeath)
-        {
+    public void Die(){
+        if (!_isDeath){
             _isDeath = true;
-            Debug.Log("💀 Jugador ha muerto. Activando respawn...");
-            OnDeath?.Invoke(ActualScreen, true); // 🔹 Disparamos el evento de muerte con la pantalla actual
-        }
-        else
-        {
-            Debug.LogError("⚠️ Jugador intentó morir pero ya estaba en estado de muerte.");
+            OnDeath?.Invoke(ActualScreen, true); 
         }
     }
 
-   public void Respawn()
-    {
-        Debug.Log($"♻️ Jugador reapareciendo... (Antes de reset, _isDeath={_isDeath})");
-
-        _isDeath = false; // 🔹 Asegurar que se reinicia correctamente
-
-        Debug.Log($"✅ Estado de muerte reiniciado (_isDeath={_isDeath})");
-
-        OnRespawn?.Invoke(); // 🔹 Disparamos el evento de respawn para que otros scripts lo sepan
-        SetNormalState(); // 🔹 Restauramos el estado normal del jugador
+    public void Respawn(){
+        _isDeath = false; 
+        OnRespawn?.Invoke(); 
+        SetNormalState(); 
     }
 
     void InScreen(int screen){

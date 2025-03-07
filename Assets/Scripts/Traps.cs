@@ -8,18 +8,15 @@ public class Traps : MonoBehaviour
     public static event Action OnTrapContact;
     private bool isTriggerActive = true;
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("PlayerHitBox") && isTriggerActive)
-        {
-            isTriggerActive = false;  // Desactiva la trampa temporalmente
+    void OnTriggerEnter(Collider collider){
+        if (collider.gameObject.CompareTag("PlayerHitBox") && isTriggerActive){
+            isTriggerActive = false;  
             Debug.Log("Jugador tocó una trampa.");
-            OnTrapContact?.Invoke(); // 🔹 Llamamos al evento solo si hay suscriptores
+            OnTrapContact?.Invoke(); 
         }
     }
 
-    public void ResetTrap()
-    {
-        isTriggerActive = true;  // Reactivamos la trampa para que se pueda activar nuevamente
+    public void ResetTrap(){
+        isTriggerActive = true;  
     }
 }

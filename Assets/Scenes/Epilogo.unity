@@ -605,12 +605,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 0.7
-  displayDuration: 2
+  displayDuration: 1.5
   initialDelay: 1.5
-  delayBetweenMessages: 2
+  delayBetweenMessages: 1.5
   messages:
   - Gracias por jugar esta demo.
   - "Podr\xE1s disfrutar del juego completo a partir del 30/05."
+  - Desarolladores del videojuego.
+  - Irene Estebez
+  - "Germ\xE1n Navasa"
+  - Daniel Santamaria
 --- !u!114 &1875273994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,11 +637,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 50
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

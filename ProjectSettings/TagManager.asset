@@ -49,3 +49,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Fondo
+    uniqueID: 3922311275
+    locked: 0
+  - name: Arcoiris
+    uniqueID: 3247925015
+    locked: 0
+  - name: Nubes
+    uniqueID: 846384455
+    locked: 0

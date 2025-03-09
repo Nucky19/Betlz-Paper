@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     //States
     public static event Action<bool> OnFrog;
     
-
     [SerializeField] public bool _isFrog =false;
     [SerializeField] public float _FrogVel=2f;
     [SerializeField] private float _FrogJumpForce=15f;
@@ -46,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _inAir =false;
 
     //GroundSensor
+    public static event Action<bool> OnGround;
     [SerializeField] Transform _sensorPosition;
     [SerializeField]  LayerMask _groundLayer;
     [SerializeField]  public float _groundSensorX = 0.65f;
@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
     if(!IsGrounded()){  
         _playerGravity.y += _gravity *Time.deltaTime;
         _inAir = true;
+        OnGround(false);
     }   
     else if(IsGrounded() && _playerGravity.y <0 ){
         _animator.SetBool("IsJumping", false);
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour
 
         _playerGravity.y = -1;
         _inAir = false;
+        OnGround(true);
     }
 
         characterController.Move(_playerGravity * Time.deltaTime);
@@ -260,8 +262,9 @@ public class PlayerController : MonoBehaviour
 
     public void ResetMovement()
     {
-        movement = Vector3.zero; // 🔹 Detener el movimiento
-        _playerGravity = Vector3.zero; // 🔹 Resetear la gravedad
+        movement = Vector3.zero; 
+        _playerGravity = Vector3.zero; 
+        transform.position = new Vector3(1, transform.position.y, transform.position.z);
     }
 
     void OnDrawGizmos() {

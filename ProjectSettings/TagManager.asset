@@ -12,6 +12,7 @@ TagManager:
   - ReturnPlatform
   - Void
   - Scissors
+  - Crane
   layers:
   - Default
   - TransparentFX

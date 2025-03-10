@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private int craneCount=0;
     private bool frogUnlock=false;
     [SerializeField] private CanvasGroup hudCanvasGroup; 
-    
+    [SerializeField] private Vector3 _spawnPoint;
 
     void Start(){
         QualitySettings.vSyncCount = 0;
@@ -34,6 +34,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void Update(){
+        if(Input.GetKeyDown("r")) Respawn(currentScreen, true);
+    }
+
+
+   
+
     void OnEnable(){
         ScreenTrigger.OnScreen += HandleCameraChange;
         PlayerStates.OnDeath += Respawn;
@@ -41,6 +48,7 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact += ResetTraps;
         PlatformCollisionDetector.OnCollisionContact += ResetCrushing;
         Items.OnCraneCollect += CraneCollect;
+        CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
         
     }
@@ -52,7 +60,18 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact -= ResetTraps;
         PlatformCollisionDetector.OnCollisionContact -= ResetCrushing;
         Items.OnCraneCollect -= CraneCollect;
+        CheckPoint.OnCheckPoint -=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged -= HandleHUDVisibility;
+    }
+
+    void UpdateSpawnPoint(Vector3 spawn)
+    {
+        _spawnPoint = spawn;
+    }
+
+    void ReSpawn(int currentScreen, bool death)
+    {
+        transform.position = _spawnPoint;
     }
 
     private void HandleHUDVisibility(bool isIdle) {

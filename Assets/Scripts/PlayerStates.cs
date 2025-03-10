@@ -9,7 +9,8 @@ public class PlayerStates : MonoBehaviour
 
     public PlayerController player;
     public static event Action<int, bool> OnDeath;
-    public static event Action OnRespawn; 
+    public static event Action <int, bool> OnRespawn; 
+    public static event Action <int, bool> OnRespawnItem; 
     [SerializeField] private bool _isDeath =false;
     [SerializeField] public GameObject normalModel;
     [SerializeField] public GameObject frogModel;
@@ -19,14 +20,15 @@ public class PlayerStates : MonoBehaviour
     void OnEnable(){
         ScreenTrigger.OnScreen += InScreen;
         Traps.OnTrapContact += Die;
+        PlatformCollisionDetector.OnCollisionContact += Die;
         // ScreenTrigger.OnEnterScreen += InScreen;
     }
 
     void OnDisable(){
         ScreenTrigger.OnScreen -= InScreen;
         Traps.OnTrapContact -= Die;
+        PlatformCollisionDetector.OnCollisionContact -= Die;
         // ScreenTrigger.OnEnterScreen -= InScreen;
-
     }
 
     void Awake(){
@@ -99,6 +101,7 @@ public class PlayerStates : MonoBehaviour
         normalModel.SetActive(false);
     }
     public void Die(){
+        // Debug.Log("AAAAAAAAAAAAAAAAAAAAAA");
         if (!_isDeath){
             _isDeath = true;
             OnDeath?.Invoke(ActualScreen, true); 
@@ -106,9 +109,26 @@ public class PlayerStates : MonoBehaviour
     }
 
     public void Respawn(){
-        _isDeath = false; 
-        OnRespawn?.Invoke(); 
-        SetNormalState(); 
+        _isDeath = false;  // Marca que el jugador ha revivido
+        OnRespawn?.Invoke(ActualScreen, false);  // Notifica a los suscriptores que el jugador ha respawneado
+        SetNormalState();  // Restablece el modelo y el estado normal del jugador
+
+        StartCoroutine(DelayedRespawn());
+    }
+
+    IEnumerator DelayedRespawn() {
+        // Esperamos 1 segundo
+        yield return new WaitForSeconds(1f);
+
+        // Ahora, disparamos el evento de respawn
+        OnRespawnItem?.Invoke(ActualScreen, false);  // Notifica a los suscriptores que el jugador ha respawneado
+
+        // También actualizamos el estado de los objetos Items
+        // Items[] items = FindObjectsOfType<Items>();  // Encontrar todos los objetos Items en la escena
+        // foreach (Items item in items)
+        // {
+        //     item.SetDeadFalse();  // Restablecer el estado 'dead' en cada objeto Items
+        // }
     }
 
     void InScreen(int screen){

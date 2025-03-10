@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class PlatformCollisionDetector : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class PlatformCollisionDetector : MonoBehaviour
     private Transform parentPlatform;
     private bool playerDetection=false;
     private bool platformDetection=false;
+    public static event Action OnCollisionContact;
+    private bool isTriggerActive = true;
 
     public void SetPlatformController(PlatformController controller, Transform platform)
     {
@@ -47,10 +50,14 @@ public class PlatformCollisionDetector : MonoBehaviour
 
     private void CheckForPlayerDeath()
     {
-        if (playerDetection && platformDetection)
+        if (playerDetection && platformDetection && isTriggerActive)
         {
-            Debug.Log("Muerto");
+            isTriggerActive=false;
+            OnCollisionContact?.Invoke();
             // Aquí puedes agregar lógica para reiniciar la escena o hacer un respawn
         }
+    }
+    public void ResetCrush(){
+        isTriggerActive = true;  
     }
 }

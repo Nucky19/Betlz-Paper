@@ -12,11 +12,19 @@ public class Animacion_texto : MonoBehaviour
     public string[] messages; // Mensajes a mostrar
     private Text textComponent; // Componente de texto
     private int currentMessageIndex = 0;
+    [SerializeField] bool Final=false;
 
     void Start()
     {
         textComponent = GetComponent<Text>();
         StartCoroutine(ShowMessages());
+    }
+
+    void Update(){
+        if(Input.GetKeyDown("p")){
+            if(!Final) SceneManager.LoadScene("Level1");
+            else SceneManager.LoadScene("MainMenu");
+        }
     }
 
     private IEnumerator ShowMessages()
@@ -35,7 +43,8 @@ public class Animacion_texto : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenMessages);
             }
         }
-        SceneManager.LoadScene("Level1");
+        if(!Final) SceneManager.LoadScene("Level1");
+        else SceneManager.LoadScene("MainMenu");
     }
 
     private IEnumerator ShowMessage(string message)

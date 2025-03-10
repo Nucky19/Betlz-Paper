@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     private int deadCount=0;
     private int craneCount=0;
     private bool frogUnlock=false;
-
     [SerializeField] private CanvasGroup hudCanvasGroup; 
     
 
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
         PlayerStates.OnDeath += Respawn;
         Items.OnFrogUnlock += FrogUnlock;
         Traps.OnTrapContact += ResetTraps;
+        PlatformCollisionDetector.OnCollisionContact += ResetCrushing;
         Items.OnCraneCollect += CraneCollect;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
         
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         PlayerStates.OnDeath -= Respawn;
         Items.OnFrogUnlock -= FrogUnlock;
         Traps.OnTrapContact -= ResetTraps;
+        PlatformCollisionDetector.OnCollisionContact -= ResetCrushing;
         Items.OnCraneCollect -= CraneCollect;
         // PlayerController.OnIdleStateChanged -= HandleHUDVisibility;
     }
@@ -92,6 +93,7 @@ public class GameManager : MonoBehaviour
                 characterController.enabled = true;
             }
             ResetTraps(); 
+            ResetCrushing();
             PlayerStates playerStates = player.GetComponent<PlayerStates>();
             if (playerStates != null) playerStates.Respawn();
         }
@@ -102,6 +104,12 @@ public class GameManager : MonoBehaviour
         Traps[] traps = FindObjectsOfType<Traps>();
         foreach (Traps trap in traps){
             trap.ResetTrap();  
+        }
+    }
+    void ResetCrushing(){
+        PlatformCollisionDetector[] platformCollisionDetector = FindObjectsOfType<PlatformCollisionDetector>();
+        foreach (PlatformCollisionDetector platform in platformCollisionDetector){
+            platform.ResetCrush();  
         }
     }
 

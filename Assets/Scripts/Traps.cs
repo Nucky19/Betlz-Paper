@@ -9,10 +9,11 @@ public class Traps : MonoBehaviour
     private bool isTriggerActive = true;
 
     void OnTriggerEnter(Collider collider){
+        // if(gameObject.CompareTag("MovingPlatform")) isTriggerActive = false;  
         if (collider.gameObject.CompareTag("PlayerHitBox") && isTriggerActive){
-            isTriggerActive = false;  
             Debug.Log("Jugador tocó una trampa.");
             OnTrapContact?.Invoke(); 
+            isTriggerActive = false;  
         }
     }
 

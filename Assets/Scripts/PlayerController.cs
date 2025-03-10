@@ -70,9 +70,13 @@ public class PlayerController : MonoBehaviour
 
     public static event Action<bool> OnIdleStateChanged;
 
-    void OnEnable(){
-      
-    }
+    // private bool frogAvaiable=false;
+    // void OnEnable(){
+    //     PlayerStates.OnFrogUnlock+=UnlockFrog();
+    // }
+    // void OnDisable(){
+    //     PlayerStates.OnFrogUnlock-=UnlockFrog();
+    // }
 
     void Start(){
         Application.targetFrameRate = 60; //Capar a 60fps el juego;
@@ -285,8 +289,17 @@ public class PlayerController : MonoBehaviour
         movement = Vector3.zero; 
         _playerGravity = Vector3.zero; 
         transform.position = new Vector3(1, transform.position.y, transform.position.z);
+        _doubleJump=true;
+        _inAir=false;
+        OnPlayerDoubleJump(true);
+        _animator.SetBool("IsJumping", false);
+        _animator.SetBool("IsGrounded", true);
+        _animator.SetBool("FreeFall",false);
     }
 
+    // void UnlockFrog(){
+    //     frogAvaiable=true;
+    // }
     void OnDrawGizmos() {
         Vector3 halfExtents = new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ);
 

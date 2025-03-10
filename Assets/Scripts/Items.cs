@@ -13,20 +13,31 @@ public class Items : MonoBehaviour
     [SerializeField] private bool inCraneArea=false;
     public static event Action OnCraneCollect; 
     public static event Action OnFrogUnlock; 
-
+    public GameObject playerObject;
+    public GameObject crane;
+    public float speed;
+    [SerializeField] public bool dead=false;
+    private Vector3 initialCranePosition;
 
    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
         PlayerController.OnGround += Grounded;
         CraneArea.OnCraneArea += InCraneArea;
+        PlayerStates.OnDeath += IsDeath;
+        PlayerStates.OnRespawnItem += Respawn;
+
    }
 
    void OnDisable(){
         PlayerController.OnPlayerDoubleJump -= DoubleJump;
         PlayerController.OnGround -= Grounded;
         CraneArea.OnCraneArea -= InCraneArea;
-   }
-
+        PlayerStates.OnDeath -= IsDeath;
+        PlayerStates.OnRespawnItem -= Respawn;
+    }
+    void Start() {
+        if (dead) dead = false;  
+        }
     void Awake() {
         Collider[] colliders = GetComponents<Collider>();
         if (colliders.Length > 0) {
@@ -38,6 +49,7 @@ public class Items : MonoBehaviour
         }
 
         player = FindObjectOfType<PlayerController>();
+        if (crane != null) initialCranePosition = crane.transform.position;
     }
 
     void Update(){
@@ -55,6 +67,7 @@ public class Items : MonoBehaviour
                     break;
                 case "Crane":
                     collectingCrane=true;
+
                     break;
                 case "FrogUnlock":
                     OnFrogUnlock?.Invoke();
@@ -69,11 +82,19 @@ public class Items : MonoBehaviour
 
     void GetCrane(bool ground){
         // Debug.Log("Craned");
+        if (dead){
+            crane.transform.position = initialCranePosition;  // Vuelve a la posición original
+            collectingCrane = false;  // Detenemos el proceso de seguir al jugador
+            dead=false;
+            return;
+        }
+        crane.transform.position=Vector3.MoveTowards(crane.transform.position, playerObject.transform.position, speed);
         if(ground && !inCraneArea){
             Debug.Log("Craned 2");
             gameObject.SetActive(false);
             collectingCrane=false;
             OnCraneCollect?.Invoke();
+            dead=false;
         }
     }
 
@@ -111,5 +132,16 @@ public class Items : MonoBehaviour
     void InCraneArea(bool craneArea){
         inCraneArea = craneArea;
     }
+    void IsDeath(int screen, bool death){
+        dead=death;
+    }
+    public void Respawn(int screen, bool death){
+        Debug.Log("Entra a respawn");
+        dead=death;
+        Debug.Log(dead);
+    }
+    // public void  SetDeadFalse() {
+    //     dead = false;
+    // }
 
 }

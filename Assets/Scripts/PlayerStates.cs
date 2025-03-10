@@ -34,6 +34,10 @@ public class PlayerStates : MonoBehaviour
         SetNormalModel();
     }
     
+    // void OnTriggerEnter(Collider collider){
+    //     if(collider.CompareTag("FrogUnlock")) OnFrogUnlock?.Invoke();
+    // }
+
     public void SetNormalState(){
         player._isFrog = false;
         SetNormalModel();

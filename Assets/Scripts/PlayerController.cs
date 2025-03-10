@@ -65,6 +65,10 @@ public class PlayerController : MonoBehaviour
 
     //Animations
     private Animator _animator;
+    private float idleTime = 0f;
+    private bool isIdle = false;
+
+    public static event Action<bool> OnIdleStateChanged;
 
     void OnEnable(){
       
@@ -102,6 +106,7 @@ public class PlayerController : MonoBehaviour
             if (!_isFrog) state.FrogTransformation();
             else if(_isFrog) state.SetNormalState();
         }
+        CheckMovement();
         Gravity();
         if(!IsGrounded()) Checkcorner();
         if(!IsGrounded()) CheckRoof();
@@ -214,6 +219,21 @@ public class PlayerController : MonoBehaviour
     //     return _coyoteTimer > 0; 
     // }
 
+    void CheckMovement(){
+        if (input.inputHorizontal == 0 && Mathf.Abs(characterController.velocity.y) < 0.01f && characterController.velocity.magnitude < 0.01f) {
+        idleTime += Time.deltaTime;
+        if (idleTime >= 1f && !isIdle) {
+            isIdle = true;
+            OnIdleStateChanged?.Invoke(true); // Notificar que está quieto
+        }
+        } else {
+            idleTime = 0f;
+            if (isIdle) {
+                isIdle = false;
+                OnIdleStateChanged?.Invoke(false); // Notificar que se está moviendo
+            }
+        }
+    }
     void Checkcorner(){
         RaycastHit hit;
         if(Physics.Raycast(_sensorPosition.position, transform.forward, out hit, _raySideSize, _groundLayer) || Physics.Raycast(_sensorPosition.position, -transform.forward, out hit, _raySideSize, _groundLayer)){

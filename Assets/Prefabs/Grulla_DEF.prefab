@@ -118,15 +118,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8387127
+      value: -1.77
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.57
+      value: 8.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 36.578754
+      value: 37.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -211,6 +211,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
+      propertyPath: m_TagString
+      value: Crane
       objectReference: {fileID: 0}
     - target: {fileID: 1190860863832171854, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}
       propertyPath: m_Layer
@@ -359,6 +363,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doubleJumpAvaiable: 0
+  isGrounded: 0
+  inCraneArea: 0
 --- !u!4 &6085107378648996544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 657591907998362130, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}

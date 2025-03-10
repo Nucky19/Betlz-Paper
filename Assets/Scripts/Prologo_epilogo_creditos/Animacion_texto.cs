@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class Animacion_texto : MonoBehaviour
 { public float fadeDuration = 0.5f; // Duración del fade in y fade out
     public float displayDuration = 2.0f; // Tiempo que el mensaje estará en pantalla
@@ -33,6 +35,7 @@ public class Animacion_texto : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenMessages);
             }
         }
+        SceneManager.LoadScene("Level1");
     }
 
     private IEnumerator ShowMessage(string message)

@@ -11,6 +11,8 @@ public class Items : MonoBehaviour
     [SerializeField] bool isGrounded;
     private bool collectingCrane=false;
     [SerializeField] private bool inCraneArea=false;
+    public static event Action OnCraneCollect; 
+    public static event Action OnFrogUnlock; 
 
 
    void OnEnable(){
@@ -54,8 +56,12 @@ public class Items : MonoBehaviour
                 case "Crane":
                     collectingCrane=true;
                     break;
+                case "FrogUnlock":
+                    OnFrogUnlock?.Invoke();
+                    gameObject.SetActive(false);
+                    break;
                 default:
-                    Destroy(gameObject);
+                    // Destroy(gameObject);
                     break;
             }
         }
@@ -67,6 +73,7 @@ public class Items : MonoBehaviour
             Debug.Log("Craned 2");
             gameObject.SetActive(false);
             collectingCrane=false;
+            OnCraneCollect?.Invoke();
         }
     }
 

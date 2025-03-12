@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         hudCanvasGroup.alpha = 1; 
+        Cursor.visible = false;
     }
 
     void Awake(){

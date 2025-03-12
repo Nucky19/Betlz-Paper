@@ -120,6 +120,8 @@ public class PlayerController : MonoBehaviour
     void PlayerMovement() {
     
         // input.inputHorizontal = Input.GetAxisRaw("Horizontal");
+        // movement.x = 0;  
+        if (Mathf.Abs(transform.position.x) > 0.01f)  transform.position = new Vector3(0, transform.position.y, transform.position.z);
         movement.z = input.inputHorizontal * playerVel;
         
         if (input.inputHorizontal > 0){

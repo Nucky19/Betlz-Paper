@@ -279,7 +279,7 @@ MonoBehaviour:
   - Esta es la historia de uno de ellos.
   - "Cuenta la leyenda que si consigues un n\xFAmero suficiente de grullas de origami
     podr\xE1s pedir un deseo."
-  - Avanza hasta el final y consigue todas las grullas que puedas.
+  - Avanza hasta el final.
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:

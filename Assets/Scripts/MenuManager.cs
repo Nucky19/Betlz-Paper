@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = true;
+
         InitializeMenus();
         StartCoroutine(SwitchMenusRoutine());
         StartCoroutine(ChangeImageRoutine());

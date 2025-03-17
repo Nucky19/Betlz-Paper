@@ -54,7 +54,7 @@ public class PlatformCollisionDetector : MonoBehaviour
         {
             isTriggerActive=false;
             OnCollisionContact?.Invoke();
-            // Aquí puedes agregar lógica para reiniciar la escena o hacer un respawn
+            playerDetection=false;
         }
     }
     public void ResetCrush(){

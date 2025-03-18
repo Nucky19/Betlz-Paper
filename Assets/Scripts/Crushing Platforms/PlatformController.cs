@@ -28,34 +28,25 @@ public class PlatformController : MonoBehaviour
 
             // Configurar el detector de colisiones
             PlatformCollisionDetector detector = platforms[i].GetComponentInChildren<PlatformCollisionDetector>();
-            if (detector != null)
-            {
+            if (detector != null){
                 detector.SetPlatformController(this, platforms[i]);
-            }
-            else
-            {
-                // Debug.LogError("Falta el CollisionDetector en " + platforms[i].name);
             }
         }
 
-        // Suscribimos este script al evento de cambio de dirección
-        if (PlatformEventManager.Instance != null)
-        {
+
+        if (PlatformEventManager.Instance != null){
             PlatformEventManager.Instance.OnPlatformReturn += ChangeDirection;
         }
     }
 
-    private void Update()
-    {
+    private void Update(){
         MovePlatforms();
     }
 
-    private void MovePlatforms()
-    {
-        foreach (Transform platform in platforms)
-        {
+    private void MovePlatforms(){
+        foreach (Transform platform in platforms){
             float direction = movingForward[platform] ? 1 : -1;
-            platform.position += Vector3.forward * direction * platformSpeeds[platform] * Time.deltaTime;
+            platform.position += Vector3.forward * direction * platformSpeeds[platform] * Time.fixedDeltaTime;
         }
     }
 

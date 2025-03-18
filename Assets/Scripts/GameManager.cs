@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Awake(){
+        Application.targetFrameRate = 60;
         // player = GameObject.FindWithTag("Player");
         // Debug.Log(player.name); 
         // characterController = player.GetComponent<CharacterController>();
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact += ResetTraps;
         PlatformCollisionDetector.OnCollisionContact += ResetCrushing;
         Items.OnCraneCollect += CraneCollect;
-        CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
+        // CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
         
     }
@@ -61,14 +62,14 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact -= ResetTraps;
         PlatformCollisionDetector.OnCollisionContact -= ResetCrushing;
         Items.OnCraneCollect -= CraneCollect;
-        CheckPoint.OnCheckPoint -=   UpdateSpawnPoint;
+        // CheckPoint.OnCheckPoint -=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged -= HandleHUDVisibility;
     }
 
-    void UpdateSpawnPoint(Vector3 spawn)
-    {
-        _spawnPoint = spawn;
-    }
+    // void UpdateSpawnPoint(Vector3 spawn)
+    // {
+    //     _spawnPoint = spawn;
+    // }
 
     void ReSpawn(int currentScreen, bool death)
     {
@@ -138,7 +139,7 @@ public class GameManager : MonoBehaviour
     }
 
     void CraneCollect(){
-        Debug.Log("Collected");
+        // Debug.Log("Collected");
         craneCount++;
         craneText.text=craneCount.ToString();
     }

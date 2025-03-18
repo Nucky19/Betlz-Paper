@@ -54,6 +54,7 @@ public class Items : MonoBehaviour
 
     void Update(){
         if(collectingCrane) GetCrane(isGrounded);
+        if(Input.GetKeyDown("f")) OnFrogUnlock?.Invoke();
     }
    
     void OnTriggerEnter(Collider collider) {
@@ -136,9 +137,9 @@ public class Items : MonoBehaviour
         dead=death;
     }
     public void Respawn(int screen, bool death){
-        Debug.Log("Entra a respawn");
+        // Debug.Log("Entra a respawn");
         dead=death;
-        Debug.Log(dead);
+        // Debug.Log(dead);
     }
     // public void  SetDeadFalse() {
     //     dead = false;

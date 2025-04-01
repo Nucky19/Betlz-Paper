@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact += ResetTraps;
         PlatformCollisionDetector.OnCollisionContact += ResetCrushing;
         Items.OnCraneCollect += CraneCollect;
+        ChangeSpawn.OnChangeSpawn += SpawnChange;
         // CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
         
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
         Traps.OnTrapContact -= ResetTraps;
         PlatformCollisionDetector.OnCollisionContact -= ResetCrushing;
         Items.OnCraneCollect -= CraneCollect;
+        ChangeSpawn.OnChangeSpawn -= SpawnChange;
         // CheckPoint.OnCheckPoint -=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged -= HandleHUDVisibility;
     }
@@ -143,5 +145,28 @@ public class GameManager : MonoBehaviour
         craneCount++;
         craneText.text=craneCount.ToString();
     }
+
+    void SpawnChange(int spawnNum, Vector3 newSpawnPosition)
+{
+    // Verificamos que el índice es válido
+    if (spawnNum >= 0 && spawnNum < respawns.Length)
+    {
+        Debug.Log($"✅ Spawn {spawnNum} cambiado a nueva posición: {newSpawnPosition}");
+
+        // Mover el Empty del Respawn al nuevo lugar
+        respawns[spawnNum].position = newSpawnPosition;
+
+        // Si el respawn es el 9, también actualizar el punto de respawn
+        if (spawnNum == 9)
+        {
+            _spawnPoint = newSpawnPosition;
+            Debug.Log("🎯 Spawn 9 actualizado como punto de respawn principal.");
+        }
+    }
+    else
+    {
+        Debug.LogWarning($"⚠️ Spawn {spawnNum} fuera de rango, no se pudo actualizar.");
+    }
+}
 
 }

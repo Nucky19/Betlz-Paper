@@ -146,27 +146,13 @@ public class GameManager : MonoBehaviour
         craneText.text=craneCount.ToString();
     }
 
-    void SpawnChange(int spawnNum, Vector3 newSpawnPosition)
-{
-    // Verificamos que el índice es válido
-    if (spawnNum >= 0 && spawnNum < respawns.Length)
-    {
-        Debug.Log($"✅ Spawn {spawnNum} cambiado a nueva posición: {newSpawnPosition}");
-
-        // Mover el Empty del Respawn al nuevo lugar
-        respawns[spawnNum].position = newSpawnPosition;
-
-        // Si el respawn es el 9, también actualizar el punto de respawn
-        if (spawnNum == 9)
-        {
-            _spawnPoint = newSpawnPosition;
-            Debug.Log("🎯 Spawn 9 actualizado como punto de respawn principal.");
+    void SpawnChange(int spawnNum, Vector3 newSpawnPosition){
+        if (spawnNum >= 0 && spawnNum < respawns.Length){
+            Debug.Log($"Spawn {spawnNum} en: {newSpawnPosition}");
+            respawns[spawnNum].position = newSpawnPosition;
+            if (spawnNum == 9) _spawnPoint = newSpawnPosition;
         }
+    
     }
-    else
-    {
-        Debug.LogWarning($"⚠️ Spawn {spawnNum} fuera de rango, no se pudo actualizar.");
-    }
-}
 
 }

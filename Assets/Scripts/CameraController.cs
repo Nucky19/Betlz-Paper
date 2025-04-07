@@ -87,4 +87,18 @@ public class CameraController : MonoBehaviour
     {
         return Array.Find(cameras, cam => cam.Priority == 1);
     }
+
+    // public GameObject cameraToActivate;
+    // public GameObject[] cameras;
+
+
+    // void ChangeCamera()
+    // {
+    //     foreach(GameObject camera in cameras)
+    //     {
+    //         camera.SetActive(false);
+    //     }
+
+    //     cameraToActivate.SetActive(true);
+    // }
 }

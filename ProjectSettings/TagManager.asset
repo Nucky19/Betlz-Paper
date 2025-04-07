@@ -16,6 +16,10 @@ TagManager:
   - FrogUnlock
   - ResChange
   - r9
+  - Vestigio
+  - PointA
+  - PointB
+  - EndPoint
   layers:
   - Default
   - TransparentFX

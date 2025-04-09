@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 2.74
+    m_Value: 1.47
   directLightingStrength:
     m_OverrideState: 1
     m_Value: 0.214
@@ -105,10 +105,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.401
+    m_Value: 0.305
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.125
+    m_Value: 0.574
   roundness:
     m_OverrideState: 1
     m_Value: 1
@@ -417,7 +417,7 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.37
+    m_Value: 0.1
   contrast:
     m_OverrideState: 1
     m_Value: 1

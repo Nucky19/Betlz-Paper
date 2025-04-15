@@ -149,6 +149,7 @@ public class PlayerController : MonoBehaviour
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
                 _animator.SetTrigger("IsDoubleJumping");
                 OnPlayerDoubleJump(false);
+                state.DoubleJumpHitBox(true);
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
             }
@@ -168,7 +169,10 @@ public class PlayerController : MonoBehaviour
             }
             _doubleJump=true;
             OnPlayerDoubleJump(true);
-            if (!_isFrog && _doubleJump) playerVel=playerVelConstant;
+            if (!_isFrog && _doubleJump) {
+                playerVel=playerVelConstant;
+                state.DoubleJumpHitBox(false);
+            }
             if(_bufferTimer>0) Jump(_jumpForce);
         }
     }

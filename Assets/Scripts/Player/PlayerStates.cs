@@ -86,6 +86,7 @@ public class PlayerStates : MonoBehaviour
         player._rayDownSize = 0.7f;
 
         if (playerHitbox != null){
+            // Debug.Log("ENTRAAA EN CAMBIO DE HITBOX RANA");x
             playerHitbox.size = new Vector3(3.38f, 1.22f, 2.846218f);
             playerHitbox.center = new Vector3(0f, -0.68f, 0.26f);
         }
@@ -97,9 +98,22 @@ public class PlayerStates : MonoBehaviour
     }
 
     private void SetFrogModel(){
-        frogModel.SetActive(true);
         normalModel.SetActive(false);
+        frogModel.SetActive(true);
     }
+
+    public void DoubleJumpHitBox(bool OnJump){
+        if(OnJump){
+            playerHitbox.size = new Vector3(1.172319f, 2.05f, 1.37f);
+            playerHitbox.center = new Vector3(0f, 1.0f, 0f);
+
+        }else{
+            playerHitbox.size = new Vector3(1.172319f, 4.891592f, 0.9461098f);
+            playerHitbox.center = new Vector3(0f, 1.0f, 0f);
+
+        }
+    }
+
     public void Die(){
         // Debug.Log("AAAAAAAAAAAAAAAAAAAAAA");
         if (!_isDeath){

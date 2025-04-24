@@ -24,8 +24,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Deform
-  m_Shader: {fileID: -6465566751694194690, guid: 599e29b962808bb4b92cec74dbe8dfde,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 599e29b962808bb4b92cec74dbe8dfde, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -194,7 +193,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _BlendMode: 0
-    - _Brillo: 1.12
+    - _Brillo: 0.75
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 2
@@ -209,6 +208,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
+    - _Distorsion: 0.2
     - _DoubleSidedEnable: 0
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
@@ -304,10 +304,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_83777D09: {r: 0.51886785, g: 0.51886785, b: 0.51886785, a: 0}
-    - DiffusionProfile_261f48f1fbc94ccbafc421414859c159_Asset: {r: 0, g: 0, b: 0,
-        a: 0}
-    - DiffusionProfile_bfbe0deb8ec4428a9cfcdb968651903c_Asset: {r: 0, g: 0, b: 0,
-        a: 0}
+    - DiffusionProfile_261f48f1fbc94ccbafc421414859c159_Asset: {r: 0, g: 0, b: 0, a: 0}
+    - DiffusionProfile_bfbe0deb8ec4428a9cfcdb968651903c_Asset: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 1}

@@ -14,6 +14,12 @@
         },
         {
             "m_Id": "1bc2d14ef3d6495fb05ae497ef6e25d5"
+        },
+        {
+            "m_Id": "4b79cbda70974c8bbb9728d485ee8093"
+        },
+        {
+            "m_Id": "5c9dbfe43a7943b9bd2dc5d6011b8fc2"
         }
     ],
     "m_Keywords": [],
@@ -2249,6 +2255,36 @@
 }
 
 {
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "4b79cbda70974c8bbb9728d485ee8093",
+    "m_Guid": {
+        "m_GuidSerialized": "36004e2a-076b-4243-a7b5-5043bf41216f"
+    },
+    "m_Name": "Emission",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Emission",
+    "m_DefaultReferenceName": "_Emission",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "4cfc6b003d924638858cd816d068b59b",
@@ -2512,6 +2548,34 @@
     "m_Value": 1.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "5c9dbfe43a7943b9bd2dc5d6011b8fc2",
+    "m_Guid": {
+        "m_GuidSerialized": "de8c18de-7900-4c86-905a-212d91db7cf2"
+    },
+    "m_Name": "Float",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Float",
+    "m_DefaultReferenceName": "_Float",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
@@ -2881,6 +2945,12 @@
         },
         {
             "m_Id": "1bc2d14ef3d6495fb05ae497ef6e25d5"
+        },
+        {
+            "m_Id": "4b79cbda70974c8bbb9728d485ee8093"
+        },
+        {
+            "m_Id": "5c9dbfe43a7943b9bd2dc5d6011b8fc2"
         }
     ]
 }

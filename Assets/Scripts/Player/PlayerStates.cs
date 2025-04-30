@@ -87,7 +87,7 @@ public class PlayerStates : MonoBehaviour
 
         if (playerHitbox != null){
             // Debug.Log("ENTRAAA EN CAMBIO DE HITBOX RANA");x
-            playerHitbox.size = new Vector3(3.38f, 1.22f, 2.846218f);
+            playerHitbox.size = new Vector3(3.38f, 1.22f, 0.9461098f);
             playerHitbox.center = new Vector3(0f, -0.68f, 0.26f);
         }
     }

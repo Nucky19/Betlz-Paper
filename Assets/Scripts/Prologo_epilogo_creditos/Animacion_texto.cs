@@ -22,7 +22,7 @@ public class Animacion_texto : MonoBehaviour
 
     void Update(){
         if(Input.GetKeyDown("p")){
-            if(!Final) SceneManager.LoadScene("Level1");
+            if(!Final) SceneManager.LoadScene("Level1_Definitivo");
             else SceneManager.LoadScene("MainMenu");
         }
     }
@@ -43,7 +43,7 @@ public class Animacion_texto : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenMessages);
             }
         }
-        if(!Final) SceneManager.LoadScene("Level1");
+        if(!Final) SceneManager.LoadScene("Level1_Definitivo");
         else SceneManager.LoadScene("MainMenu");
     }
 

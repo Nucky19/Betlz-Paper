@@ -68,6 +68,16 @@ public class PlayerController : MonoBehaviour
     private float idleTime = 0f;
     private bool isIdle = false;
 
+    //SFX
+    
+   [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pasosClip;
+    [SerializeField] private AudioClip landingClip;
+
+    private bool wasGrounded = true;
+
+    
+    
     public static event Action<bool> OnIdleStateChanged;
 
     // private bool frogAvaiable=false;
@@ -92,6 +102,10 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         _animator = GetComponentInChildren<Animator>();
+
+       
+
+        
     }
     public void SetAnimator(Animator newAnimator){
         if (newAnimator != null)_animator = newAnimator;
@@ -115,6 +129,8 @@ public class PlayerController : MonoBehaviour
         if(!IsGrounded()) Checkcorner();
         if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
+
+        ReproducirSonidos(); //Audio
     }
 
     void PlayerMovement() {
@@ -126,19 +142,28 @@ public class PlayerController : MonoBehaviour
         
         if (input.inputHorizontal > 0){
             _animator.SetBool("IsRunning", true);
+           
+
             if (playerDirection == "left") {
                 playerRotation = -180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "right";
+                
             }
         } else if (input.inputHorizontal < 0) {
             _animator.SetBool("IsRunning", true);
+            
+
             if (playerDirection == "right") {
                 playerRotation = 180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "left";
+                
+                
             }
-        }else if(input.inputHorizontal==0) _animator.SetBool("IsRunning", false);
+        }else if(input.inputHorizontal==0) _animator.SetBool("IsRunning", false); 
+        
+      
 
         Vector3 totalMovement = movement * Time.deltaTime; 
         characterController.Move(totalMovement*playerVel);
@@ -320,4 +345,39 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, Vector3.up*_rayUpSize);
         Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
+
+    void ReproducirSonidos() //Audio
+{
+    // Sonido al caminar
+    if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
+    {
+        if (!audioSource.isPlaying || audioSource.clip != pasosClip)
+        {
+            audioSource.clip = pasosClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+    else if (audioSource.clip == pasosClip && audioSource.isPlaying)
+    {
+        audioSource.Stop();
+    }
+
+    // Sonido al aterrizar
+    if (!wasGrounded && IsGrounded())
+    {
+        if (landingClip != null)
+        {
+            audioSource.Stop(); // Detén cualquier sonido previo
+            audioSource.clip = landingClip;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+    }
+
+    wasGrounded = IsGrounded();
+}
+
+
+   
 }

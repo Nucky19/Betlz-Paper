@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: 77e350a5084dea04e9d0542c9a259274, type: 3}
-  volume: 0.5
+  volume: 0.3
   loop: 1
   persistBetweenScenes: 1
 --- !u!4 &306019154

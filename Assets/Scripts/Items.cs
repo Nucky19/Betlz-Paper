@@ -63,7 +63,7 @@ public class Items : MonoBehaviour
                 case "JumpReset":
                     if (!doubleJumpAvaiable) {
                         player._doubleJump = true;
-                        StartCoroutine(DisableTemporarily(gameObject, 2f));
+                        StartCoroutine(DisableTemporarily(gameObject, 1.25f));
                     }
                     break;
                 case "Crane":

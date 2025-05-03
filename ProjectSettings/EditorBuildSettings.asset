@@ -11,13 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prologo.unity
     guid: 9ec9e7bc0b23ee94e9accafa0b151441
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Epilogo.unity
-    guid: a3dd84c5e5c38c8468adc0b84dd7a5da
-  - enabled: 1
     path: Assets/Scenes/Level1_Definitivo.unity
     guid: 5843ba8b2f0ec784a87022aa3645de09
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 3381a1c8535247c4fbe0da6fbc14a895
+  - enabled: 1
+    path: Assets/Scenes/Epilogo.unity
+    guid: a3dd84c5e5c38c8468adc0b84dd7a5da
   m_configObjects: {}

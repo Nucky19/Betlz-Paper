@@ -34,6 +34,14 @@ public class MenuManager : MonoBehaviour
         StartCoroutine(ChangeImageRoutine());
     }
 
+    void OnEnable(){
+        GameManager.OnLoadScene += SceneLoad;  
+    }
+
+    void OnDisable(){
+        GameManager.OnLoadScene -= SceneLoad;
+    }
+
     private void InitializeMenus()
     {
         mainMenu.alpha = 1;

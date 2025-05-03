@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 
 public class GameManager : MonoBehaviour
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup hudCanvasGroup; 
     [SerializeField] private Vector3 _spawnPoint;
 
+    public static event Action<string> OnLoadScene; 
+
     void Start(){
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
@@ -38,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     void Update(){
         if(Input.GetKeyDown("r")) Respawn(currentScreen, true);
+        if(Input.GetKeyDown("3")) SceneLoad("Level3");
     }
 
 
@@ -153,6 +158,11 @@ public class GameManager : MonoBehaviour
             if (spawnNum == 9) _spawnPoint = newSpawnPosition;
         }
     
+    }
+
+    public void SceneLoad(string sceneName){
+        SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1;
     }
 
 }

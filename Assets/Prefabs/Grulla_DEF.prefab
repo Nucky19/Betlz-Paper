@@ -365,6 +365,10 @@ MonoBehaviour:
   doubleJumpAvaiable: 0
   isGrounded: 0
   inCraneArea: 0
+  playerObject: {fileID: 0}
+  crane: {fileID: 0}
+  speed: 0
+  dead: 0
 --- !u!4 &6085107378648996544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 657591907998362130, guid: 42bb1bf8607d7404d93166351e0ac7a2, type: 3}

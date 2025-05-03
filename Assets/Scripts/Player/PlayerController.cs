@@ -68,6 +68,18 @@ public class PlayerController : MonoBehaviour
     private float idleTime = 0f;
     private bool isIdle = false;
 
+    //SFX
+    
+   [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pasosClip;
+    [SerializeField] private AudioClip landingClip;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip doubleJumpClip;
+
+    private bool wasGrounded = true;
+
+    
+    
     public static event Action<bool> OnIdleStateChanged;
 
     // private bool frogAvaiable=false;
@@ -92,6 +104,10 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         _animator = GetComponentInChildren<Animator>();
+
+       
+
+        
     }
     public void SetAnimator(Animator newAnimator){
         if (newAnimator != null)_animator = newAnimator;
@@ -115,6 +131,8 @@ public class PlayerController : MonoBehaviour
         if(!IsGrounded()) Checkcorner();
         if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
+
+        ReproducirSonidos(); //Audio
     }
 
     void PlayerMovement() {
@@ -126,19 +144,28 @@ public class PlayerController : MonoBehaviour
         
         if (input.inputHorizontal > 0){
             _animator.SetBool("IsRunning", true);
+           
+
             if (playerDirection == "left") {
                 playerRotation = -180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "right";
+                
             }
         } else if (input.inputHorizontal < 0) {
             _animator.SetBool("IsRunning", true);
+            
+
             if (playerDirection == "right") {
                 playerRotation = 180f;
                 this.transform.Rotate(Vector3.up, playerRotation);
                 playerDirection = "left";
+                
+                
             }
-        }else if(input.inputHorizontal==0) _animator.SetBool("IsRunning", false);
+        }else if(input.inputHorizontal==0) _animator.SetBool("IsRunning", false); 
+        
+      
 
         Vector3 totalMovement = movement * Time.deltaTime; 
         characterController.Move(totalMovement*playerVel);
@@ -201,7 +228,28 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsJumping", true);
             //_animator.SetBool("IsJumpingFrog", true;)
         }if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
+        
+        
+        
+         if (jumpClip != null) //Audio
+        {
+            audioSource.Stop(); // Por si se están reproduciendo pasos
+            audioSource.clip = jumpClip;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+        
+        
+        
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
+
+         if (doubleJumpClip != null) //Audio
+        {
+            audioSource.Stop();
+            audioSource.clip = doubleJumpClip;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
     }
@@ -320,4 +368,39 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, Vector3.up*_rayUpSize);
         Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
+
+    void ReproducirSonidos() //Audio
+{
+    // Sonido al caminar
+    if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
+    {
+        if (!audioSource.isPlaying || audioSource.clip != pasosClip)
+        {
+            audioSource.clip = pasosClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+    else if (audioSource.clip == pasosClip && audioSource.isPlaying)
+    {
+        audioSource.Stop();
+    }
+
+    // Sonido al aterrizar
+    if (!wasGrounded && IsGrounded())
+    {
+        if (landingClip != null)
+        {
+            audioSource.Stop(); // Detén cualquier sonido previo
+            audioSource.clip = landingClip;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+    }
+
+    wasGrounded = IsGrounded();
+}
+
+
+   
 }

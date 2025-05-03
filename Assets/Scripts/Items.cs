@@ -19,6 +19,8 @@ public class Items : MonoBehaviour
     [SerializeField] public bool dead=false;
     private Vector3 initialCranePosition;
 
+    [SerializeField] AudioClip sonidoGrulla;
+
    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
         PlayerController.OnGround += Grounded;
@@ -68,6 +70,7 @@ public class Items : MonoBehaviour
                     break;
                 case "Crane":
                     collectingCrane=true;
+                     AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position);
 
                     break;
                 case "FrogUnlock":

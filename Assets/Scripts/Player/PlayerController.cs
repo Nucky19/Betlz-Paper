@@ -70,13 +70,13 @@ public class PlayerController : MonoBehaviour
 
     //SFX
     
-//    [SerializeField] private AudioSource audioSource;
-//     [SerializeField] private AudioClip pasosClip;
-//     [SerializeField] private AudioClip landingClip;
-//     [SerializeField] private AudioClip jumpClip;
-//     [SerializeField] private AudioClip doubleJumpClip;
+   [SerializeField] private AudioSource audioSource;
+   [SerializeField] private AudioClip pasosClip;
+   [SerializeField] private AudioClip landingClip;
+   [SerializeField] private AudioClip jumpClip;
+   [SerializeField] private AudioClip doubleJumpClip;
 
-//     private bool wasGrounded = true;
+     private bool wasGrounded = true;
 
     
     
@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
 
-        // ReproducirSonidos(); //Audio
+         ReproducirSonidos(); //Audio
     }
 
     void PlayerMovement() {
@@ -231,27 +231,45 @@ public class PlayerController : MonoBehaviour
         
         
         
-        //  if (jumpClip != null) //Audio
-        // {
+        //   if (jumpClip != null) //Audio
+        //  {
         //     audioSource.Stop(); // Por si se están reproduciendo pasos
         //     audioSource.clip = jumpClip;
         //     audioSource.loop = false;
         //     audioSource.Play();
-        // }
+        //  }
         
         
         
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
 
-        //  if (doubleJumpClip != null) //Audio
-        // {
-        //     audioSource.Stop();
-        //     audioSource.clip = doubleJumpClip;
-        //     audioSource.loop = false;
-        //     audioSource.Play();
-        // }
+        //   if (doubleJumpClip != null) //Audio
+        //  {
+        //      audioSource.Stop();
+        //      audioSource.clip = doubleJumpClip;
+        //      audioSource.loop = false;
+        //      audioSource.Play();
+        //  }
+
+
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
+
+         if (jumpClip != null) //Audio
+         {
+            audioSource.Stop(); // Por si se están reproduciendo pasos
+            audioSource.clip = jumpClip;
+             audioSource.loop = false;
+            audioSource.Play();
+          }
+
+           if (doubleJumpClip != null) //Audio
+          {
+              audioSource.Stop();
+              audioSource.clip = doubleJumpClip;
+              audioSource.loop = false;
+              audioSource.Play();
+        }
     }
 
     bool IsGrounded(){
@@ -369,37 +387,37 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(_sensorPosition.position, Vector3.down*_rayDownSize);
     }
 
-//     void ReproducirSonidos() //Audio
-// {
-//     // Sonido al caminar
-//     if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
-//     {
-//         if (!audioSource.isPlaying || audioSource.clip != pasosClip)
-//         {
-//             audioSource.clip = pasosClip;
-//             audioSource.loop = true;
-//             audioSource.Play();
-//         }
-//     }
-//     else if (audioSource.clip == pasosClip && audioSource.isPlaying)
-//     {
-//         audioSource.Stop();
-//     }
+    void ReproducirSonidos() //Audio
+{
+    // Sonido al caminar
+    if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
+    {
+        if (!audioSource.isPlaying || audioSource.clip != pasosClip)
+        {
+            audioSource.clip = pasosClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+    else if (audioSource.clip == pasosClip && audioSource.isPlaying)
+    {
+        audioSource.Stop();
+    }
 
-//     // Sonido al aterrizar
-//     if (!wasGrounded && IsGrounded())
-//     {
-//         if (landingClip != null)
-//         {
-//             audioSource.Stop(); // Detén cualquier sonido previo
-//             audioSource.clip = landingClip;
-//             audioSource.loop = false;
-//             audioSource.Play();
-//         }
-//     }
+    // Sonido al aterrizar
+    if (!wasGrounded && IsGrounded())
+    {
+        if (landingClip != null)
+        {
+            audioSource.Stop(); // Detén cualquier sonido previo
+            audioSource.clip = landingClip;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+    }
 
-//     wasGrounded = IsGrounded();
-// }
+    wasGrounded = IsGrounded();
+}
 
 
    

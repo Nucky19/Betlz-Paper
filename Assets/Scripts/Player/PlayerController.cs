@@ -229,28 +229,8 @@ public class PlayerController : MonoBehaviour
             //_animator.SetBool("IsJumpingFrog", true;)
         }if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
         
-        
-        
-        //   if (jumpClip != null) //Audio
-        //  {
-        //     audioSource.Stop(); // Por si se están reproduciendo pasos
-        //     audioSource.clip = jumpClip;
-        //     audioSource.loop = false;
-        //     audioSource.Play();
-        //  }
-        
-        
-        
+    
         else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
-
-        //   if (doubleJumpClip != null) //Audio
-        //  {
-        //      audioSource.Stop();
-        //      audioSource.clip = doubleJumpClip;
-        //      audioSource.loop = false;
-        //      audioSource.Play();
-        //  }
-
 
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;

@@ -7,6 +7,6 @@ public class EpilogoTrigger : MonoBehaviour
 {
 
    void OnTriggerEnter(Collider collider){
-        if (collider.gameObject.CompareTag("Player")) SceneManager.LoadScene("Epilogo");
+        if (collider.gameObject.CompareTag("Player")) SceneManager.LoadScene("Level3");
    }
 }

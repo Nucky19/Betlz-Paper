@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public static event Action<bool> OnFrog;
     
     [SerializeField] public bool _isFrog =false;
-    [SerializeField] public float _FrogVel=2f;
+    [SerializeField] public float _FrogVel=2.7f;
     [SerializeField] private float _FrogJumpForce=15f;
     [SerializeField] private bool _frogJumpComplete =false;
 

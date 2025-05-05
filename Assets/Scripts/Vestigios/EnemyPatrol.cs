@@ -19,8 +19,13 @@ public class EnemyPatrol : MonoBehaviour
     private Quaternion startRotation;
     private Coroutine patrolRoutine;
 
-    void Start()
-    {
+    
+
+    void OnEnable(){
+        PlayerStates.OnDeath += HandlePlayerDeath;
+
+        if (patrolRoutine != null) StopCoroutine(patrolRoutine);
+
         if (startFromPointB)
         {
             startPosition = pointB.position;
@@ -34,11 +39,15 @@ public class EnemyPatrol : MonoBehaviour
 
         startRotation = transform.rotation;
         transform.position = startPosition;
+
         patrolRoutine = StartCoroutine(PatrolRoutine());
     }
 
-    private void OnEnable() => PlayerStates.OnDeath += HandlePlayerDeath;
-    private void OnDisable() => PlayerStates.OnDeath -= HandlePlayerDeath;
+    void OnDisable(){
+        PlayerStates.OnDeath -= HandlePlayerDeath;
+        if (patrolRoutine != null) StopCoroutine(patrolRoutine);
+    }
+
 
     private void HandlePlayerDeath(int screen, bool death)
     {

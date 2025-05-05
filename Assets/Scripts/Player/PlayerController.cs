@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponentInChildren<Animator>();
 
+        //audioSource = GetComponent<AudioSource>();
+
        
 
         

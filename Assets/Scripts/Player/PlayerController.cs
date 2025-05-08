@@ -122,6 +122,10 @@ public class PlayerController : MonoBehaviour
     void Update(){
         PlayerMovement();
         if (input.jump && IsGrounded()) { 
+            if (_audio.isPlaying && _audio.clip == pasosClip)
+            {
+                _audio.Stop();  // Detenemos el sonido de caminar si está en reproducción
+            }
             _audio.PlayOneShot(jumpClip, 0.7F);//audio
             
             jumpParticles.PlayJumpEffect(); //Particulas
@@ -187,6 +191,7 @@ public class PlayerController : MonoBehaviour
     void InAir(bool inAir){
         if (inAir) { 
             if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+                jumpParticles.PlayJumpEffect(); //Particulas
                 _animator.SetTrigger("IsDoubleJumping");
                 OnPlayerDoubleJump(false);
                 state.DoubleJumpHitBox(true);
@@ -248,21 +253,28 @@ public class PlayerController : MonoBehaviour
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
 
-         if (jumpClip != null) //Audio
-         {
-            _audio.Stop(); // Por si se están reproduciendo pasos
-            _audio.clip = jumpClip;
-            _audio.loop = false;
-            _audio.Play();
-          }
+        
+        
+        
+         if (!_doubleJump && doubleJumpClip != null) {
+        _audio.Stop();  // Detenemos cualquier sonido previo
+        _audio.clip =doubleJumpClip;
+        _audio.loop = false;
+        _audio.Play();
+    }
 
-           if (doubleJumpClip != null) //Audio
-          {
-              _audio.Stop();
-              _audio.clip = doubleJumpClip;
-              _audio.loop = false;
-              _audio.Play();
-        }
+          if (_doubleJump && jumpClip != null) {
+        _audio.Stop();  // Detenemos cualquier sonido previo
+        _audio.clip = jumpClip;
+        _audio.loop = false;
+        _audio.Play();
+    }
+   
+   
+   
+   
+   
+   
     }
 
     bool IsGrounded(){

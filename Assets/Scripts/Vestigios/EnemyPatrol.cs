@@ -64,21 +64,27 @@ public class EnemyPatrol : MonoBehaviour
     {
         while (true)
         {
-            while (Vector3.Distance(transform.position, target.position) > 0.1f)
+            while (Vector3.Distance(transform.position, target.position) > 0.05f)
             {
                 Vector3 direction = (target.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
+                float step = speed * Time.deltaTime;
+                Vector3 nextPosition = transform.position + direction * step;
+
+                // Si el siguiente paso va a pasar el objetivo, ajusta la posición directamente
+                if (Vector3.Distance(nextPosition, target.position) < step)
+                {
+                    transform.position = target.position;
+                    break;
+                }
+
+                transform.position = nextPosition;
 
                 // Rotación solo en eje relevante
                 Vector3 lookDir = direction;
                 if (patrolAxis == PatrolAxis.Horizontal)
-                {
                     lookDir = new Vector3(direction.x, 0, 0);
-                }
                 else if (patrolAxis == PatrolAxis.Vertical)
-                {
                     lookDir = new Vector3(0, direction.y, 0);
-                }
 
                 if (lookDir != Vector3.zero)
                 {
@@ -89,7 +95,11 @@ public class EnemyPatrol : MonoBehaviour
                 yield return null;
             }
 
+            // Asegúrate de que el enemigo esté exactamente en el objetivo antes de esperar
+            transform.position = target.position;
             yield return new WaitForSeconds(waitTime);
+            
+            // Cambia al siguiente objetivo
             target = target == pointA ? pointB : pointA;
         }
     }

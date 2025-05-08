@@ -122,12 +122,15 @@ public class PlayerController : MonoBehaviour
     void Update(){
         PlayerMovement();
         if (input.jump && IsGrounded()) { 
+            _audio.PlayOneShot(jumpClip, 0.7F);//audio
+            
             jumpParticles.PlayJumpEffect(); //Particulas
-            _audio.PlayOneShot(jumpClip, 0.7F); //audio
+            
             
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
                 _frogJumpComplete = true;
+                //Poner sonido de rana cuando este
             }
             else if (!_isFrog) Jump(_jumpForce); 
         }

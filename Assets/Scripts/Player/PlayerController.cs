@@ -70,13 +70,18 @@ public class PlayerController : MonoBehaviour
 
     //SFX
     
-   [SerializeField] private AudioSource audioSource;
+   [SerializeField] private AudioSource _audio;
    [SerializeField] private AudioClip pasosClip;
    [SerializeField] private AudioClip landingClip;
    [SerializeField] private AudioClip jumpClip;
    [SerializeField] private AudioClip doubleJumpClip;
 
      private bool wasGrounded = true;
+
+
+     //Particles
+
+     public JumpParticles jumpParticles;
 
     
     
@@ -105,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponentInChildren<Animator>();
 
-        //audioSource = GetComponent<AudioSource>();
+       _audio = GetComponent<AudioSource>(); //Audio
 
        
 
@@ -116,7 +121,10 @@ public class PlayerController : MonoBehaviour
     }
     void Update(){
         PlayerMovement();
-        if (input.jump && IsGrounded()) {
+        if (input.jump && IsGrounded()) { 
+            jumpParticles.PlayJumpEffect(); //Particulas
+            _audio.PlayOneShot(jumpClip, 0.7F); //audio
+            
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
                 _frogJumpComplete = true;
@@ -239,18 +247,18 @@ public class PlayerController : MonoBehaviour
 
          if (jumpClip != null) //Audio
          {
-            audioSource.Stop(); // Por si se están reproduciendo pasos
-            audioSource.clip = jumpClip;
-             audioSource.loop = false;
-            audioSource.Play();
+            _audio.Stop(); // Por si se están reproduciendo pasos
+            _audio.clip = jumpClip;
+            _audio.loop = false;
+            _audio.Play();
           }
 
            if (doubleJumpClip != null) //Audio
           {
-              audioSource.Stop();
-              audioSource.clip = doubleJumpClip;
-              audioSource.loop = false;
-              audioSource.Play();
+              _audio.Stop();
+              _audio.clip = doubleJumpClip;
+              _audio.loop = false;
+              _audio.Play();
         }
     }
 
@@ -374,16 +382,17 @@ public class PlayerController : MonoBehaviour
     // Sonido al caminar
     if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
     {
-        if (!audioSource.isPlaying || audioSource.clip != pasosClip)
+        if (!_audio.isPlaying || _audio.clip != pasosClip)
         {
-            audioSource.clip = pasosClip;
-            audioSource.loop = true;
-            audioSource.Play();
+            
+            _audio.clip = pasosClip;
+            _audio.loop = true;
+           _audio.Play();
         }
     }
-    else if (audioSource.clip == pasosClip && audioSource.isPlaying)
+    else if (_audio.clip == pasosClip && _audio.isPlaying)
     {
-        audioSource.Stop();
+        _audio.Stop();
     }
 
     // Sonido al aterrizar
@@ -391,10 +400,10 @@ public class PlayerController : MonoBehaviour
     {
         if (landingClip != null)
         {
-            audioSource.Stop(); // Detén cualquier sonido previo
-            audioSource.clip = landingClip;
-            audioSource.loop = false;
-            audioSource.Play();
+            _audio.Stop(); // Detén cualquier sonido previo
+            _audio.clip = landingClip;
+            _audio.loop = false;
+            _audio.Play();
         }
     }
 

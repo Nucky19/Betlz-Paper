@@ -76,6 +76,9 @@ public class PlayerController : MonoBehaviour
    [SerializeField] private AudioClip jumpClip;
    [SerializeField] private AudioClip doubleJumpClip;
 
+    [SerializeField] private AudioClip frogJumpClip;
+
+
      private bool wasGrounded = true;
 
 
@@ -133,6 +136,7 @@ public class PlayerController : MonoBehaviour
             
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
+                 _audio.PlayOneShot(frogJumpClip, 0.7F);
                 _frogJumpComplete = true;
                 //Poner sonido de rana cuando este
             }

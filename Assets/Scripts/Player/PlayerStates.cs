@@ -17,6 +17,10 @@ public class PlayerStates : MonoBehaviour
     [SerializeField] private BoxCollider playerHitbox;
     private int ActualScreen;
 
+    [SerializeField] private AudioSource _audio;
+
+    [SerializeField] private AudioClip deathClip;
+
     void OnEnable(){
         ScreenTrigger.OnScreen += InScreen;
         Traps.OnTrapContact += Die;
@@ -34,6 +38,8 @@ public class PlayerStates : MonoBehaviour
     void Awake(){
         player = GetComponent<PlayerController>();
         SetNormalModel();
+
+         _audio = GetComponent<AudioSource>();
     }
     
     // void OnTriggerEnter(Collider collider){
@@ -116,8 +122,10 @@ public class PlayerStates : MonoBehaviour
 
     public void Die(){
         // Debug.Log("AAAAAAAAAAAAAAAAAAAAAA");
+        
         if (!_isDeath){
             _isDeath = true;
+            _audio.PlayOneShot(deathClip, 0.7F);
             OnDeath?.Invoke(ActualScreen, true); 
         }
     }

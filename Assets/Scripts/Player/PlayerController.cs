@@ -76,12 +76,17 @@ public class PlayerController : MonoBehaviour
    [SerializeField] private AudioClip jumpClip;
    [SerializeField] private AudioClip doubleJumpClip;
 
+    [SerializeField] private AudioClip frogJumpClip;
+
+
      private bool wasGrounded = true;
 
 
      //Particles
 
      public JumpParticles jumpParticles;
+
+   
 
     
     
@@ -124,7 +129,7 @@ public class PlayerController : MonoBehaviour
         if (input.jump && IsGrounded()) { 
             if (_audio.isPlaying && _audio.clip == pasosClip)
             {
-                _audio.Stop();  // Detenemos el sonido de caminar si está en reproducción
+                _audio.Stop();  
             }
             _audio.PlayOneShot(jumpClip, 0.7F);//audio
             
@@ -133,8 +138,9 @@ public class PlayerController : MonoBehaviour
             
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
+                 _audio.PlayOneShot(frogJumpClip, 0.7F);
                 _frogJumpComplete = true;
-                //Poner sonido de rana cuando este
+                
             }
             else if (!_isFrog) Jump(_jumpForce); 
         }
@@ -197,6 +203,8 @@ public class PlayerController : MonoBehaviour
                 state.DoubleJumpHitBox(true);
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
+
+                
             }
             
             if(!_doubleJump && Input.GetButtonDown("Jump")) _bufferTimer=_bufferTime;
@@ -214,6 +222,7 @@ public class PlayerController : MonoBehaviour
             }
             _doubleJump=true;
             OnPlayerDoubleJump(true);
+
             if (!_isFrog && _doubleJump) {
                 playerVel=playerVelConstant;
                 state.DoubleJumpHitBox(false);
@@ -270,9 +279,7 @@ public class PlayerController : MonoBehaviour
         _audio.Play();
     }
    
-   
-   
-   
+        
    
    
     }

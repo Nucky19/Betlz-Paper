@@ -94,7 +94,7 @@ public class Items : MonoBehaviour
                     break;
                 case "Crane":
                     collectingCrane=true;
-                     AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position); //Sonido
+                    AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position); //Sonido
 
                     break;
                 case "FrogUnlock":

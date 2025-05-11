@@ -112,11 +112,12 @@ public class PlayerStates : MonoBehaviour
         if(OnJump){
             playerHitbox.size = new Vector3(1.172319f, 2.05f, 1.37f);
             playerHitbox.center = new Vector3(0f, 1.0f, 0f);
+            player._rayUpSize = 2.86f;
 
         }else{
             playerHitbox.size = new Vector3(1.172319f, 4.891592f, 0.9461098f);
             playerHitbox.center = new Vector3(0f, 1.0f, 0f);
-
+            player._rayUpSize = 4.15f;
         }
     }
 

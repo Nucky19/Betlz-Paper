@@ -15,6 +15,10 @@ public class DeathTransition : MonoBehaviour
         PlayerStates.OnRespawn -= HandleRespawn;
     }
     
+    void Start(){
+        deathCanvas.SetActive(true);
+    }
+
     void HandleRespawn(int screen, bool death){
         deathPanelAnimator.SetTrigger("PlayTransition");
     }

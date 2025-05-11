@@ -20,7 +20,21 @@ public class Items : MonoBehaviour
     [SerializeField] public bool dead=false;
     private Vector3 initialCranePosition;
 
+    //SFX
+
     [SerializeField] AudioClip sonidoGrulla;
+
+    [SerializeField] AudioClip sonidoGrullaObtencionDef;
+
+    [SerializeField] AudioClip sonidoRecoleccionRana;
+
+
+
+    [SerializeField] AudioClip sonidoMariposa;
+
+    // [SerializeField] private AudioSource _audio;
+    
+
 
    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
@@ -53,7 +67,14 @@ public class Items : MonoBehaviour
 
         player = FindObjectOfType<PlayerController>();
         if (crane != null) initialCranePosition = crane.transform.position;
+   
+   
+        // _audio = GetComponent<AudioSource>();
+   
     }
+
+
+    
 
     void Update(){
         if(collectingCrane) GetCrane(isGrounded);
@@ -67,15 +88,17 @@ public class Items : MonoBehaviour
                 case "JumpReset":
                     if (!doubleJumpAvaiable) {
                         player._doubleJump = true;
+                        AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
                         StartCoroutine(DisableTemporarily(gameObject, 1.25f));
                     }
                     break;
                 case "Crane":
                     collectingCrane=true;
-                     AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position);
+                     AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position); //Sonido
 
                     break;
                 case "FrogUnlock":
+                    AudioSource.PlayClipAtPoint(sonidoRecoleccionRana, transform.position); //Sonido
                     OnFrogUnlock?.Invoke();
                     gameObject.SetActive(false);
                     break;
@@ -98,9 +121,11 @@ public class Items : MonoBehaviour
         if(ground && !inCraneArea){
             Debug.Log("Craned 2");
             gameObject.SetActive(false);
+            AudioSource.PlayClipAtPoint(sonidoGrullaObtencionDef, transform.position); //Sonido
             collectingCrane=false;
             OnCraneCollect?.Invoke();
             dead=false;
+            
         }
     }
 

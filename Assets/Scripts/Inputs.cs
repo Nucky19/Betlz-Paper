@@ -10,6 +10,8 @@ public class Inputs : MonoBehaviour
     public bool jump;
     public bool firstTransformation;
     private bool frogAvaiable=false;
+
+
     void OnEnable(){
         Items.OnFrogUnlock+=UnlockFrog;
     }
@@ -19,7 +21,7 @@ public class Inputs : MonoBehaviour
     void HandleInput(){
         inputHorizontal=Input.GetAxisRaw("Horizontal");
         jump=Input.GetButtonDown("Jump");
-        if(frogAvaiable) firstTransformation=Input.GetKeyDown("z") || Input.GetKeyDown("k");  
+        if(frogAvaiable) firstTransformation=Input.GetKeyDown("z") || Input.GetKeyDown("k");    
         if(Input.GetKey("r") && Input.GetKey("q")) SceneManager.LoadScene("MainMenu");
     }
     
@@ -29,4 +31,6 @@ public class Inputs : MonoBehaviour
     void UnlockFrog(){
         frogAvaiable=true;
     }
+
+    
 }

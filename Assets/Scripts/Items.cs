@@ -22,6 +22,11 @@ public class Items : MonoBehaviour
 
     [SerializeField] AudioClip sonidoGrulla;
 
+    [SerializeField] AudioClip sonidoGrullaObtencionDef;
+
+    [SerializeField] AudioClip sonidoMariposa
+    ;
+
    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
         PlayerController.OnGround += Grounded;
@@ -67,6 +72,7 @@ public class Items : MonoBehaviour
                 case "JumpReset":
                     if (!doubleJumpAvaiable) {
                         player._doubleJump = true;
+                        AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position);
                         StartCoroutine(DisableTemporarily(gameObject, 1.25f));
                     }
                     break;
@@ -97,6 +103,7 @@ public class Items : MonoBehaviour
         crane.transform.position=Vector3.MoveTowards(crane.transform.position, playerObject.transform.position, speed);
         if(ground && !inCraneArea){
             Debug.Log("Craned 2");
+            AudioSource.PlayClipAtPoint(sonidoGrullaObtencionDef, transform.position);
             gameObject.SetActive(false);
             collectingCrane=false;
             OnCraneCollect?.Invoke();

@@ -124,8 +124,10 @@ public class PlayerStates : MonoBehaviour
         // Debug.Log("AAAAAAAAAAAAAAAAAAAAAA");
         
         if (!_isDeath){
+            // _audio.Stop();
+            // _audio.PlayOneShot(deathClip, 0.7F);
+            // _audio.Play();
             _isDeath = true;
-            _audio.PlayOneShot(deathClip, 0.7F);
             OnDeath?.Invoke(ActualScreen, true); 
         }
     }
@@ -141,16 +143,7 @@ public class PlayerStates : MonoBehaviour
     IEnumerator DelayedRespawn() {
         // Esperamos 1 segundo
         yield return new WaitForSeconds(1f);
-
-        // Ahora, disparamos el evento de respawn
         OnRespawnItem?.Invoke(ActualScreen, false);  // Notifica a los suscriptores que el jugador ha respawneado
-
-        // También actualizamos el estado de los objetos Items
-        // Items[] items = FindObjectsOfType<Items>();  // Encontrar todos los objetos Items en la escena
-        // foreach (Items item in items)
-        // {
-        //     item.SetDeadFalse();  // Restablecer el estado 'dead' en cada objeto Items
-        // }
     }
 
     void InScreen(int screen){

@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour
     // void OnDisable(){
     //     PlayerStates.OnFrogUnlock-=UnlockFrog();
     // }
-
+    [SerializeField] private AudioSource _movementAudio;
+    [SerializeField] private AudioSource _jumpAudio;
     void Start(){
         Application.targetFrameRate = 60; //Capar a 60fps el juego;
     }
@@ -116,9 +117,10 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
 
        _audio = GetComponent<AudioSource>(); //Audio
+    //    _movementAudio = GetComponent<AudioSource>(); //Audio
+    //    _jumpAudio = GetComponent<AudioSource>(); //Audio
 
-       
-
+        
         
     }
     public void SetAnimator(Animator newAnimator){
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour
             
             if (_isFrog && !_frogJumpComplete){
                 Jump(_FrogJumpForce); 
-                 _audio.PlayOneShot(frogJumpClip, 0.7F);
+                _jumpAudio.PlayOneShot(frogJumpClip, 0.7F);
                 _frogJumpComplete = true;
                 
             }
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
         if(!IsGrounded()) CheckRoof();
         CheckPassablePlatform();
 
-         ReproducirSonidos(); //Audio
+        ReproducirSonidos(); //Audio
     }
 
     void PlayerMovement() {
@@ -203,8 +205,6 @@ public class PlayerController : MonoBehaviour
                 state.DoubleJumpHitBox(true);
                 _doubleJump=false;
                 Jump(_doubleJumpForce);
-
-                
             }
             
             if(!_doubleJump && Input.GetButtonDown("Jump")) _bufferTimer=_bufferTime;
@@ -254,34 +254,17 @@ public class PlayerController : MonoBehaviour
         if(_doubleJump) {
             _animator.SetBool("IsJumping", true);
             //_animator.SetBool("IsJumpingFrog", true;)
+            if (jumpClip != null) _jumpAudio.PlayOneShot(jumpClip);
         }if(!_isFrog && _doubleJump) playerVel=_playerVelJump;
         
-    
-        else if(!_isFrog && !_doubleJump) playerVel=_playerVelDoubleJump;
-
+        //hace el doble salto
+        else if(!_isFrog && !_doubleJump) {
+            playerVel=_playerVelDoubleJump;
+           if (doubleJumpClip != null) _jumpAudio.PlayOneShot(doubleJumpClip);
+        }
         _playerGravity.y = Mathf.Sqrt(jumpForce * -2 * _gravity);
         _bufferTimer=0;
 
-        
-        
-        
-         if (!_doubleJump && doubleJumpClip != null) {
-        _audio.Stop();  // Detenemos cualquier sonido previo
-        _audio.clip =doubleJumpClip;
-        _audio.loop = false;
-        _audio.Play();
-    }
-
-          if (_doubleJump && jumpClip != null) {
-        _audio.Stop();  // Detenemos cualquier sonido previo
-        _audio.clip = jumpClip;
-        _audio.loop = false;
-        _audio.Play();
-    }
-   
-        
-   
-   
     }
 
     bool IsGrounded(){
@@ -292,20 +275,6 @@ public class PlayerController : MonoBehaviour
         _groundLayer.value        
         );
     }
-
-    // bool IsGrounded() {
-    //     bool grounded = Physics.CheckBox(
-    //         _sensorPosition.position, 
-    //         new Vector3(_groundSensorX, _groundSensorY, _groundSensorZ),     
-    //         Quaternion.identity,      
-    //         _groundLayer.value        
-    //     );
-
-    //     if (grounded) _coyoteTimer = _coyoteTime; 
-    //     else _coyoteTimer -= Time.deltaTime; 
-
-    //     return _coyoteTimer > 0; 
-    // }
 
     void CheckMovement(){
         if (input.inputHorizontal == 0 && Mathf.Abs(characterController.velocity.y) < 0.01f && characterController.velocity.magnitude < 0.01f) {
@@ -403,33 +372,27 @@ public class PlayerController : MonoBehaviour
 {
     // Sonido al caminar
     if (IsGrounded() && Mathf.Abs(input.inputHorizontal) > 0.1f)
-    {
-        if (!_audio.isPlaying || _audio.clip != pasosClip)
         {
-            
-            _audio.clip = pasosClip;
-            _audio.loop = true;
-           _audio.Play();
+            if (!_movementAudio.isPlaying || _movementAudio.clip != pasosClip)
+            {
+                _movementAudio.clip = pasosClip;
+                _movementAudio.loop = true;
+                _movementAudio.Play();
+            }
         }
-    }
-    else if (_audio.clip == pasosClip && _audio.isPlaying)
-    {
-        _audio.Stop();
-    }
-
-    // Sonido al aterrizar
-    if (!wasGrounded && IsGrounded())
-    {
-        if (landingClip != null)
+        else if (_movementAudio.clip == pasosClip && _movementAudio.isPlaying)
         {
-            _audio.Stop(); // Detén cualquier sonido previo
-            _audio.clip = landingClip;
-            _audio.loop = false;
-            _audio.Play();
+            _movementAudio.Stop();
         }
-    }
 
-    wasGrounded = IsGrounded();
+        // Sonido al aterrizar
+        if (!wasGrounded && IsGrounded())
+        {
+            if (landingClip != null) _movementAudio.PlayOneShot(landingClip);
+        }
+
+        wasGrounded = IsGrounded();
+    
 }
 
 

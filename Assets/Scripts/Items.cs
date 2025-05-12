@@ -33,9 +33,11 @@ public class Items : MonoBehaviour
     [SerializeField] AudioClip sonidoMariposa;
 
     // [SerializeField] private AudioSource _audio;
+
+
+    //ParticulasDobleSalto
     
-
-
+   
    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
         PlayerController.OnGround += Grounded;
@@ -174,5 +176,8 @@ public class Items : MonoBehaviour
     // public void  SetDeadFalse() {
     //     dead = false;
     // }
+
+
+    
 
 }

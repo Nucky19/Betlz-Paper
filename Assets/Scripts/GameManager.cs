@@ -45,9 +45,6 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown("3")) SceneLoad("Level3");
     }
 
-
-   
-
     void OnEnable(){
         ScreenTrigger.OnScreen += HandleCameraChange;
         PlayerStates.OnDeath += Respawn;

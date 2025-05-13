@@ -137,9 +137,9 @@ public class PlayerStates : MonoBehaviour
         // Debug.Log("AAAAAAAAAAAAAAAAAAAAAA");
         
         if (!_isDeath){
-            // _audio.Stop();
-            // _audio.PlayOneShot(deathClip, 0.7F);
-            // _audio.Play();
+            _audio.Stop();
+            _audio.PlayOneShot(deathClip, 0.5F);
+            _audio.Play();
             _isDeath = true;
             OnDeath?.Invoke(ActualScreen, true); 
         }

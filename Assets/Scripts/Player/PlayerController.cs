@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
         _animator = GetComponentInChildren<Animator>();
 
-       _audio = GetComponent<AudioSource>(); //Audio
+    //    _audio = GetComponent<AudioSource>(); //Audio
     //    _movementAudio = GetComponent<AudioSource>(); //Audio
     //    _jumpAudio = GetComponent<AudioSource>(); //Audio
 
@@ -129,11 +129,9 @@ public class PlayerController : MonoBehaviour
     void Update(){
         PlayerMovement();
         if (input.jump && IsGrounded()) { 
-            if (_audio.isPlaying && _audio.clip == pasosClip)
-            {
-                _audio.Stop();  
-            }
-            _audio.PlayOneShot(jumpClip, 0.7F);//audio
+            if (_audio.isPlaying && _audio.clip == pasosClip)_audio.Stop();  
+            
+            _jumpAudio.PlayOneShot(jumpClip, 0.7F);//audio
             
             jumpParticles.PlayJumpEffect(); //Particulas
             

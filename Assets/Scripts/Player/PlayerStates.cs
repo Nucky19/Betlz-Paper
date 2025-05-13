@@ -20,6 +20,8 @@ public class PlayerStates : MonoBehaviour
     [SerializeField] private AudioSource _audio;
 
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip frogTransClip;
+    [SerializeField] private AudioClip frogClip;
 
     void OnEnable(){
         ScreenTrigger.OnScreen += InScreen;
@@ -39,7 +41,7 @@ public class PlayerStates : MonoBehaviour
         player = GetComponent<PlayerController>();
         SetNormalModel();
 
-         _audio = GetComponent<AudioSource>();
+        // _audio = GetComponent<AudioSource>();
     }
     
     // void OnTriggerEnter(Collider collider){
@@ -77,6 +79,11 @@ public class PlayerStates : MonoBehaviour
         player.playerVel = player._FrogVel;
         Debug.Log("IsFrog");
 
+        _audio.Stop();
+        _audio.PlayOneShot(frogTransClip, 0.7F);
+        Invoke(nameof(PlayFrogClip), frogTransClip.length);
+        _audio.Play();
+
         CharacterController characterController = player.GetComponent<CharacterController>();
 
         if (characterController != null){
@@ -96,6 +103,11 @@ public class PlayerStates : MonoBehaviour
             playerHitbox.size = new Vector3(3.38f, 1.22f, 0.9461098f);
             playerHitbox.center = new Vector3(0f, -0.68f, 0.26f);
         }
+    }
+
+    void PlayFrogClip(){
+        _audio.PlayOneShot(frogClip, 0.7F);
+        _audio.Play();
     }
 
     private void SetNormalModel(){
@@ -132,6 +144,8 @@ public class PlayerStates : MonoBehaviour
             OnDeath?.Invoke(ActualScreen, true); 
         }
     }
+
+    
 
     public void Respawn(){
         _isDeath = false;  // Marca que el jugador ha revivido

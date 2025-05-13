@@ -106,7 +106,7 @@ public class PlayerStates : MonoBehaviour
     }
 
     void PlayFrogClip(){
-        _audio.PlayOneShot(frogClip, 0.7F);
+        _audio.PlayOneShot(frogClip, 0.17F);
         _audio.Play();
     }
 

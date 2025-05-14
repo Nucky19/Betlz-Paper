@@ -81,7 +81,7 @@ public class PlayerStates : MonoBehaviour
 
         _audio.Stop();
         _audio.PlayOneShot(frogTransClip, 0.7F);
-        Invoke(nameof(PlayFrogClip), frogTransClip.length);
+        // Invoke(nameof(PlayFrogClip), frogTransClip.length);
         _audio.Play();
 
         CharacterController characterController = player.GetComponent<CharacterController>();

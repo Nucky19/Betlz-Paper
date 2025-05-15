@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private bool isPaused;
+    private bool pauseAnimation=false;
+    [SerializeField] GameObject _pauseCanvas;
+    [SerializeField] private Animator _pauseMenuAnimator;
     [SerializeField] int currentScreen;
     [SerializeField] Transform[] respawns; 
     [SerializeField] GameObject player; 
@@ -30,10 +34,12 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         hudCanvasGroup.alpha = 1; 
         Cursor.visible = false;
+        Time.timeScale=1;
     }
 
     void Awake(){
         Application.targetFrameRate = 60;
+        _pauseMenuAnimator=_pauseCanvas.GetComponentInChildren<Animator>();
         // player = GameObject.FindWithTag("Player");
         // Debug.Log(player.name); 
         // characterController = player.GetComponent<CharacterController>();
@@ -53,6 +59,7 @@ public class GameManager : MonoBehaviour
         PlatformCollisionDetector.OnCollisionContact += ResetCrushing;
         Items.OnCraneCollect += CraneCollect;
         ChangeSpawn.OnChangeSpawn += SpawnChange;
+        Inputs.OnPause += Pause;
         // CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
         
@@ -66,6 +73,7 @@ public class GameManager : MonoBehaviour
         PlatformCollisionDetector.OnCollisionContact -= ResetCrushing;
         Items.OnCraneCollect -= CraneCollect;
         ChangeSpawn.OnChangeSpawn -= SpawnChange;
+        Inputs.OnPause -= Pause;
         // CheckPoint.OnCheckPoint -=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged -= HandleHUDVisibility;
     }
@@ -75,8 +83,29 @@ public class GameManager : MonoBehaviour
     //     _spawnPoint = spawn;
     // }
 
-    void ReSpawn(int currentScreen, bool death)
-    {
+    public void Pause(){
+        if(!isPaused && !pauseAnimation) {
+            Cursor.visible = true;
+            isPaused=true;
+            StartCoroutine(ClosePauseAnimation());
+            // Time.timeScale=0;
+            _pauseCanvas.SetActive(true);
+        }else if(isPaused && !pauseAnimation){
+            Cursor.visible = false;
+            pauseAnimation=false;
+            Time.timeScale=1;
+            isPaused = false;
+            _pauseCanvas.SetActive(false);
+        }
+    }
+
+    IEnumerator ClosePauseAnimation(){
+        _pauseMenuAnimator.SetBool("close",true);
+        yield return new WaitForSecondsRealtime(0.15f);
+        Time.timeScale=0;
+    }
+
+    void ReSpawn(int currentScreen, bool death){
         transform.position = _spawnPoint;
     }
 
@@ -103,7 +132,12 @@ public class GameManager : MonoBehaviour
         currentScreen = cameraNumber;
     }
 
-    void Respawn(int screen, bool death){
+    public void RespawnPause(){
+        Respawn(currentScreen, true);
+        Pause();
+    }
+
+    public void Respawn(int screen, bool death){
         Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
         deadCount++;
         deadsText.text=deadCount.ToString();

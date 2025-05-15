@@ -8,9 +8,7 @@ public class NewBehaviourScript : MonoBehaviour
     [Header("Referencias")]
     public Image targetImage;             // Imagen que se va a animar
     public Sprite[] animationFrames;      // Lista de imágenes (frames de animación)
-
-    [Header("Configuración")]
-    public float frameInterval = 0.2f;    // Tiempo entre cada frame (en segundos)
+    public float[] frameDurations;        // Duración individual de cada frame
 
     private int currentFrame = 0;
     private float timer;
@@ -24,8 +22,16 @@ public class NewBehaviourScript : MonoBehaviour
             return;
         }
 
+        if (frameDurations == null || frameDurations.Length != animationFrames.Length)
+        {
+            Debug.LogWarning("Duraciones no asignadas correctamente. Se asignará duración por defecto (0.2s) a todos los frames.");
+            frameDurations = new float[animationFrames.Length];
+            for (int i = 0; i < frameDurations.Length; i++)
+                frameDurations[i] = 0.2f;
+        }
+
         targetImage.sprite = animationFrames[0];
-        timer = frameInterval;
+        timer = frameDurations[0];
     }
 
     void Update()
@@ -36,7 +42,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             currentFrame = (currentFrame + 1) % animationFrames.Length;
             targetImage.sprite = animationFrames[currentFrame];
-            timer = frameInterval;
+            timer = frameDurations[currentFrame];
         }
     }
 }

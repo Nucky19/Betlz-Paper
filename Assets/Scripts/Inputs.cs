@@ -12,6 +12,7 @@ public class Inputs : MonoBehaviour
     private bool frogAvaiable=false;
     public static event Action OnPause; 
 
+
     void OnEnable(){
         Items.OnFrogUnlock+=UnlockFrog;
     }
@@ -24,7 +25,7 @@ public class Inputs : MonoBehaviour
         if(frogAvaiable) firstTransformation=Input.GetKeyDown("z") || Input.GetKeyDown("k");    
         if(Input.GetKey("r") && Input.GetKey("q")) SceneManager.LoadScene("MainMenu");
         if(Input.GetKeyDown(KeyCode.Escape)) OnPause?.Invoke();
-
+        if(Input.GetKeyDown("3")) SceneManager.LoadScene("Level3");
     }
     
     void Update(){
@@ -33,6 +34,5 @@ public class Inputs : MonoBehaviour
     void UnlockFrog(){
         frogAvaiable=true;
     }
-
-    
+ 
 }

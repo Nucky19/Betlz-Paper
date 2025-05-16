@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private bool isPaused;
     private bool pauseAnimation=false;
     [SerializeField] GameObject _pauseCanvas;
+    private bool isExit;
+    [SerializeField] GameObject _exitCanvas;
     [SerializeField] private Animator _pauseMenuAnimator;
     [SerializeField] int currentScreen;
     [SerializeField] Transform[] respawns; 
@@ -48,7 +50,6 @@ public class GameManager : MonoBehaviour
 
     void Update(){
         if(Input.GetKeyDown("r")) Respawn(currentScreen, true);
-        if(Input.GetKeyDown("3")) SceneLoad("Level3");
     }
 
     void OnEnable(){
@@ -96,6 +97,18 @@ public class GameManager : MonoBehaviour
             Time.timeScale=1;
             isPaused = false;
             _pauseCanvas.SetActive(false);
+            isExit=true;
+            Exit();
+        }
+    }
+
+    public void Exit(){
+        if(!isExit){
+            isExit=true;
+            _exitCanvas.SetActive(true);
+        }else if(isExit){
+            isExit=false;
+            _exitCanvas.SetActive(false);
         }
     }
 

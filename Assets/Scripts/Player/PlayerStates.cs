@@ -157,15 +157,7 @@ public class PlayerStates : MonoBehaviour
 
     IEnumerator DelayedRespawn() {
         // Esperamos 1 segundo
-        Debug.Log("AAAAAAAAAAAAAAAAA");
-        Debug.Log("No Pausa");
         yield return new WaitForSeconds(1f);
-        Debug.Log("Puede Pausar");
-        Debug.Log("BBBBBBBBBBBBBBBBBB");
-        Debug.Log("BBBBBBBBBBBBBBBBBB");
-        Debug.Log("BBBBBBBBBBBBBBBBBB");
-        Debug.Log("BBBBBBBBBBBBBBBBBB");
-        Debug.Log("Puede Pausar");
         OnRespawnItem?.Invoke(ActualScreen, false);
     }
 

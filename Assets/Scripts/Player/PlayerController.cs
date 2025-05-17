@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
     void InAir(bool inAir){
         if (inAir) { 
-            if(_doubleJump==true && Input.GetButtonDown("Jump") && !_isFrog){
+            if(_doubleJump==true && input.jump && !_isFrog){
                 jumpParticles.PlayJumpEffect(); //Particulas
                 _animator.SetTrigger("IsDoubleJumping");
                 OnPlayerDoubleJump(false);

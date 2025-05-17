@@ -20,16 +20,31 @@ public class Inputs : MonoBehaviour
         Items.OnFrogUnlock-=UnlockFrog;
     }
     void HandleInput(){
-        inputHorizontal=Input.GetAxisRaw("Horizontal");
-        jump=Input.GetButtonDown("Jump");
-        if(frogAvaiable) firstTransformation=Input.GetKeyDown("z") || Input.GetKeyDown("k");    
+        // inputHorizontal=Input.GetAxisRaw("Horizontal");
+        float joystickHorizontal = Input.GetAxisRaw("Horizontal");
+        float dpadHorizontal = Input.GetAxisRaw("DPadHorizontal");
+        float dpadHorizontalAlt = Input.GetAxisRaw("DPadHorizontalAlt");
+        inputHorizontal = Mathf.Abs(joystickHorizontal) > 0.1f ? joystickHorizontal : Mathf.Abs(dpadHorizontal) > 0.1f ? dpadHorizontal : dpadHorizontalAlt;
+        jump = Input.GetButtonDown("Jump") || 
+        Input.GetKeyDown(KeyCode.JoystickButton0) ||  
+        Input.GetKeyDown(KeyCode.JoystickButton1) ||  
+        Input.GetKeyDown(KeyCode.JoystickButton2) ||  
+        Input.GetKeyDown(KeyCode.JoystickButton3); 
+        // if(frogAvaiable) firstTransformation=Input.GetKeyDown("z") || Input.GetKeyDown("k");    
+        if(frogAvaiable) firstTransformation = frogAvaiable && 
+            (Input.GetButtonDown("Transform") || 
+            Input.GetKeyDown(KeyCode.JoystickButton6) ||  // ZL
+            Input.GetKeyDown(KeyCode.Z) || 
+            Input.GetKeyDown(KeyCode.K));  
         if(Input.GetKey("r") && Input.GetKey("q")) SceneManager.LoadScene("MainMenu");
-        if(Input.GetKeyDown(KeyCode.Escape)) OnPause?.Invoke();
+        // if(Input.GetKeyDown(KeyCode.Escape)) OnPause?.Invoke();
+        if (Input.GetButtonDown("Pause")) OnPause?.Invoke();
         if(Input.GetKeyDown("3")) SceneManager.LoadScene("Level3");
     }
     
     void Update(){
         HandleInput();
+        Debug.Log($"Joystick: {Input.GetAxisRaw("Horizontal")} | DPad6: {Input.GetAxisRaw("DPadHorizontal")} | DPad7: {Input.GetAxisRaw("DPadHorizontalAlt")}");
     }
     void UnlockFrog(){
         frogAvaiable=true;

@@ -330,7 +330,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 77e350a5084dea04e9d0542c9a259274, type: 3}
   volume: 0.1
   loop: 1
-  persistBetweenScenes: 1
+  persistBetweenScenes: 0
 --- !u!4 &306019154
 Transform:
   m_ObjectHideFlags: 0

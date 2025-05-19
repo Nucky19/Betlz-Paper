@@ -21,14 +21,6 @@ public class NewCameraController : MonoBehaviour
 
     cameraToActive.SetActive(true);
   }
-
-
-
-
-
-
-
-
     private void OnTriggerEnter(Collider other)
     {
         

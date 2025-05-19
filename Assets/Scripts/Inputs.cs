@@ -38,13 +38,13 @@ public class Inputs : MonoBehaviour
             Input.GetKeyDown(KeyCode.K));  
         if(Input.GetKey("r") && Input.GetKey("q")) SceneManager.LoadScene("MainMenu");
         // if(Input.GetKeyDown(KeyCode.Escape)) OnPause?.Invoke();
-        if (Input.GetButtonDown("Pause")) OnPause?.Invoke();
+        if (Input.GetButtonDown("Pause") && SceneManager.GetActiveScene().name != "Prologo") OnPause?.Invoke();
         if(Input.GetKeyDown("3")) SceneManager.LoadScene("Level3");
     }
     
     void Update(){
         HandleInput();
-        Debug.Log($"Joystick: {Input.GetAxisRaw("Horizontal")} | DPad6: {Input.GetAxisRaw("DPadHorizontal")} | DPad7: {Input.GetAxisRaw("DPadHorizontalAlt")}");
+        // Debug.Log($"Joystick: {Input.GetAxisRaw("Horizontal")} | DPad6: {Input.GetAxisRaw("DPadHorizontal")} | DPad7: {Input.GetAxisRaw("DPadHorizontalAlt")}");
     }
     void UnlockFrog(){
         frogAvaiable=true;

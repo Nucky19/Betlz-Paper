@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     void Update(){
         if(Input.GetKeyDown("r")) Respawn(currentScreen, true);
+        if(Input.GetKeyDown("escape") && SceneManager.GetActiveScene().name=="Prologo") SceneLoad("Level1_Definitivo");
     }
 
     void OnEnable(){

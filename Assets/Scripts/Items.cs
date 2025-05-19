@@ -32,13 +32,16 @@ public class Items : MonoBehaviour
 
     [SerializeField] AudioClip sonidoMariposa;
 
+    [SerializeField] float disableTimeMariposa = 1.25f;
+    [SerializeField] private Animator mariposaAnimator;
+
     // [SerializeField] private AudioSource _audio;
 
 
     //ParticulasDobleSalto
-    
-   
-   void OnEnable(){
+
+
+    void OnEnable(){
         PlayerController.OnPlayerDoubleJump += DoubleJump;
         PlayerController.OnGround += Grounded;
         CraneArea.OnCraneArea += InCraneArea;
@@ -69,8 +72,8 @@ public class Items : MonoBehaviour
 
         player = FindObjectOfType<PlayerController>();
         if (crane != null) initialCranePosition = crane.transform.position;
-   
-   
+
+        mariposaAnimator = GetComponent<Animator>();
         // _audio = GetComponent<AudioSource>();
    
     }
@@ -91,7 +94,16 @@ public class Items : MonoBehaviour
                     if (!doubleJumpAvaiable) {
                         player._doubleJump = true;
                         AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
-                        StartCoroutine(DisableTemporarily(gameObject, 1.25f));
+                        StartCoroutine(DisableTemporarily(gameObject, disableTimeMariposa));
+                    }
+                    break;
+                case "JumpResetB":
+                    if (!doubleJumpAvaiable) {
+                        player._doubleJump = true;
+                        AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
+                        mariposaAnimator.SetTrigger("isBlue");
+                        Debug.Log("AZULAZULAZULAZULAZULAZULAZULAZUL");
+                        StartCoroutine(DisableTemporarilyHitBox(gameObject, disableTimeMariposa));
                     }
                     break;
                 case "Crane":
@@ -152,6 +164,18 @@ public class Items : MonoBehaviour
     
         if (meshRenderer) meshRenderer.enabled = true;
         if (skinnedRenderer) skinnedRenderer.enabled = true;
+        if (col) col.enabled = true;
+
+    }
+    IEnumerator DisableTemporarilyHitBox(GameObject obj, float time) {
+
+        Collider col = obj.GetComponent<Collider>();
+        if (col == null) col = obj.GetComponentInChildren<Collider>();
+
+        if (col) col.enabled = false;
+
+        yield return new WaitForSeconds(time);
+
         if (col) col.enabled = true;
 
     }

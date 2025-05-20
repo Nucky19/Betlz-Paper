@@ -126,21 +126,21 @@ public class PlayerStates : MonoBehaviour
             playerHitbox.size = new Vector3(1.172319f, 2.05f, 1.37f);
             playerHitbox.center = new Vector3(0f, 1.0f, 0f);
             player._rayUpSize = 2.86f;
-            if (characterController != null){
-            characterController.height = 0;
-            characterController.center = new Vector3(characterController.center.x, 0.56f, characterController.center.z);
-            characterController.radius = 0.37f;
+            // if (characterController != null){
+            // characterController.height = 0;
+            // characterController.center = new Vector3(characterController.center.x, 0.56f, characterController.center.z);
+            // characterController.radius = 0.37f;
         }
 
         }else{
             playerHitbox.size = new Vector3(1.172319f, 4.891592f, 0.9461098f);
             playerHitbox.center = new Vector3(0f, 1.0f, 0f);
             player._rayUpSize = 4.15f;
-            if (characterController != null){
-            characterController.height = 4.19f;
-            characterController.center = new Vector3(characterController.center.x, 1.0f, characterController.center.z);
-            characterController.radius = 0.37f;
-        }
+        //     if (characterController != null){
+        //     characterController.height = 4.19f;
+        //     characterController.center = new Vector3(characterController.center.x, 1.0f, characterController.center.z);
+        //     characterController.radius = 0.37f;
+        // }
         }
     }
 

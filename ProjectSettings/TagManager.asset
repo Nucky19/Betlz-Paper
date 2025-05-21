@@ -23,6 +23,7 @@ TagManager:
   - TransparencyZone
   - 175
   - JumpResetB
+  - ItemHitBox
   layers:
   - Default
   - TransparentFX

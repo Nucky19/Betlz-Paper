@@ -87,8 +87,42 @@ public class Items : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Level3") OnFrogUnlock?.Invoke();
     }
    
+
+//     public void HandleTriggerEnter(Collider collider) {
+//         if (!collider.gameObject.CompareTag("PlayerHitbox")) return;
+//  // Evita autocolisión
+        
+//         switch (collider.tag) {
+//             case "JumpReset":
+//                 if (!doubleJumpAvaiable) {
+//                     player._doubleJump = true;
+//                     AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position);
+//                     StartCoroutine(DisableTemporarily(collider.gameObject, disableTimeMariposa));
+//                 }
+//                 break;
+//             case "JumpResetB":
+//                 if (!doubleJumpAvaiable) {
+//                     player._doubleJump = true;
+//                     AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position);
+//                     mariposaAnimator.SetTrigger("isBlue");
+//                     StartCoroutine(DisableTemporarilyHitBox(collider.gameObject, disableTimeMariposa));
+//                 }
+//                 break;
+//             case "Crane":
+//                 collectingCrane = true;
+//                 AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position);
+//                 break;
+//             case "FrogUnlock":
+//                 AudioSource.PlayClipAtPoint(sonidoRecoleccionRana, transform.position);
+//                 OnFrogUnlock?.Invoke();
+//                 collider.gameObject.SetActive(false);
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
     void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.CompareTag("Player")) {
+        if (collider.gameObject.CompareTag("ItemHitBox")) {
             switch (gameObject.tag) {
                 case "JumpReset":
                     if (!doubleJumpAvaiable) {

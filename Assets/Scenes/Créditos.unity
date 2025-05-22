@@ -390,19 +390,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 0.7
-  displayDuration: 4
+  displayDuration: 2.7
   initialDelay: 1.7
   delayBetweenMessages: 2
   messages:
-  - "Se suele decir que la infancia es de las \xE9pocas m\xE1s bonitas de la vida,
-    pero para algunos no es del todo cierto. Muchos ni\xF1os no pudieron disfrutarla
-    por culpa de uno de los mayores enemigos de la sociedad: la ansiedad."
-  - " El miedo a ser juzgados, a ir a clase, al que dir\xE1n, ser diferente, son
-    situaciones que atraviesan muchos ni\xF1os."
-  - Esta es la historia de uno de ellos.
-  - "Cuenta la leyenda que si consigues un n\xFAmero suficiente de grullas de origami
-    podr\xE1s pedir un deseo."
-  - Avanza hasta el final.
+  - "No te rindas todav\xEDa"
+  - Ya queda poco
+  - "Yo te ayudar\xE9"
+  - Estamos a punto de lograrlo
+  - Estas cerca de pedir tu deseo
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:
@@ -426,7 +422,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 34e9450e6d8589b4ea1d883878dadf03, type: 3}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3

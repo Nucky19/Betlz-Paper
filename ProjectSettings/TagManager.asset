@@ -24,6 +24,7 @@ TagManager:
   - 175
   - JumpResetB
   - ItemHitBox
+  - CutterReset
   layers:
   - Default
   - TransparentFX

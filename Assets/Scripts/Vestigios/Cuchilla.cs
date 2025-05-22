@@ -50,7 +50,6 @@ public class Cuchilla : MonoBehaviour
 
     private void HandlePlayerDeath(int screen, bool death){
         if (!death) return;
-
    
         if (resetTriggerObject != null && !resetTriggerObject.activeSelf)
             resetTriggerObject.SetActive(true);

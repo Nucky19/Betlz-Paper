@@ -394,11 +394,11 @@ MonoBehaviour:
   initialDelay: 1.7
   delayBetweenMessages: 1.5
   messages:
-  - "No te rindas todav\xEDa"
-  - Ya queda poco
-  - "Yo te ayudar\xE9"
-  - Estamos a punto de lograrlo
-  - "Est\xE1s cerca de pedir tu deseo"
+  - Vaya, parece que esta vez no ha podido ser.
+  - Pero tu siempre vuelves a intentarlo.
+  - No te rindas.
+  - Coge aire.
+  - No dejes que la ansiedad te consuma.
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:

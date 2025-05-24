@@ -127,8 +127,8 @@ public class PlayerStates : MonoBehaviour
             playerHitbox.center = new Vector3(0f, 1.0f, 0f);
             player._rayUpSize = 2.86f;
             if (characterController != null){
-                characterController.height = 1.93f;
-                characterController.center = new Vector3(characterController.center.x, 1.0f, characterController.center.z);
+                characterController.height = 2.87f;
+                characterController.center = new Vector3(characterController.center.x, 0.12f, characterController.center.z);
                 characterController.radius = 0.37f;
             }
         }else{

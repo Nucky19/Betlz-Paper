@@ -390,15 +390,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 0.7
-  displayDuration: 2.7
+  displayDuration: 2.2
   initialDelay: 1.7
-  delayBetweenMessages: 2
+  delayBetweenMessages: 1.5
   messages:
   - "No te rindas todav\xEDa"
   - Ya queda poco
   - "Yo te ayudar\xE9"
   - Estamos a punto de lograrlo
-  - Estas cerca de pedir tu deseo
+  - "Est\xE1s cerca de pedir tu deseo"
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:
@@ -422,7 +422,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 34e9450e6d8589b4ea1d883878dadf03, type: 3}
-    m_FontSize: 40
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3

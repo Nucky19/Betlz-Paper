@@ -25,6 +25,7 @@ TagManager:
   - JumpResetB
   - ItemHitBox
   - CutterReset
+  - Cuchilla
   layers:
   - Default
   - TransparentFX

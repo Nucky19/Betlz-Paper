@@ -124,19 +124,18 @@ public class Items : MonoBehaviour
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("ItemHitBox")) {
             switch (gameObject.tag) {
-                case "JumpReset":
-                    if (!doubleJumpAvaiable) {
-                        player._doubleJump = true;
-                        AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
-                        StartCoroutine(DisableTemporarily(gameObject, disableTimeMariposa));
-                    }
-                    break;
+                // case "JumpReset":
+                //     if (!doubleJumpAvaiable) {
+                //         player._doubleJump = true;
+                //         AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
+                //         StartCoroutine(DisableTemporarily(gameObject, disableTimeMariposa));
+                //     }
+                //     break;
                 case "JumpResetB":
                     if (!doubleJumpAvaiable) {
                         player._doubleJump = true;
                         AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
                         mariposaAnimator.SetTrigger("isBlue");
-                        Debug.Log("AZULAZULAZULAZULAZULAZULAZULAZUL");
                         StartCoroutine(DisableTemporarilyHitBox(gameObject, disableTimeMariposa));
                     }
                     break;
@@ -157,6 +156,23 @@ public class Items : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("ItemHitBox"))
+        {
+            switch (gameObject.tag)
+            {
+                case "JumpReset":
+                    if (!doubleJumpAvaiable)
+                    {
+                        player._doubleJump = true;
+                        AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position); //Sonido
+                        StartCoroutine(DisableTemporarily(gameObject, disableTimeMariposa));
+                    }
+                    break;
+            }
+        }
+    }
     void GetCrane(bool ground){
         // Debug.Log("Craned");
         if (dead){

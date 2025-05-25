@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         hudCanvasGroup.alpha = 1;
         Cursor.visible = false;
         Time.timeScale = 1;
-        craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
+        // craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
         
     }
 
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
     public void Respawn(int screen, bool death){
         Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
         deadCount++;
-        GlobalGameManager.Instance.globalDeadCount++;
+        // GlobalGameManager.Instance.globalDeadCount++;
         deadsText.text=deadCount.ToString();
         if (death && screen >= 0 && screen < respawns.Length){
             if (characterController != null){

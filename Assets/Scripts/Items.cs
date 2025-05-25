@@ -84,7 +84,7 @@ public class Items : MonoBehaviour
     void Update(){
         if(collectingCrane) GetCrane(isGrounded);
         if(Input.GetKeyDown("f")) OnFrogUnlock?.Invoke();
-        if (SceneManager.GetActiveScene().name == "Level3") OnFrogUnlock?.Invoke();
+        if (SceneManager.GetActiveScene().name == "Level3" || SceneManager.GetActiveScene().name == "Final") OnFrogUnlock?.Invoke();
     }
    
 

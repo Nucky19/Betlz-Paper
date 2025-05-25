@@ -29,28 +29,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup hudCanvasGroup; 
     [SerializeField] private Vector3 _spawnPoint;
 
-    public static event Action<string> OnLoadScene; 
+    public static event Action<string> OnLoadScene;
 
-    void Start(){
+    void Start()
+    {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
-        hudCanvasGroup.alpha = 1; 
+        hudCanvasGroup.alpha = 1;
         Cursor.visible = false;
-        Time.timeScale=1;
+        Time.timeScale = 1;
+        craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
+        
     }
 
-    void Awake(){
+    void Awake()
+    {
         Application.targetFrameRate = 60;
-        _pauseMenuAnimator=_pauseCanvas.GetComponentInChildren<Animator>();
+        _pauseMenuAnimator = _pauseCanvas.GetComponentInChildren<Animator>();
         // player = GameObject.FindWithTag("Player");
         // Debug.Log(player.name); 
         // characterController = player.GetComponent<CharacterController>();
 
     }
 
-    void Update(){
-        if(Input.GetKeyDown("r")) Respawn(currentScreen, true);
-        if(Input.GetKeyDown("escape") && SceneManager.GetActiveScene().name=="Prologo") SceneLoad("Level1_Definitivo");
+    void Update()
+    {
+        if (Input.GetKeyDown("r")) Respawn(currentScreen, true);
+        if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().name == "Prologo") SceneLoad("Level1_Definitivo");
+        
+        
     }
 
     void OnEnable(){
@@ -154,6 +161,7 @@ public class GameManager : MonoBehaviour
     public void Respawn(int screen, bool death){
         Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
         deadCount++;
+        GlobalGameManager.Instance.globalDeadCount++;
         deadsText.text=deadCount.ToString();
         if (death && screen >= 0 && screen < respawns.Length){
             if (characterController != null){
@@ -190,10 +198,12 @@ public class GameManager : MonoBehaviour
         panelImage.sprite = newHUDFrog;
     }
 
-    void CraneCollect(){
+    void CraneCollect()
+    {
         // Debug.Log("Collected");
-        craneCount++;
-        craneText.text=craneCount.ToString();
+        GlobalGameManager.Instance.globalCraneCount++;
+        // craneCount=GlobalGameManager.Instance.globalCraneCount;
+        craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
     }
 
     void SpawnChange(int spawnNum, Vector3 newSpawnPosition){

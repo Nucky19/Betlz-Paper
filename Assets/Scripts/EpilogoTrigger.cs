@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class EpilogoTrigger : MonoBehaviour
 {
+   [SerializeField] string sceneName;
 
    void OnTriggerEnter(Collider collider){
-        if (collider.gameObject.CompareTag("Player")) SceneManager.LoadScene("Level3");
+        if (collider.gameObject.CompareTag("Player")) SceneManager.LoadScene(sceneName);
    }
 }

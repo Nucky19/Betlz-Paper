@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Animacion_texto : MonoBehaviour
-{ public float fadeDuration = 0.5f; // Duración del fade in y fade out
+{ public float fadeDuration = 0.3f; // Duración del fade in y fade out
     public float displayDuration = 2.0f; // Tiempo que el mensaje estará en pantalla
     public float initialDelay = 1.0f; // Tiempo de espera antes de mostrar la primera frase
-    public float delayBetweenMessages = 1.0f; // Tiempo de espera entre frases
+    public float delayBetweenMessages = 0.7f; // Tiempo de espera entre frases
     public string[] messages; // Mensajes a mostrar
     private Text textComponent; // Componente de texto
     private int currentMessageIndex = 0;
@@ -21,8 +21,9 @@ public class Animacion_texto : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetKeyDown("p")){
-            if(!Final) SceneManager.LoadScene("Level1_Definitivo");
+        if(Input.GetKeyDown("escape")){
+            if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
+            else if(SceneManager.GetActiveScene().name == "TextoAntesD") SceneManager.LoadScene("Final");
             else SceneManager.LoadScene("MainMenu");
         }
     }
@@ -43,7 +44,8 @@ public class Animacion_texto : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenMessages);
             }
         }
-        if(!Final) SceneManager.LoadScene("Level1_Definitivo");
+        if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
+        else if(SceneManager.GetActiveScene().name == "TextoAntesD") SceneManager.LoadScene("Final");
         else SceneManager.LoadScene("MainMenu");
     }
 

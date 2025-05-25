@@ -33,12 +33,22 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (GlobalGameManager.Instance == null){
+            GameObject prefab = Resources.Load<GameObject>("GlobalGameManager");
+            if (prefab != null){
+                Instantiate(prefab);
+                Debug.Log("✅ GlobalGameManager instanciado automáticamente.");
+            }else{
+                Debug.LogError("❌ No se encontró el prefab GlobalGameManager en Resources.");
+            }
+        }
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         hudCanvasGroup.alpha = 1;
         Cursor.visible = false;
         Time.timeScale = 1;
-        // craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
+        if (GlobalGameManager.Instance != null && craneText != null) craneText.text = GlobalGameManager.Instance.globalCraneCount.ToString();
+
         
     }
 
@@ -161,7 +171,7 @@ public class GameManager : MonoBehaviour
     public void Respawn(int screen, bool death){
         Debug.Log($"🔄 Respawn llamado con screen={screen}, death={death}");
         deadCount++;
-        // GlobalGameManager.Instance.globalDeadCount++;
+        GlobalGameManager.Instance.globalDeadCount++;
         deadsText.text=deadCount.ToString();
         if (death && screen >= 0 && screen < respawns.Length){
             if (characterController != null){

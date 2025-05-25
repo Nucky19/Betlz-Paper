@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 3381a1c8535247c4fbe0da6fbc14a895
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TEXTOS/Epilogo.unity
     guid: a3dd84c5e5c38c8468adc0b84dd7a5da
+  - enabled: 1
+    path: Assets/Scenes/TEXTOS/TextoAntesFinal.unity
+    guid: f6df55f50b3ea244f85ab1fdfd4ca69a
   - enabled: 1
     path: Assets/Scenes/Final.unity
     guid: 012dc686df712694198268b2e0de0b6d

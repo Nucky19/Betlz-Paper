@@ -394,11 +394,11 @@ MonoBehaviour:
   initialDelay: 1.7
   delayBetweenMessages: 1.5
   messages:
-  - "No te rindas todav\xEDa"
   - Ya queda poco
-  - "Yo te ayudar\xE9"
-  - Estamos a punto de lograrlo
-  - "Est\xE1s cerca de pedir tu deseo"
+  - "No te rindas a\xFAn"
+  - "No te rindas a\xFAn"
+  - 'Todas las grullas que hemos recogido '
+  - "Valdr\xE1n la pena"
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:

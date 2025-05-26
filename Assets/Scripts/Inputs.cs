@@ -40,6 +40,10 @@ public class Inputs : MonoBehaviour
         // if(Input.GetKeyDown(KeyCode.Escape)) OnPause?.Invoke();
         if (Input.GetButtonDown("Pause") && SceneManager.GetActiveScene().name != "Prologo") OnPause?.Invoke();
         if(Input.GetKeyDown("3")) SceneManager.LoadScene("Level3");
+        if(Input.GetKeyDown("4")){
+            GlobalGameManager.Instance.globalCraneCount = 19;  // ✅ Establecer valor antes de cambiar de escena
+            SceneManager.LoadScene("Final");
+        }
     }
     
     void Update(){

@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public static event Action<string> OnLoadScene;
 
+    private int finalCraneCount;
+
     void Start()
     {
         if (GlobalGameManager.Instance == null){
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("❌ No se encontró el prefab GlobalGameManager en Resources.");
             }
         }
+        if (SceneManager.GetActiveScene().name == "Final") finalCraneCount = GlobalGameManager.Instance.globalCraneCount;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         hudCanvasGroup.alpha = 1;
@@ -66,8 +69,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown("r")) Respawn(currentScreen, true);
         if (Input.GetKeyDown("escape") && SceneManager.GetActiveScene().name == "Prologo") SceneLoad("Level1_Definitivo");
-        
-        
+
+        Debug.Log(GlobalGameManager.Instance.globalCraneCount);
     }
 
     void OnEnable(){
@@ -173,17 +176,31 @@ public class GameManager : MonoBehaviour
         deadCount++;
         GlobalGameManager.Instance.globalDeadCount++;
         deadsText.text=deadCount.ToString();
-        if (death && screen >= 0 && screen < respawns.Length){
-            if (characterController != null){
+
+        if (SceneManager.GetActiveScene().name == "Final")
+        {
+            finalCraneCount--;
+            craneText.text = finalCraneCount.ToString();
+            if (deadCount >= GlobalGameManager.Instance.globalCraneCount)
+            {
+                Debug.Log("☠️☠️☠️☠️☠️☠️☠️☠️☠️☠️☠️kekw");
+                player.SetActive(false); // Desactiva al jugador
+                return; // No seguimos con el respawn
+            }
+        }
+        if (death && screen >= 0 && screen < respawns.Length)
+        {
+            if (characterController != null)
+            {
                 characterController.enabled = false;
                 player.transform.position = respawns[screen].position;
                 Debug.Log("Posición del jugador: " + player.transform.position);
-                
+
                 PlayerController playerController = player.GetComponent<PlayerController>();
                 if (playerController != null) playerController.ResetMovement();
                 characterController.enabled = true;
             }
-            ResetTraps(); 
+            ResetTraps();
             ResetCrushing();
             PlayerStates playerStates = player.GetComponent<PlayerStates>();
             if (playerStates != null) playerStates.Respawn();

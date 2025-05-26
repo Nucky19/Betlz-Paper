@@ -23,7 +23,7 @@ public class Animacion_texto : MonoBehaviour
     void Update(){
         if(Input.GetKeyDown("escape")){
             if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
-            else if(SceneManager.GetActiveScene().name == "TextoAntesD") SceneManager.LoadScene("Final");
+            else if(SceneManager.GetActiveScene().name == "TextoAntesFinal") SceneManager.LoadScene("Final");
             else SceneManager.LoadScene("MainMenu");
         }
     }
@@ -45,7 +45,7 @@ public class Animacion_texto : MonoBehaviour
             }
         }
         if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
-        else if(SceneManager.GetActiveScene().name == "TextoAntesD") SceneManager.LoadScene("Final");
+        else if(SceneManager.GetActiveScene().name == "TextoAntesFinal") SceneManager.LoadScene("Final");
         else SceneManager.LoadScene("MainMenu");
     }
 

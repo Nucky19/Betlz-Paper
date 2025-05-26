@@ -389,10 +389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ed1bd8dae92654a8f1909d6f96487f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 0.7
-  displayDuration: 2.2
-  initialDelay: 1.7
-  delayBetweenMessages: 1.5
+  fadeDuration: 0.43
+  displayDuration: 1.88
+  initialDelay: 1.42
+  delayBetweenMessages: 1.18
   messages:
   - "Finalmente has llegado hasta aqu\xED."
   - "No te has rendido en ning\xFAn momento."

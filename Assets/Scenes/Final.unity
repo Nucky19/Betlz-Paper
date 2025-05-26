@@ -16607,6 +16607,7 @@ MonoBehaviour:
   m_Script: {fileID: 810556190}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Entries: []
 --- !u!4 &445533241
 Transform:
   m_ObjectHideFlags: 19
@@ -42874,6 +42875,7 @@ Transform:
   - {fileID: 1940342871}
   - {fileID: 1981079418}
   - {fileID: 984939842}
+  - {fileID: 1185483408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1003764846
@@ -51390,8 +51392,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.134846, y: 3.0210276, z: 1.4413961}
-  m_Center: {x: 1.8653994, y: 1.1396749, z: 2.2344058}
+  m_Size: {x: 8.134846, y: 3.0210276, z: 3.439234}
+  m_Center: {x: 1.8653994, y: 1.1396744, z: 2.6329722}
 --- !u!1 &1101927002
 GameObject:
   m_ObjectHideFlags: 0
@@ -55120,6 +55122,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185409441}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1185483407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185483408}
+  - component: {fileID: 1185483410}
+  - component: {fileID: 1185483409}
+  m_Layer: 0
+  m_Name: GoodEnding Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1185483408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185483407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.87, y: 157.38, z: 196.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 992878997}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1185483409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185483407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77407c8f04ac6cd4782db6cfc0eeb593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: GoodEnding
+--- !u!65 &1185483410
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185483407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.0001307, y: 4.105606, z: 9.948502}
+  m_Center: {x: 1.0000653, y: -0.048606873, z: 0.4253006}
 --- !u!1 &1186443316
 GameObject:
   m_ObjectHideFlags: 0
@@ -65935,8 +66004,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.134846, y: 0.94940716, z: 1.0262054}
-  m_Center: {x: 1.8653994, y: -0.059964567, z: 0.16864423}
+  m_Size: {x: 8.134846, y: 2.0358067, z: 1.0262054}
+  m_Center: {x: 1.8653994, y: 0.4832352, z: 0.16864422}
 --- !u!1 &1564329067
 GameObject:
   m_ObjectHideFlags: 0
@@ -97165,8 +97234,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.134846, y: 1.2250701, z: 3.770944}
-  m_Center: {x: 1.8653994, y: -0.19779605, z: -0.0072856545}
+  m_Size: {x: 8.134846, y: 1.3472378, z: 3.9778855}
+  m_Center: {x: 1.8653994, y: -0.2588797, z: -0.1107563}
 --- !u!1 &1987942361
 GameObject:
   m_ObjectHideFlags: 0

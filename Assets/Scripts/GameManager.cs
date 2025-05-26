@@ -219,8 +219,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void FrogUnlock(){
+    void FrogUnlock()
+    {
         panelImage.sprite = newHUDFrog;
+        Transform panelTransform = panelImage.transform;
+        Transform textTransform = panelTransform.Find("Transformation");
+        if (textTransform != null) textTransform.gameObject.SetActive(false);
     }
 
     void CraneCollect()

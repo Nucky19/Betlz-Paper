@@ -39,14 +39,12 @@ public class GameManager : MonoBehaviour
             GameObject prefab = Resources.Load<GameObject>("GlobalGameManager");
             if (prefab != null){
                 Instantiate(prefab);
-                Debug.Log("✅ GlobalGameManager instanciado automáticamente.");
-            }else{
-                Debug.LogError("❌ No se encontró el prefab GlobalGameManager en Resources.");
             }
         }
         if (SceneManager.GetActiveScene().name == "Final") finalCraneCount = GlobalGameManager.Instance.globalCraneCount;
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
+        // Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 1;
         hudCanvasGroup.alpha = 1;
         Cursor.visible = false;
         Time.timeScale = 1;

@@ -71,7 +71,8 @@ public class GameManager : MonoBehaviour
         Debug.Log(GlobalGameManager.Instance.globalCraneCount);
     }
 
-    void OnEnable(){
+    void OnEnable()
+    {
         ScreenTrigger.OnScreen += HandleCameraChange;
         PlayerStates.OnDeath += Respawn;
         Items.OnFrogUnlock += FrogUnlock;
@@ -80,12 +81,14 @@ public class GameManager : MonoBehaviour
         Items.OnCraneCollect += CraneCollect;
         ChangeSpawn.OnChangeSpawn += SpawnChange;
         Inputs.OnPause += Pause;
+        
         // CheckPoint.OnCheckPoint +=   UpdateSpawnPoint;
         // PlayerController.OnIdleStateChanged += HandleHUDVisibility;
-        
+
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         ScreenTrigger.OnScreen -= HandleCameraChange;
         PlayerStates.OnDeath -= Respawn;
         Items.OnFrogUnlock -= FrogUnlock;
@@ -181,9 +184,10 @@ public class GameManager : MonoBehaviour
             craneText.text = finalCraneCount.ToString();
             if (deadCount >= GlobalGameManager.Instance.globalCraneCount)
             {
-                Debug.Log("☠️☠️☠️☠️☠️☠️☠️☠️☠️☠️☠️kekw");
-                player.SetActive(false); // Desactiva al jugador
-                return; // No seguimos con el respawn
+                player.SetActive(false);
+                SceneLoad("BadEning");
+                Debug.Log("BadEnding");
+                return;
             }
         }
         if (death && screen >= 0 && screen < respawns.Length)
@@ -245,6 +249,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void SceneLoad(string sceneName){
+        Debug.Log("BadEning");
         SceneManager.LoadScene(sceneName);
         Time.timeScale = 1;
     }

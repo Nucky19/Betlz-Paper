@@ -46,6 +46,7 @@ public class Animacion_texto : MonoBehaviour
         }
         if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
         else if(SceneManager.GetActiveScene().name == "TextoAntesFinal") SceneManager.LoadScene("Final");
+        else if(SceneManager.GetActiveScene().name == "GoodEnding") SceneManager.LoadScene("GoodCreditos");
         else SceneManager.LoadScene("MainMenu");
     }
 

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
             }
         }
         if (SceneManager.GetActiveScene().name == "Final") finalCraneCount = GlobalGameManager.Instance.globalCraneCount;
+        if (SceneManager.GetActiveScene().name == "Level1_Definitivo") GlobalGameManager.Instance.globalCraneCount=0;
         QualitySettings.vSyncCount = 0;
         // Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 1;

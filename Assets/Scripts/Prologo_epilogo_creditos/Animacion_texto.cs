@@ -21,10 +21,11 @@ public class Animacion_texto : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetKeyDown("escape")){
+        if(Input.GetButtonDown("Pause")){
             if(SceneManager.GetActiveScene().name == "Prologo") SceneManager.LoadScene("Level1_Definitivo");
             else if(SceneManager.GetActiveScene().name == "TextoAntesFinal") SceneManager.LoadScene("Final");
-            else SceneManager.LoadScene("MainMenu");
+            else if(SceneManager.GetActiveScene().name == "GoodEnding") SceneManager.LoadScene("GoodCreditos");
+            // else SceneManager.LoadScene("MainMenu");
         }
     }
 

@@ -389,15 +389,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ed1bd8dae92654a8f1909d6f96487f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 0.7
-  displayDuration: 2.2
-  initialDelay: 1.7
-  delayBetweenMessages: 1.5
+  fadeDuration: 0.46
+  displayDuration: 1.23
+  initialDelay: 0.86
+  delayBetweenMessages: 0.62
   messages:
-  - Ya queda poco
-  - "No te rindas a\xFAn"
+  - Ya queda poco.
+  - "No te rindas a\xFAn."
   - 'Todas las grullas que hemos recogido '
-  - "Valdr\xE1n la pena"
+  - "nos ayudar\xE1n a seguir adelante."
+  - "T\xFA puedes."
   Final: 0
 --- !u!114 &716450384
 MonoBehaviour:

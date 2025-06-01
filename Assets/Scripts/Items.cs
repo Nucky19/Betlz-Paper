@@ -14,6 +14,7 @@ public class Items : MonoBehaviour
     [SerializeField] private bool inCraneArea=false;
     public static event Action OnCraneCollect; 
     public static event Action OnFrogUnlock; 
+    public static event Action<bool> OnFrogTutorial; 
     public GameObject playerObject;
     public GameObject crane;
     public float speed;
@@ -34,6 +35,8 @@ public class Items : MonoBehaviour
 
     [SerializeField] float disableTimeMariposa = 1.25f;
     [SerializeField] private Animator mariposaAnimator;
+    [SerializeField] GameObject frogTutorialCanvas;
+    private bool frogTutorialActive = false;
 
     // [SerializeField] private AudioSource _audio;
 
@@ -79,48 +82,24 @@ public class Items : MonoBehaviour
     }
 
 
-    
 
-    void Update(){
-        if(collectingCrane) GetCrane(isGrounded);
-        if(Input.GetKeyDown("f")) OnFrogUnlock?.Invoke();
+
+    void Update()
+    {
+        if (collectingCrane) GetCrane(isGrounded);
+        if (Input.GetKeyDown("f")) OnFrogUnlock?.Invoke();
         if (SceneManager.GetActiveScene().name == "Level3" || SceneManager.GetActiveScene().name == "Final") OnFrogUnlock?.Invoke();
+        if (frogTutorialActive && Input.GetButtonDown("Transform"))
+        {
+            frogTutorialCanvas.SetActive(false);
+            frogTutorialActive = false;
+            Debug.Log("Desactivando Tutorial");
+            gameObject.SetActive(false);
+            OnFrogTutorial?.Invoke(true);
+
+        }
     }
    
-
-//     public void HandleTriggerEnter(Collider collider) {
-//         if (!collider.gameObject.CompareTag("PlayerHitbox")) return;
-//  // Evita autocolisión
-        
-//         switch (collider.tag) {
-//             case "JumpReset":
-//                 if (!doubleJumpAvaiable) {
-//                     player._doubleJump = true;
-//                     AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position);
-//                     StartCoroutine(DisableTemporarily(collider.gameObject, disableTimeMariposa));
-//                 }
-//                 break;
-//             case "JumpResetB":
-//                 if (!doubleJumpAvaiable) {
-//                     player._doubleJump = true;
-//                     AudioSource.PlayClipAtPoint(sonidoMariposa, transform.position);
-//                     mariposaAnimator.SetTrigger("isBlue");
-//                     StartCoroutine(DisableTemporarilyHitBox(collider.gameObject, disableTimeMariposa));
-//                 }
-//                 break;
-//             case "Crane":
-//                 collectingCrane = true;
-//                 AudioSource.PlayClipAtPoint(sonidoGrulla, transform.position);
-//                 break;
-//             case "FrogUnlock":
-//                 AudioSource.PlayClipAtPoint(sonidoRecoleccionRana, transform.position);
-//                 OnFrogUnlock?.Invoke();
-//                 collider.gameObject.SetActive(false);
-//                 break;
-//             default:
-//                 break;
-//         }
-//     }
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("ItemHitBox")) {
             switch (gameObject.tag) {
@@ -147,7 +126,21 @@ public class Items : MonoBehaviour
                 case "FrogUnlock":
                     AudioSource.PlayClipAtPoint(sonidoRecoleccionRana, transform.position); //Sonido
                     OnFrogUnlock?.Invoke();
-                    gameObject.SetActive(false);
+                    if (frogTutorialCanvas != null)
+                    {
+                        frogTutorialCanvas.SetActive(true);
+                        frogTutorialActive = true;
+                        Debug.Log("Activando Tutorial");
+                    }
+                    OnFrogTutorial?.Invoke(false);
+                    // MeshRenderer mesh = GetComponent<MeshRenderer>();
+                    // if (mesh != null) mesh.enabled = false;
+
+                    // SkinnedMeshRenderer skinned = GetComponent<SkinnedMeshRenderer>();
+                    // if (skinned != null) skinned.enabled = false;
+
+                    // Collider col = GetComponent<Collider>();
+                    // if (col != null) col.enabled = false;
                     break;
                 default:
                     // Destroy(gameObject);

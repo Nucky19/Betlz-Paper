@@ -11,6 +11,7 @@ public class Inputs : MonoBehaviour
     public bool firstTransformation;
     private bool frogAvaiable=false;
     public static event Action OnPause; 
+    
 
 
     void OnEnable(){

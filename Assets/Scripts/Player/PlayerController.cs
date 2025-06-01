@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     
     public Inputs input;
+    [SerializeField] bool canMove;
     public PlayerStates state;
     private CharacterController characterController;
 
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
     void Awake(){
         if (Instance == null) Instance = this;
         else   Destroy(gameObject);
-
+        if (!canMove) canMove = true;
         input = GetComponent<Inputs>();
         state=GetComponent<PlayerStates>();
 
@@ -126,8 +127,22 @@ public class PlayerController : MonoBehaviour
     public void SetAnimator(Animator newAnimator){
         if (newAnimator != null)_animator = newAnimator;
     }
-    void Update(){
-        PlayerMovement();
+
+    void OnEnable()
+    {
+        Items.OnFrogTutorial += CanMove;
+        
+    }
+    void OnDisable(){
+        Items.OnFrogTutorial -= CanMove;
+    }
+
+    void CanMove(bool movementAviable){
+        canMove = movementAviable;
+    }
+
+        void Update(){
+        if(canMove) PlayerMovement();
         if (input.jump && IsGrounded()) { 
             if (_audio.isPlaying && _audio.clip == pasosClip)_audio.Stop();  
             
